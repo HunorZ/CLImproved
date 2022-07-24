@@ -1,0 +1,1514 @@
+[
+  {
+    "category": "user EXEC mode",
+    "words": [
+      {
+        "type": "command",
+        "word": "enable",
+        "description": "Turn on priviledged commands"
+      },
+      {
+        "type": "command",
+        "word": "ping",
+        "description": "sends a ping message",
+        "words": [
+          {
+            "type": "param",
+            "word": "IPv4-address",
+            "description": "IP-address which should be pinged"
+          },
+          {
+            "type": "param",
+            "word": "IPv6-address",
+            "description": "IPv6-address which should be pinged"
+          }
+        ]
+      },
+      {
+        "type": "command",
+        "word": "reload",
+        "description": "restarts the system"
+      },
+      {
+        "type": "command",
+        "word": "show",
+        "description": "",
+        "words": [
+          {
+            "type": "command",
+            "word": "arp",
+            "description": "Arp table"
+          },
+          {
+            "type": "command",
+            "word": "cdp",
+            "description": "CDP information",
+            "words": [
+              {
+                "type": "multiCommand",
+                "word": "entry",
+                "description": "Information for specific neighbor entry",
+                "words": [
+                  [
+                    {
+                      "type": "command",
+                      "word": "*",
+                      "description": "all CDP neighbor entries"
+                    },
+                    {
+                      "type": "param",
+                      "word": "name",
+                      "description": "Name of CDP neighbor entry"
+                    }
+                  ],
+                  [
+                    {
+                      "type": "command",
+                      "word": "protocol",
+                      "description": "Protocol information"
+                    },
+                    {
+                      "type": "command",
+                      "word": "version",
+                      "description": "Version information"
+                    },
+                    {
+                      "type": "finish"
+                    }
+                  ]
+                ]
+              },
+              {
+                "type": "command",
+                "word": "interface",
+                "description": "CDP interface status and configuration"
+              },
+              {
+                "type": "command",
+                "word": "neighbors",
+                "description": "CDP neighbor entries"
+              },
+              {
+                "type": "finish"
+              }
+            ]
+          },
+          {
+            "type": "command",
+            "word": "class-map",
+            "description": "Show QoS Class Map",
+            "words": [
+              {
+                "type": "param",
+                "word": "class-map name"
+              },
+              {
+                "type": "finish"
+              }
+            ]
+          },
+          {
+            "type": "command",
+            "word": "clock",
+            "description": "Display the system clock",
+            "words": [
+              {
+                "type": "command",
+                "word": "detail",
+                "description": "Display detailed information"
+              },
+              {
+                "type": "finish"
+              }
+            ]
+          },
+          {
+            "type": "command",
+            "word": "controllers",
+            "description": "Interface controllers status",
+            "words": [
+              {
+                "type": "command",
+                "word": "Ethernet",
+                "description": "IEEE 802.3"
+              },
+              {
+                "type": "command",
+                "word": "FastEthernet",
+                "description": "FastEthernet IEEE 802.3"
+              },
+              {
+                "type": "command",
+                "word": "GigabitEthernet",
+                "description": "GigabitEthernet IEEE 802.3z"
+              },
+              {
+                "type": "command",
+                "word": "Serial",
+                "description": "Serial"
+              },
+              {
+                "type": "finish"
+              }
+            ]
+          },
+          {
+            "type": "command",
+            "word": "crypto",
+            "words": [
+              {
+                "type": "command",
+                "word": "key",
+                "words": [
+                  {
+                    "type": "command",
+                    "word": "mypubkey",
+                    "words": [
+                      {
+                        "type": "command",
+                        "word": "rsa"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "command",
+            "word": "dot11",
+            "description": "IEEE 802.11 show information",
+            "words": [
+              {
+                "type": "command",
+                "word": "interface",
+                "description": "Interface statistics information"
+              }
+            ]
+          },
+          {
+            "type": "command",
+            "word": "flash:",
+            "description": "display information about flash: file system"
+          },
+          {
+            "type": "command",
+            "word": "frame-relay",
+            "description": "Frame-Relay information",
+            "words": [
+              {
+                "type": "command",
+                "word": "lmi",
+                "description": "show frame relay lmi statistics"
+              },
+              {
+                "type": "command",
+                "word": "map",
+                "description": "Frame-Relay map table"
+              },
+              {
+                "type": "command",
+                "word": "pvc",
+                "description": "show frame relay pvc statistics"
+              }
+            ]
+          },
+          {
+            "type": "command",
+            "word": "history",
+            "description": "Display the session command history"
+          },
+          {
+            "type": "command",
+            "word": "hosts",
+            "description": "IP domain-name, lookup style, nameservers, and host table"
+          },
+          {
+            "type": "command",
+            "word": "interfaces",
+            "description": "Interface status and configuration"
+          },
+          {
+            "type": "command",
+            "word": "ip",
+            "description": "IP information",
+            "words": [
+              {
+                "type": "command",
+                "word": "arp",
+                "description": "IP ARP table"
+              },
+              {
+                "type": "command",
+                "word": "bgp",
+                "description": "BGP information",
+                "words": [
+                  {
+                    "type": "command",
+                    "word": "neighbors",
+                    "description": "Detailed information on TCP and BGP neighbor connections"
+                  },
+                  {
+                    "type": "command",
+                    "word": "summary",
+                    "description": "Summary of BGP neighbor status"
+                  }
+                ]
+              },
+              {
+                "type": "command",
+                "word": "dhcp",
+                "description": "Show items in the DHCP database",
+                "words": [
+                  {
+                    "type": "command",
+                    "word": "binding",
+                    "description": "DHCP address bindings"
+                  },
+                  {
+                    "type": "command",
+                    "word": "conflict",
+                    "description": "DHCP address conflicts"
+                  },
+                  {
+                    "type": "command",
+                    "word": "pool",
+                    "description": "DHCP pools information",
+                    "words": [
+                      {
+                        "type": "param",
+                        "word": "pool name"
+                      },
+                      {
+                        "type": "finish"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "command",
+                "word": "eigrp",
+                "description": "IP-EIGRP show commands",
+                "words": [
+                  {
+                    "type": "command",
+                    "word": "interfaces",
+                    "description": "IP-EIGRP interfaces",
+                    "words": [
+                      {
+                        "type": "param",
+                        "word": "AS Number"
+                      },
+                      {
+                        "type": "finish"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "command",
+                    "word": "neighbors",
+                    "description": "IP-EIGRP neighbors",
+                    "words": [
+                      {
+                        "type": "param",
+                        "word": "AS Number"
+                      },
+                      {
+                        "type": "finish"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "command",
+                    "word": "topology",
+                    "description": "IP-EIGRP Topology Table",
+                    "words": [
+                      {
+                        "type": "param",
+                        "word": "AS Number"
+                      },
+                      {
+                        "type": "param",
+                        "word": "IPv4 Address",
+                        "description": "Network to display information about"
+                      },
+                      {
+                        "type": "command",
+                        "word": "all-links",
+                        "description": "Show all links in topology table"
+                      },
+                      {
+                        "type": "finish"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "command",
+                "word": "traffic",
+                "description": "IP-EIGRP Traffic Statistics",
+                "words": [
+                  {
+                    "type": "param",
+                    "word": "AS Number"
+                  },
+                  {
+                    "type": "finish"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "command",
+            "word": "interface",
+            "description": "IP interface status and configuration"
+          },
+          {
+            "type": "command",
+            "word": "nbar",
+            "description": "Network-Based Application Recognition"
+          },
+          {
+            "type": "command",
+            "word": "ospf",
+            "description": "OSPF information"
+          },
+          {
+            "type": "command",
+            "word": "protocols",
+            "description": "IP routing protocol process parameters and statistics"
+          },
+          {
+            "type": "command",
+            "word": "rip",
+            "description": "IP RIP show commands"
+          },
+          {
+            "type": "command",
+            "word": "route",
+            "description": "IP routing table"
+          },
+          {
+            "type": "command",
+            "word": "ssh",
+            "description": "Information on SSH"
+          },
+          {
+            "type": "command",
+            "word": "ipv6",
+            "description": "IPv6 information"
+          },
+          {
+            "type": "command",
+            "word": "lldp",
+            "description": "LLDP information"
+          },
+          {
+            "type": "command",
+            "word": "policy-map",
+            "description": "Show QoS Policy Map"
+          },
+          {
+            "type": "command",
+            "word": "pppoe",
+            "description": "PPPoE information"
+          },
+          {
+            "type": "command",
+            "word": "privilege",
+            "description": "Show current privilege level"
+          },
+          {
+            "type": "command",
+            "word": "protocols",
+            "description": "Active network routing protocols"
+          },
+          {
+            "type": "command",
+            "word": "queue",
+            "description": "Show queue contents"
+          },
+          {
+            "type": "command",
+            "word": "queueing",
+            "description": "Show queueing configuration"
+          },
+          {
+            "type": "command",
+            "word": "sessions",
+            "description": "Information about Telnet connections"
+          },
+          {
+            "type": "command",
+            "word": "ssh",
+            "description": "Status of SSH server connections"
+          },
+          {
+            "type": "command",
+            "word": "tcp",
+            "description": "Status of TCP connections"
+          },
+          {
+            "type": "command",
+            "word": "terminal",
+            "description": "Display terminal configuration parameters"
+          },
+          {
+            "type": "command",
+            "word": "users",
+            "description": "Display information about terminal lines"
+          },
+          {
+            "type": "command",
+            "word": "version",
+            "description": "System hardware and software status"
+          },
+          {
+            "type": "command",
+            "word": "vlan-switch",
+            "description": "VTP VLAN status"
+          },
+          {
+            "type": "command",
+            "word": "vtp",
+            "description": "Configure VLAN database"
+          }
+        ]
+      },
+      {
+        "type": "command",
+        "word": "telnet",
+        "description": "opens a telnet connection",
+        "words": [
+          {
+            "type": "param",
+            "word": "IP(v6)-address"
+          }
+        ]
+      },
+      {
+        "type": "command",
+        "word": "traceroute",
+        "description": "traces the route to a destination",
+        "words": [
+          {
+            "type": "param",
+            "word": "IP(v6)-address"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "privileged EXEC mode",
+    "words": [
+      {
+        "type": "command/enterSubMode",
+        "word": "configure terminal",
+        "description": "enter global configuration mode",
+        "submode": {
+          "words": [
+            {
+              "type": "command",
+              "word": "banner motd",
+              "description": "define a banner message of the day",
+              "words": [
+                {
+                  "type": "param",
+                  "word": "message"
+                }
+              ]
+            },
+            {
+              "type": "command",
+              "word": "crypto",
+              "description": "encryption module",
+              "words": [
+                {
+                  "type": "command",
+                  "word": "dynamic-map"
+                },
+                {
+                  "type": "command",
+                  "word": "ipsec"
+                },
+                {
+                  "type": "command",
+                  "word": "isakmp"
+                },
+                {
+                  "type": "command",
+                  "word": "key",
+                  "words": [
+                    {
+                      "type": "command",
+                      "word": "generate",
+                      "words": [
+                        {
+                          "type": "command",
+                          "word": "rsa",
+                          "words": [
+                            {
+                              "type": "command",
+                              "word": "general-keys",
+                              "words": [
+                                {
+                                  "type": "command",
+                                  "word": "modulus",
+                                  "words": [
+                                    {
+                                      "type": "param",
+                                      "word": "Modulus Zahl 360-4096"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "finish"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "command",
+                      "word": "zeroize"
+                    }
+                  ]
+                },
+                {
+                  "type": "command",
+                  "word": "map"
+                }
+              ]
+            },
+            {
+              "type": "multiCommand",
+              "word": "enable",
+              "description": "modify enable password parameters",
+              "words": [
+                [
+                  {
+                    "type": "command",
+                    "word": "password"
+                  },
+                  {
+                    "type": "command",
+                    "word": "secret"
+                  }
+                ],
+                [
+                  {
+                    "type": "param",
+                    "word": "password"
+                  }
+                ]
+              ]
+            },
+            {
+              "type": "command",
+              "word": "hostname",
+              "words": [
+                {
+                  "type": "param",
+                  "word": "name"
+                }
+              ]
+            },
+            {
+              "type": "command",
+              "word": "domain-name",
+              "words": [
+                {
+                  "type": "param",
+                  "word": "name"
+                }
+              ]
+            },
+            {
+              "type": "multiCommand",
+              "word": "username",
+              "words": [
+                [
+                  {
+                    "type": "param",
+                    "word": "username"
+                  }
+                ],
+                [
+                  {
+                    "type": "command",
+                    "word": "secret"
+                  }
+                ]
+              ]
+            },
+            {
+              "type": "command",
+              "word": "ipv6",
+              "words": [
+                {
+                  "type": "command",
+                  "word": "unicast-routing"
+                }
+              ]
+            },
+            {
+              "type": "command",
+              "word": "service",
+              "words": [
+                {
+                  "type": "command",
+                  "word": "password-encryption"
+                }
+              ]
+            },
+            {
+              "type": "command",
+              "word": "security passwords",
+              "words": [
+                {
+                  "type": "command",
+                  "word": "min-length",
+                  "words": [
+                    {
+                      "type": "param",
+                      "word": "Length"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "command",
+              "word": "login",
+              "words": [
+                {
+                  "type": "command",
+                  "word": "block-for",
+                  "words": [
+                    {
+                      "type": "param",
+                      "word": "Zeit in s",
+                      "words": [
+                        {
+                          "type": "command",
+                          "word": "attempts",
+                          "words": [
+                            {
+                              "type": "param",
+                              "word": "Versuche",
+                              "words": [
+                                {
+                                  "type": "word",
+                                  "word": "within",
+                                  "words": [
+                                    {
+                                      "type": "param",
+                                      "word": "Zeit in s"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "command",
+                  "word": "on-failure"
+                },
+                {
+                  "type": "command",
+                  "word": "on-success"
+                }
+              ]
+            },
+            {
+              "type": "command",
+              "word": "interface",
+              "words": [
+                {
+                  "type": "command",
+                  "word": "FastEthernet",
+                  "words": [
+                    {
+                      "type": "param/enterSubMode",
+                      "word": "Interface",
+                      "submode": {
+                        "words": [
+                          {
+                            "type": "command",
+                            "word": "bandwidth",
+                            "words": [
+                              {
+                                "type": "param",
+                                "word": "Bandwidth in kilobits"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "command",
+                            "word": "delay",
+                            "words": [
+                              {
+                                "type": "param",
+                                "word": "tens of microseconds"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "command",
+                            "word": "description",
+                            "words": [
+                              {
+                                "type": "param",
+                                "word": "Description"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "command",
+                            "word": "duplex",
+                            "words": [
+                              {
+                                "type": "command",
+                                "word": "auto"
+                              },
+                              {
+                                "type": "command",
+                                "word": "full"
+                              },
+                              {
+                                "type": "command",
+                                "word": "half"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "command",
+                            "word": "ip",
+                            "words": [
+                              {
+                                "type": "command",
+                                "word": "address",
+                                "words": [
+                                  {
+                                    "type": "param",
+                                    "word": "IP address",
+                                    "words": [
+                                      {
+                                        "type": "param",
+                                        "word": "IP subnet mask"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "command",
+                                    "word": "dhcp"
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "command",
+                            "word": "ipv6",
+                            "words": [
+                              {
+                                "type": "command",
+                                "word": "address",
+                                "words": [
+                                  {
+                                    "type": "param",
+                                    "word": "IPv6 address",
+                                    "description": "IPv6 address WITHOUT prefix"
+                                  },
+                                  {
+                                    "type": "param",
+                                    "word": "IPv6 address",
+                                    "description": "IPv6 address WITH prefix",
+                                    "words": [
+                                      {
+                                        "type": "command",
+                                        "word": "link-local"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "command",
+                                "word": "enable",
+                                "description": "Enable IPv6 on interface"
+                              },
+                              {
+                                "type": "command",
+                                "word": "mac-address",
+                                "description": "Manually set interface MAC address"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "command",
+                            "word": "no",
+                            "words": [
+                              {
+                                "type": "command",
+                                "word": "shutdown"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "command",
+                            "word": "shutdown"
+                          },
+                          {
+                            "type": "exitSubMode",
+                            "word": "exit"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "command",
+                  "word": "GigabitEthernet",
+                  "words": [
+                    {
+                      "type": "param/enterSubMode",
+                      "word": "Interface",
+                      "submode": {
+                        "words": [
+                          {
+                            "type": "command",
+                            "word": "bandwidth",
+                            "words": [
+                              {
+                                "type": "param",
+                                "word": "Bandwidth in kilobits"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "command",
+                            "word": "delay",
+                            "words": [
+                              {
+                                "type": "param",
+                                "word": "tens of microseconds"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "command",
+                            "word": "description",
+                            "words": [
+                              {
+                                "type": "param",
+                                "word": "Description"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "command",
+                            "word": "duplex",
+                            "words": [
+                              {
+                                "type": "command",
+                                "word": "auto"
+                              },
+                              {
+                                "type": "command",
+                                "word": "full"
+                              },
+                              {
+                                "type": "command",
+                                "word": "half"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "command",
+                            "word": "ip",
+                            "words": [
+                              {
+                                "type": "command",
+                                "word": "address",
+                                "words": [
+                                  {
+                                    "type": "param",
+                                    "word": "IP address",
+                                    "words": [
+                                      {
+                                        "type": "param",
+                                        "word": "IP subnet mask"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "command",
+                                    "word": "dhcp"
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "command",
+                            "word": "ipv6",
+                            "words": [
+                              {
+                                "type": "command",
+                                "word": "address",
+                                "words": [
+                                  {
+                                    "type": "param",
+                                    "word": "IPv6 address",
+                                    "description": "IPv6 address WITHOUT prefix"
+                                  },
+                                  {
+                                    "type": "param",
+                                    "word": "IPv6 address",
+                                    "description": "IPv6 address WITH prefix",
+                                    "words": [
+                                      {
+                                        "type": "command",
+                                        "word": "link-local"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "command",
+                                "word": "enable",
+                                "description": "Enable IPv6 on interface"
+                              },
+                              {
+                                "type": "command",
+                                "word": "mac-address",
+                                "description": "Manually set interface MAC address"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "command",
+                            "word": "no",
+                            "words": [
+                              {
+                                "type": "command",
+                                "word": "shutdown"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "command",
+                            "word": "shutdown"
+                          },
+                          {
+                            "type": "exitSubMode",
+                            "word": "exit"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "command",
+                  "word": "Vlan",
+                  "words": [
+                    {
+                      "type": "param/enterSubMode",
+                      "word": "Vlan ID",
+                      "submode": {
+                        "words": [
+                          {
+                            "type": "command",
+                            "word": "description",
+                            "words": [
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "exitSubMode",
+              "word": "exit"
+            }
+          ]
+        }
+      },
+      {
+        "type": "command",
+        "word": "clock set",
+        "words": [
+          {
+            "type": "param",
+            "word": "hh:mm:ss",
+            "words": [
+              {
+                "type": "param",
+                "word": "day 1-31",
+                "words": [
+                  {
+                    "type": "param",
+                    "word": "month",
+                    "words": [
+                      {
+                        "type": "param",
+                        "word": "year"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "param",
+                "word": "month",
+                "words": [
+                  {
+                    "type": "param",
+                    "word": "day 1-31",
+                    "words": [
+                      {
+                        "type": "param",
+                        "word": "year"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "command",
+        "word": "copy",
+        "words": [
+          {
+            "type": "command",
+            "word": "running-config",
+            "words": [
+              {
+                "type": "command",
+                "word": "startup-config"
+              }
+            ]
+          },
+          {
+            "type": "command",
+            "word": "startup-config",
+            "words": [
+              {
+                "type": "command",
+                "word": "running-config"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "command",
+        "word": "delete",
+        "words": [
+          {
+            "type": "param",
+            "word": "WORD"
+          },
+          {
+            "type": "command",
+            "word": "flash"
+          }
+        ]
+      },
+      {
+        "type": "command",
+        "word": "dir",
+        "words": [
+          {
+            "type": "param",
+            "word": "Directory or Filename"
+          },
+          {
+            "type": "command",
+            "word": "flash"
+          },
+          {
+            "type": "command",
+            "word": "nvram"
+          },
+          {
+            "type": "finish"
+          }
+        ]
+      },
+      {
+        "type": "command",
+        "word": "disable",
+        "description": " Wechselt in den user EXEC mode"
+      },
+      {
+        "type": "command",
+        "word": "erase startup-config",
+        "description": "Setzt alle Einstellungen zurück"
+      },
+      {
+        "type": "command",
+        "word": "exit"
+      },
+      {
+        "type": "command",
+        "word": "ping",
+        "words": [
+          {
+            "type": "param",
+            "word": "IP(v6)-address"
+          }
+        ]
+      },
+      {
+        "type": "command",
+        "word": "reload",
+        "description": "Startet das System neu"
+      },
+      {
+        "type": "multiCommand",
+        "word": "show",
+        "description": "bruh",
+        "words": [
+          [
+            {
+              "type": "command",
+              "word": "arp"
+            },
+            {
+              "type": "command",
+              "word": "clock",
+              "words": [
+                {
+                  "type": "command",
+                  "word": "detail"
+                },
+                {
+                  "type": "finish"
+                }
+              ]
+            },
+            {
+              "type": "command",
+              "word": "crypto",
+              "words": [
+                {
+                  "type": "command",
+                  "word": "key",
+                  "words": [
+                    {
+                      "type": "command",
+                      "word": "mypubkey",
+                      "words": [
+                        {
+                          "type": "command",
+                          "word": "rsa"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "command",
+              "word": "debugging"
+            },
+            {
+              "type": "command",
+              "word": "dhcp",
+              "words": [
+                {
+                  "type": "command",
+                  "word": "lease"
+                }
+              ]
+            },
+            {
+              "type": "command",
+              "word": "dotll",
+              "words": [
+                {
+                  "type": "command",
+                  "word": "interface"
+                }
+              ]
+            },
+            {
+              "type": "command",
+              "word": "history"
+            },
+            {
+              "type": "command",
+              "word": "hosts"
+            },
+            {
+              "type": "command",
+              "word": "interfaces",
+              "words": [
+                {
+                  "type": "command",
+                  "word": "Ethernet",
+                  "words": [
+                    {
+                      "type": "param",
+                      "word": "Port",
+                      "words": [
+                        {
+                          "type": "command",
+                          "word": "status"
+                        },
+                        {
+                          "type": "command",
+                          "word": "switchport"
+                        },
+                        {
+                          "type": "finish"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "command",
+                  "word": "FastEthernet",
+                  "words": [
+                    {
+                      "type": "param",
+                      "word": "FastEthernet interface number",
+                      "words": [
+                        {
+                          "type": "command",
+                          "word": "status"
+                        },
+                        {
+                          "type": "command",
+                          "word": "switchport"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "finish"
+                    }
+                  ]
+                },
+                {
+                  "type": "command",
+                  "word": "GigabitEthernet",
+                  "words": [
+                    {
+                      "type": "param",
+                      "word": "GigabitEthernet interface number",
+                      "words": [
+                        {
+                          "type": "command",
+                          "word": "status"
+                        },
+                        {
+                          "type": "command",
+                          "word": "switchport"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "finish"
+                    }
+                  ]
+                },
+                {
+                  "type": "command",
+                  "word": "loopback",
+                  "words": [
+                    {
+                      "type": "param",
+                      "word": "Loopback interface number",
+                      "words": [
+                        {
+                          "type": "command",
+                          "word": "switchport"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "finish"
+                    }
+                  ]
+                },
+                {
+                  "type": "command",
+                  "word": "vlan",
+                  "words": [
+                    {
+                      "type": "param",
+                      "word": "VLAN interface number"
+                    }
+                  ]
+                },
+                {
+                  "type": "command",
+                  "word": "status"
+                },
+                {
+                  "type": "command",
+                  "word": "switchport"
+                },
+                {
+                  "type": "command",
+                  "word": "trunk"
+                },
+                {
+                  "type": "finish"
+                }
+              ]
+            },
+            {
+              "type": "command",
+              "word": "dtp"
+            },
+            {
+              "type": "command",
+              "word": "ip",
+              "words": [
+                {
+                  "type": "command",
+                  "word": "interface",
+                  "words": [
+                    {
+                      "type": "command",
+                      "word": "brief"
+                    },
+                    {
+                      "type": "finish"
+                    }
+                  ]
+                },
+                {
+                  "type": "command",
+                  "word": "route"
+                }
+              ]
+            },
+            {
+              "type": "command",
+              "word": "ipv6",
+              "words": [
+                {
+                  "type": "command",
+                  "word": "interface",
+                  "words": [
+                    {
+                      "type": "command",
+                      "word": "brief"
+                    },
+                    {
+                      "type": "finish"
+                    }
+                  ]
+                },
+                {
+                  "type": "command",
+                  "word": "route"
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "type": "command",
+              "word": "| include",
+              "words": [
+                {
+                  "type": "param",
+                  "word": "String"
+                }
+              ]
+            },
+            {
+              "type": "command",
+              "word": "| exclude",
+              "words": [
+                {
+                  "type": "param",
+                  "word": "String"
+                }
+              ]
+            },
+            {
+              "type": "command",
+              "word": "| begin",
+              "words": [
+                {
+                  "type": "param",
+                  "word": "String"
+                }
+              ]
+            },
+            {
+              "type": "finish"
+            }
+          ]
+        ]
+      },
+      {
+        "type": "command",
+        "word": "telnet",
+        "words": [
+          {
+            "type": "param",
+            "word": "IP(v6)-address"
+          }
+        ]
+      },
+      {
+        "type": "command",
+        "word": "traceroute",
+        "words": [
+          {
+            "type": "param",
+            "word": "IP(v6)-address"
+          }
+        ]
+      },
+      {
+        "type": "command",
+        "word": "write",
+        "description": "Speichert alle Einstellungen",
+        "words": [
+          {
+            "type": "command",
+            "word": "erase"
+          },
+          {
+            "type": "command",
+            "word": "memory"
+          },
+          {
+            "type": "command",
+            "word": "terminal"
+          }
+        ]
+      }
+    ]
+  }
+]

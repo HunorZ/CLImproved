@@ -37,13 +37,12 @@ public class JSONFileHandler {
     /**
      * @param file JSONfile that should be interpreted
      */
-    public void init(String file) {
+    public void init(String file) throws UnsupportedOperationException  {
         InputStream inputStream = null;
         try {
             inputStream = Files.newInputStream(Path.of(file));
         } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("File konnte nicht gelesen weden");
+            System.out.println("File konnte nicht gelesen werden");
         }
         //the content of the json-file is stored inside fileContent
         JSONTokener tokener = new JSONTokener(inputStream);

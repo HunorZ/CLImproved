@@ -20,6 +20,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.PublicKey;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Controller {
 
@@ -68,12 +69,67 @@ public class Controller {
                 }
             }
         });
+        Main.stage.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+            final KeyCombination keyComb = new KeyCodeCombination(KeyCode.T,
+                    KeyCombination.CONTROL_DOWN);
+
+            public void handle(KeyEvent ke) {
+                if (keyComb.match(ke)) {
+                    createNewTab();
+                    ke.consume(); // <-- stops passing the event to next node
+                }
+            }
+        });
+        Main.stage.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+            final KeyCombination keyComb = new KeyCodeCombination(KeyCode.W,
+                    KeyCombination.CONTROL_DOWN);
+
+            public void handle(KeyEvent ke) {
+                if (keyComb.match(ke)) {
+                    removeTab(tabPane.getTabs().get(currentTabIndex));
+                    tabPane.getTabs().remove(currentTabIndex);
+                    ke.consume(); // <-- stops passing the event to next node
+                }
+            }
+        });
     }
+
+    public void updateCommands() {
+        commandContainers.get(currentTabIndex).getChildren().clear();
+        textAreas.get(currentTabIndex).setText(jsonFileHandlerArrayList.get(currentTabIndex).commandWriter.content);
+        String[] words = jsonFileHandlerArrayList.get(currentTabIndex).getWords();
+        String[] descriptions = jsonFileHandlerArrayList.get(currentTabIndex).getDescriptions();
+        commandContainers.get(currentTabIndex).setVgap(5);
+        commandContainers.get(currentTabIndex).setHgap(50);
+        for (int i = 0; i < words.length; i++) {
+            Button button = new Button();
+            int finalI = i;
+            button.setOnAction(actionEvent -> {
+                if (jsonFileHandlerArrayList.get(currentTabIndex).isParam(finalI)) {
+                    String parameter = PopUp.readLine(jsonFileHandlerArrayList.get(currentTabIndex).getWords()[finalI]);
+                    jsonFileHandlerArrayList.get(currentTabIndex).commandWriter.writeWord(parameter);
+                }
+                jsonFileHandlerArrayList.get(currentTabIndex).loadNextWords(finalI);
+
+                updateCommands();
+
+            });
+            if (jsonFileHandlerArrayList.get(currentTabIndex).getWords().length == 1) {
+                button.fire();
+                break;
+            }
+
+            commandContainers.get(currentTabIndex).add(button, 0, i);
+            commandContainers.get(currentTabIndex).add(new Label(words[i]), 1, i);
+            commandContainers.get(currentTabIndex).add(new Label(descriptions[i]), 2, i);
+        }
+    }
+
 
     public void createNewTab() {
         //new Tab
         Tab tab = new Tab("tab");
-
+        tab.setText("Untitled                      ");
 
         outerAnchorPanes.add(new AnchorPane());
         outerAnchorPanes.get(outerAnchorPanes.size() - 1).maxWidth(1.7976931348623157E308);
@@ -166,26 +222,7 @@ public class Controller {
         scrollPanes.get(scrollPanes.size() - 1).setContent(commandContainers.get(commandContainers.size() - 1));
         updateCommands();
         tab.setOnClosed(ex -> {
-            System.out.println(tab.getId());
-            for (int i = Integer.parseInt(tab.getId()); i < tabPane.getTabs().size(); i++) {
-                tabPane.getTabs().get(i).setId("" + i);
-            }
-
-            int tabID = Integer.parseInt(tab.getId());
-            //remove jsonFileHandler instance as tab is closed and object is no longer needed
-            jsonFileHandlerArrayList.remove(tabID);
-
-            outerAnchorPanes.remove(tabID);
-            vBoxes.remove(tabID);
-            innerAnchorPanes.remove(tabID);
-            hBoxes.remove(tabID);
-            gridPanes.remove(tabID);
-            firstColumnConstrains.remove(tabID);
-            secondColumnConstrains.remove(tabID);
-            rowConstraints.remove(tabID);
-            textAreas.remove(tabID);
-            scrollPanes.remove(tabID);
-            commandContainers.remove(tabID);
+            removeTab(tab);
         });
 
         tab.setOnSelectionChanged(ex -> {
@@ -197,36 +234,30 @@ public class Controller {
         });
     }
 
-    public void updateCommands() {
-        commandContainers.get(currentTabIndex).getChildren().clear();
-        textAreas.get(currentTabIndex).setText(jsonFileHandlerArrayList.get(currentTabIndex).commandWriter.content);
-        String[] words = jsonFileHandlerArrayList.get(currentTabIndex).getWords();
-        String[] descriptions = jsonFileHandlerArrayList.get(currentTabIndex).getDescriptions();
-        commandContainers.get(currentTabIndex).setVgap(5);
-        commandContainers.get(currentTabIndex).setHgap(50);
-        for (int i = 0; i < words.length; i++) {
-            Button button = new Button();
-            int finalI = i;
-            button.setOnAction(actionEvent -> {
-                if (jsonFileHandlerArrayList.get(currentTabIndex).isParam(finalI)) {
-                    String parameter = PopUp.readLine(jsonFileHandlerArrayList.get(currentTabIndex).getWords()[finalI]);
-                    jsonFileHandlerArrayList.get(currentTabIndex).commandWriter.writeWord(parameter);
-                }
-                jsonFileHandlerArrayList.get(currentTabIndex).loadNextWords(finalI);
-
-                updateCommands();
-
-            });
-            if (jsonFileHandlerArrayList.get(currentTabIndex).getWords().length == 1) {
-                button.fire();
-                break;
-            }
-
-            commandContainers.get(currentTabIndex).add(button, 0, i);
-            commandContainers.get(currentTabIndex).add(new Label(words[i]), 1, i);
-            commandContainers.get(currentTabIndex).add(new Label(descriptions[i]), 2, i);
+    public void removeTab(Tab tab) {
+        System.out.println(tab.getId());
+        for (int i = Integer.parseInt(tab.getId()); i < tabPane.getTabs().size(); i++) {
+            tabPane.getTabs().get(i).setId("" + i);
         }
+
+        int tabID = Integer.parseInt(tab.getId());
+        //remove jsonFileHandler instance as tab is closed and object is no longer needed
+        jsonFileHandlerArrayList.remove(tabID);
+
+        //remove all JavaFx components, as they are no longer displayed
+        outerAnchorPanes.remove(tabID);
+        vBoxes.remove(tabID);
+        innerAnchorPanes.remove(tabID);
+        hBoxes.remove(tabID);
+        gridPanes.remove(tabID);
+        firstColumnConstrains.remove(tabID);
+        secondColumnConstrains.remove(tabID);
+        rowConstraints.remove(tabID);
+        textAreas.remove(tabID);
+        scrollPanes.remove(tabID);
+        commandContainers.remove(tabID);
     }
+
 
     @FXML
     private void saveAs() {
@@ -252,6 +283,10 @@ public class Controller {
             contentAtLastSave = textAreas.get(currentTabIndex).getText();
             output.write(textAreas.get(currentTabIndex).getText());
             output.flush();
+
+            String[] pathParts = filePathAtLastSave.split("\\\\");
+            String fileName = pathParts[pathParts.length - 1].split("\\.")[0];
+            tabPane.getTabs().get(currentTabIndex).setText(fileName+" ".repeat(30-fileName.length()));
         } catch (Exception e) {
             System.out.println("Filesave aborted!");
         }

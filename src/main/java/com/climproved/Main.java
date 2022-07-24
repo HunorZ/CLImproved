@@ -16,9 +16,15 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         Main.stage = stage;
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("hello-view.fxml"));
         Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
-        Scene scene = new Scene(fxmlLoader.load(), size.getWidth() * 0.6, size.getHeight() * 0.6);
+        Main.stage.setHeight(size.getHeight() * 0.7);
+        Main.stage.setWidth(((size.getHeight() * 0.7) / 9) * 16);
+
+       // Main.stage.getIcons().add();
+
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("hello-view.fxml"));
+
+        Scene scene = new Scene(fxmlLoader.load());
         Main.stage.setTitle("CLImproved");
         Main.stage.setScene(scene);
         Main.stage.setResizable(true);

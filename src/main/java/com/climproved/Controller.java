@@ -204,8 +204,18 @@ public class Controller {
         rowConstraints.get(rowConstraints.size() - 1).setVgrow(Priority.SOMETIMES);
         gridPanes.get(gridPanes.size() - 1).getColumnConstraints().addAll(firstColumnConstrains.get(firstColumnConstrains.size() - 1), secondColumnConstrains.get(secondColumnConstrains.size() - 1));
         gridPanes.get(gridPanes.size() - 1).getRowConstraints().add(rowConstraints.get(rowConstraints.size() - 1));
+        gridPanes.get(gridPanes.size() - 1).setGridLinesVisible(true);
+        gridPanes.get(gridPanes.size() - 1).setId("gridPane");
+        gridPanes.get(gridPanes.size()-1).setFocusTraversable(false);
+
         textAreas.add(new TextArea());
+        textAreas.get(textAreas.size() - 1).setId("textArea");
+        textAreas.get(textAreas.size() - 1).setFocusTraversable(false);
+
         scrollPanes.add(new ScrollPane());
+        scrollPanes.get(scrollPanes.size() - 1).setId("darkMode_center_scrollPane");
+        scrollPanes.get(scrollPanes.size() - 1).setFocusTraversable(false);
+
         commandContainers.add(new GridPane());
 
         scrollPanes.get(scrollPanes.size() - 1).setContent(commandContainers.get(commandContainers.size() - 1));
@@ -233,6 +243,7 @@ public class Controller {
         String[] execModes = jsonFileHandlerArrayList.get(0).getModes();
         for (int i = 0; i < execModes.length; i++) {
             Button button = new Button(execModes[i]);
+            button.setId("darkMode_header_modeButton");
             int finalI = i;
             button.setOnAction(actionEvent -> {
                 jsonFileHandlerArrayList.get(currentTabIndex).changeMode(finalI);
@@ -256,7 +267,6 @@ public class Controller {
     }
 
     public void removeTab(Tab tab) {
-        System.out.println(tab.getId());
         for (int i = Integer.parseInt(tab.getId()); i < tabPane.getTabs().size(); i++) {
             tabPane.getTabs().get(i).setId("" + i);
         }
@@ -277,6 +287,9 @@ public class Controller {
         textAreas.remove(tabID);
         scrollPanes.remove(tabID);
         commandContainers.remove(tabID);
+        if (tabPane.getTabs().size() == 1) {
+            createNewTab();
+        }
     }
 
     @FXML
@@ -343,6 +356,7 @@ public class Controller {
                     "Version 1.3.1\n" +
                     "GUI Version 1.0\n\n" +
                     "Made by\n" +
+                    "-Felix Payer\n" +
                     "-Hunor Zakarias\n\n" +
                     "OS: " + System.getProperty("os.name") + "\n" +
                     "Architecture: " + System.getProperty("os.arch") + "\n" +

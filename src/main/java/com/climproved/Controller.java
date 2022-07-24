@@ -1,9 +1,14 @@
 package com.climproved;
 
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
 
@@ -40,7 +45,7 @@ public class Controller {
 
     int currentTabIndex = 0;
 
-    String filePathAtLastSave;
+    String filePathAtLastSave = "";
     String contentAtLastSave;
 
     public void initialize() {
@@ -50,6 +55,18 @@ public class Controller {
         //addTab function
         addTab.setOnSelectionChanged(e -> {
             createNewTab();
+        });
+
+        Main.stage.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+            final KeyCombination keyComb = new KeyCodeCombination(KeyCode.S,
+                    KeyCombination.CONTROL_DOWN);
+
+            public void handle(KeyEvent ke) {
+                if (keyComb.match(ke)) {
+                    save();
+                    ke.consume(); // <-- stops passing the event to next node
+                }
+            }
         });
     }
 

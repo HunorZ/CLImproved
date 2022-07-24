@@ -1,0 +1,14 @@
+#tabPane{
+    -fx-background-color: #000000;
+}
+
+#button_commands{
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-background-radius: 0;
+    -fx-background-color: transparent;
+}
+
+.tab{
+-fx-background-color: #000000;
+}

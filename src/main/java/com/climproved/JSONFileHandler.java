@@ -139,7 +139,6 @@ public class JSONFileHandler {
                 case "command":
                     //gets the value of the object "word" and writes it into the file
                     commandWriter.writeWord(nextCommands.getJSONObject(indexOfPressedCommand).getString("word"));
-
                     //loads the following commands of command with "indexOfPressedCommand",
                     //throws an error if no further commands are available
                     nextCommands = nextCommands.getJSONObject(indexOfPressedCommand).getJSONArray("words");
@@ -175,8 +174,9 @@ public class JSONFileHandler {
 
                     //makes a brake as no further commands are available and
                     //a tab is added to visualize the submode in the final txt document
-                    commandWriter.makeBreak();
                     commandWriter.addTab();
+                    commandWriter.makeBreak();
+
 
                     //the next commands are loaded into nextCommands
                     nextCommands = accessedModes.peek().getJSONArray("words");
@@ -187,8 +187,9 @@ public class JSONFileHandler {
                     //makes a brake as no further commands are available and
                     //a tab is added to visualize the submode in the final txt document
                     commandWriter.writeWord(nextCommands.getJSONObject(indexOfPressedCommand).getString("word"));
-                    commandWriter.makeBreak();
                     commandWriter.addTab();
+                    commandWriter.makeBreak();
+
 
                     //isInSubMode is set to true
                     //the submode is pushed onto the "accessedMode" stack
@@ -204,9 +205,10 @@ public class JSONFileHandler {
                     //makes a brake as no further commands are available and
                     //a tab is removed to visualize the exit of the submode in the final txt document
                     commandWriter.writeWord(nextCommands.getJSONObject(indexOfPressedCommand).getString("word"));
-                    commandWriter.makeBreak();
-                    commandWriter.makeBreak();
                     commandWriter.removeTab();
+                    commandWriter.makeBreak();
+                    commandWriter.makeBreak();
+
 
                     //as the submode is exited, it can be removed from the stack
                     accessedModes.pop();
@@ -249,7 +251,6 @@ public class JSONFileHandler {
                 if (multiCommands.empty()) {
                     isInMultiCommand = false;
                 }
-                //creates a break
                 commandWriter.makeBreak();
             }
         }

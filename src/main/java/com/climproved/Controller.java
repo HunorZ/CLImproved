@@ -1,19 +1,28 @@
 package com.climproved;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
+import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -45,9 +54,22 @@ public class Controller {
     ArrayList<GridPane> commandContainers = new ArrayList<>();
 
     int currentTabIndex = 0;
+    boolean aboutPageOpen = false;
 
     String filePathAtLastSave = "";
     String contentAtLastSave;
+
+    Image center_addButton_image;
+    Image header_logo_image;
+
+    {
+        try {
+            center_addButton_image = new Image(new FileInputStream("assets\\add_button.png"));
+            header_logo_image = new Image(new FileInputStream("assets\\CLImproved_newLogo.png"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
     public void initialize() {
         //add first tab at init
@@ -96,7 +118,8 @@ public class Controller {
 
     public void updateCommands() {
         commandContainers.get(currentTabIndex).getChildren().clear();
-        textAreas.get(currentTabIndex).setText(jsonFileHandlerArrayList.get(currentTabIndex).commandWriter.content);
+        textAreas.get(currentTabIndex).setText("");
+        textAreas.get(currentTabIndex).appendText(jsonFileHandlerArrayList.get(currentTabIndex).commandWriter.content);
         String[] words = jsonFileHandlerArrayList.get(currentTabIndex).getWords();
         String[] descriptions = jsonFileHandlerArrayList.get(currentTabIndex).getDescriptions();
         commandContainers.get(currentTabIndex).setVgap(5);
@@ -112,13 +135,13 @@ public class Controller {
                 jsonFileHandlerArrayList.get(currentTabIndex).loadNextWords(finalI);
 
                 updateCommands();
-
             });
             if (jsonFileHandlerArrayList.get(currentTabIndex).getWords().length == 1) {
                 button.fire();
                 break;
             }
-
+            button.setGraphic(new ImageView(center_addButton_image));
+            button.setId("button_commands");
             commandContainers.get(currentTabIndex).add(button, 0, i);
             commandContainers.get(currentTabIndex).add(new Label(words[i]), 1, i);
             commandContainers.get(currentTabIndex).add(new Label(descriptions[i]), 2, i);
@@ -161,19 +184,18 @@ public class Controller {
 
         gridPanes.add(new GridPane());
         gridPanes.get(gridPanes.size() - 1).setAlignment(Pos.CENTER);
-        gridPanes.get(gridPanes.size() - 1).setGridLinesVisible(true);
         VBox.setVgrow(gridPanes.get(gridPanes.size() - 1), Priority.ALWAYS);
 
         firstColumnConstrains.add(new ColumnConstraints());
         firstColumnConstrains.get(firstColumnConstrains.size() - 1).setHgrow(Priority.SOMETIMES);
         firstColumnConstrains.get(firstColumnConstrains.size() - 1).setMinWidth(10);
-        firstColumnConstrains.get(firstColumnConstrains.size() - 1).setPercentWidth(70.0);
+        firstColumnConstrains.get(firstColumnConstrains.size() - 1).setPercentWidth(60.0);
         firstColumnConstrains.get(firstColumnConstrains.size() - 1).setPrefWidth(100.0);
 
         secondColumnConstrains.add(new ColumnConstraints());
         secondColumnConstrains.get(secondColumnConstrains.size() - 1).setHgrow(Priority.SOMETIMES);
         secondColumnConstrains.get(secondColumnConstrains.size() - 1).setMinWidth(10);
-        secondColumnConstrains.get(secondColumnConstrains.size() - 1).setPercentWidth(30.0);
+        secondColumnConstrains.get(secondColumnConstrains.size() - 1).setPercentWidth(40.0);
         secondColumnConstrains.get(secondColumnConstrains.size() - 1).setPrefWidth(100.0);
 
         rowConstraints.add(new RowConstraints());
@@ -182,7 +204,6 @@ public class Controller {
         rowConstraints.get(rowConstraints.size() - 1).setVgrow(Priority.SOMETIMES);
         gridPanes.get(gridPanes.size() - 1).getColumnConstraints().addAll(firstColumnConstrains.get(firstColumnConstrains.size() - 1), secondColumnConstrains.get(secondColumnConstrains.size() - 1));
         gridPanes.get(gridPanes.size() - 1).getRowConstraints().add(rowConstraints.get(rowConstraints.size() - 1));
-
         textAreas.add(new TextArea());
         scrollPanes.add(new ScrollPane());
         commandContainers.add(new GridPane());
@@ -258,7 +279,6 @@ public class Controller {
         commandContainers.remove(tabID);
     }
 
-
     @FXML
     private void saveAs() {
         FileChooser fileChooser = new FileChooser();
@@ -286,7 +306,7 @@ public class Controller {
 
             String[] pathParts = filePathAtLastSave.split("\\\\");
             String fileName = pathParts[pathParts.length - 1].split("\\.")[0];
-            tabPane.getTabs().get(currentTabIndex).setText(fileName+" ".repeat(30-fileName.length()));
+            tabPane.getTabs().get(currentTabIndex).setText(fileName + " ".repeat(30 - fileName.length()));
         } catch (Exception e) {
             System.out.println("Filesave aborted!");
         }
@@ -305,6 +325,54 @@ public class Controller {
             }
         } else {
             saveAs();
+        }
+    }
+
+    @FXML
+    private void openAboutPage() {
+        if (!aboutPageOpen) {
+            aboutPageOpen = true;
+
+            Stage aboutStage = new Stage();
+            BorderPane aboutPane = new BorderPane();
+            Scene aboutStage_scene = new Scene(aboutPane);
+
+            ImageView aboutPagelogoImage = new ImageView(header_logo_image);
+            HBox picuteHBox = new HBox(aboutPagelogoImage);
+            Label infoLabel = new Label("CLImproved for Windows\n" +
+                    "Version 1.3.1\n" +
+                    "GUI Version 1.0\n\n" +
+                    "Made by\n" +
+                    "-Hunor Zakarias\n\n" +
+                    "OS: " + System.getProperty("os.name") + "\n" +
+                    "Architecture: " + System.getProperty("os.arch") + "\n" +
+                    "Java Version: " + System.getProperty("java.version"));
+
+            infoLabel.setFont(new Font("System Regular", 15));
+
+            picuteHBox.setPadding(new Insets(50, 10, 10, 20));
+
+            aboutPagelogoImage.setFitWidth(80);
+            aboutPagelogoImage.setFitHeight(80);
+
+            aboutPane.setPrefWidth(Double.MAX_VALUE);
+            aboutPane.setPrefHeight(Double.MAX_VALUE);
+            aboutPane.setRight(infoLabel);
+            aboutPane.setLeft(picuteHBox);
+            aboutPane.setPadding(new Insets(10, 70, 10, 10));
+
+            aboutStage.setResizable(false);
+            aboutStage.setWidth(330);
+            aboutStage.setHeight(300);
+
+            aboutStage.setTitle("About");
+            aboutStage.getIcons().add(header_logo_image);
+            aboutStage.setScene(aboutStage_scene);
+            aboutStage.show();
+
+            aboutStage.setOnCloseRequest(e -> {
+                aboutPageOpen = false;
+            });
         }
     }
 }

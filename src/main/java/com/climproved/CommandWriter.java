@@ -11,7 +11,6 @@ public class CommandWriter {
     public void writeWord(String s) {
         if (lineJumpMade) {
             lineJumpMade = false;
-            content += tabs;
         } else {
             content += " ";
         }
@@ -22,7 +21,7 @@ public class CommandWriter {
      * makes a break
      */
     public void makeBreak() {
-        content += "\n";
+        content += "\n" + tabs;
         lineJumpMade = true;
     }
 

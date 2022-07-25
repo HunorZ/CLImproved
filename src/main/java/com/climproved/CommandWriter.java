@@ -1,7 +1,7 @@
 package com.climproved;
 
 public class CommandWriter {
-    public String content = "";
+    private String content = "";
     private String tabs = "";
     private boolean lineJumpMade = true;
 
@@ -15,6 +15,14 @@ public class CommandWriter {
             content += " ";
         }
         content += s;
+    }
+
+    public void setContent(String s) {
+        content = s;
+    }
+
+    public String getContent() {
+        return content;
     }
 
     /**

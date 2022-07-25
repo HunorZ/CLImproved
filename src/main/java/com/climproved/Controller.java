@@ -25,11 +25,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.security.PublicKey;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Controller {
 
@@ -74,7 +71,6 @@ public class Controller {
     public void initialize() {
         //add first tab at init
         createNewTab();
-
         //addTab function
         addTab.setOnSelectionChanged(e -> {
             createNewTab();
@@ -91,6 +87,7 @@ public class Controller {
                 }
             }
         });
+
         Main.stage.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
             final KeyCombination keyComb = new KeyCodeCombination(KeyCode.T,
                     KeyCombination.CONTROL_DOWN);
@@ -108,7 +105,7 @@ public class Controller {
 
             public void handle(KeyEvent ke) {
                 if (keyComb.match(ke)) {
-                    removeTab(tabPane.getTabs().get(currentTabIndex));
+                    removeTab(currentTabIndex);
                     tabPane.getTabs().remove(currentTabIndex);
                     ke.consume(); // <-- stops passing the event to next node
                 }
@@ -118,8 +115,9 @@ public class Controller {
 
     public void updateCommands() {
         commandContainers.get(currentTabIndex).getChildren().clear();
-        textAreas.get(currentTabIndex).setText("");
-        textAreas.get(currentTabIndex).appendText(jsonFileHandlerArrayList.get(currentTabIndex).commandWriter.content);
+        String content = jsonFileHandlerArrayList.get(currentTabIndex).commandWriter.getContent();
+        textAreas.get(currentTabIndex).clear();
+        textAreas.get(currentTabIndex).appendText(content);
         String[] words = jsonFileHandlerArrayList.get(currentTabIndex).getWords();
         String[] descriptions = jsonFileHandlerArrayList.get(currentTabIndex).getDescriptions();
         commandContainers.get(currentTabIndex).setVgap(5);
@@ -154,80 +152,95 @@ public class Controller {
         Tab tab = new Tab("tab");
         tab.setText("Untitled                      ");
 
+
+        //create new jsonFileHandler instance for new tab
+        jsonFileHandlerArrayList.add(new JSONFileHandler());
+        jsonFileHandlerArrayList.get(jsonFileHandlerArrayList.size() - 1).init("ciscoFile.json");
+
+        int index = jsonFileHandlerArrayList.size() - 1;
+
         outerAnchorPanes.add(new AnchorPane());
-        outerAnchorPanes.get(outerAnchorPanes.size() - 1).maxWidth(1.7976931348623157E308);
-        outerAnchorPanes.get(outerAnchorPanes.size() - 1).maxHeight(1.7976931348623157E308);
-        outerAnchorPanes.get(outerAnchorPanes.size() - 1).minWidth(0.0);
-        outerAnchorPanes.get(outerAnchorPanes.size() - 1).minHeight(0.0);
+        outerAnchorPanes.get(index).maxWidth(1.7976931348623157E308);
+        outerAnchorPanes.get(index).maxHeight(1.7976931348623157E308);
+        outerAnchorPanes.get(index).minWidth(0.0);
+        outerAnchorPanes.get(index).minHeight(0.0);
 
         vBoxes.add(new VBox());
-        vBoxes.get(vBoxes.size() - 1).setAlignment(Pos.TOP_CENTER);
-        AnchorPane.setBottomAnchor(vBoxes.get(vBoxes.size() - 1), 0.0);
-        AnchorPane.setLeftAnchor(vBoxes.get(vBoxes.size() - 1), 0.0);
-        AnchorPane.setRightAnchor(vBoxes.get(vBoxes.size() - 1), 0.0);
-        AnchorPane.setTopAnchor(vBoxes.get(vBoxes.size() - 1), 0.0);
+        vBoxes.get(index).setAlignment(Pos.TOP_CENTER);
+        AnchorPane.setBottomAnchor(vBoxes.get(index), 0.0);
+        AnchorPane.setLeftAnchor(vBoxes.get(index), 0.0);
+        AnchorPane.setRightAnchor(vBoxes.get(index), 0.0);
+        AnchorPane.setTopAnchor(vBoxes.get(index), 0.0);
 
         innerAnchorPanes.add(new AnchorPane());
-        innerAnchorPanes.get(innerAnchorPanes.size() - 1).setPrefHeight(50.0);
+        innerAnchorPanes.get(index).setPrefHeight(50.0);
 
         hBoxes.add(new HBox());
-        hBoxes.get(hBoxes.size() - 1).setAlignment(Pos.CENTER_LEFT);
-        hBoxes.get(hBoxes.size() - 1).setFillHeight(false);
-        hBoxes.get(hBoxes.size() - 1).prefHeight(46.0);
-        hBoxes.get(hBoxes.size() - 1).setSpacing(30.0);
-        hBoxes.get(hBoxes.size() - 1).setPadding(new Insets(0, 0, 0, 100));
+        hBoxes.get(index).setAlignment(Pos.CENTER_LEFT);
+        hBoxes.get(index).setFillHeight(false);
+        hBoxes.get(index).prefHeight(46.0);
+        hBoxes.get(index).setSpacing(30.0);
+        hBoxes.get(index).setPadding(new Insets(0, 0, 0, 100));
 
-        AnchorPane.setBottomAnchor(hBoxes.get(hBoxes.size() - 1), 0.0);
-        AnchorPane.setLeftAnchor(hBoxes.get(hBoxes.size() - 1), 0.0);
-        AnchorPane.setRightAnchor(hBoxes.get(hBoxes.size() - 1), 0.0);
-        AnchorPane.setTopAnchor(hBoxes.get(hBoxes.size() - 1), 0.0);
+        AnchorPane.setBottomAnchor(hBoxes.get(index), 0.0);
+        AnchorPane.setLeftAnchor(hBoxes.get(index), 0.0);
+        AnchorPane.setRightAnchor(hBoxes.get(index), 0.0);
+        AnchorPane.setTopAnchor(hBoxes.get(index), 0.0);
 
         gridPanes.add(new GridPane());
-        gridPanes.get(gridPanes.size() - 1).setAlignment(Pos.CENTER);
-        VBox.setVgrow(gridPanes.get(gridPanes.size() - 1), Priority.ALWAYS);
+        gridPanes.get(index).setAlignment(Pos.CENTER);
+        VBox.setVgrow(gridPanes.get(index), Priority.ALWAYS);
 
         firstColumnConstrains.add(new ColumnConstraints());
-        firstColumnConstrains.get(firstColumnConstrains.size() - 1).setHgrow(Priority.SOMETIMES);
-        firstColumnConstrains.get(firstColumnConstrains.size() - 1).setMinWidth(10);
-        firstColumnConstrains.get(firstColumnConstrains.size() - 1).setPercentWidth(60.0);
-        firstColumnConstrains.get(firstColumnConstrains.size() - 1).setPrefWidth(100.0);
+        firstColumnConstrains.get(index).setHgrow(Priority.SOMETIMES);
+        firstColumnConstrains.get(index).setMinWidth(10);
+        firstColumnConstrains.get(index).setPercentWidth(60.0);
+        firstColumnConstrains.get(index).setPrefWidth(100.0);
 
         secondColumnConstrains.add(new ColumnConstraints());
-        secondColumnConstrains.get(secondColumnConstrains.size() - 1).setHgrow(Priority.SOMETIMES);
-        secondColumnConstrains.get(secondColumnConstrains.size() - 1).setMinWidth(10);
-        secondColumnConstrains.get(secondColumnConstrains.size() - 1).setPercentWidth(40.0);
-        secondColumnConstrains.get(secondColumnConstrains.size() - 1).setPrefWidth(100.0);
+        secondColumnConstrains.get(index).setHgrow(Priority.SOMETIMES);
+        secondColumnConstrains.get(index).setMinWidth(10);
+        secondColumnConstrains.get(index).setPercentWidth(40.0);
+        secondColumnConstrains.get(index).setPrefWidth(100.0);
 
         rowConstraints.add(new RowConstraints());
-        rowConstraints.get(rowConstraints.size() - 1).setMinHeight(10.0);
-        rowConstraints.get(rowConstraints.size() - 1).setPrefHeight(30.0);
-        rowConstraints.get(rowConstraints.size() - 1).setVgrow(Priority.SOMETIMES);
-        gridPanes.get(gridPanes.size() - 1).getColumnConstraints().addAll(firstColumnConstrains.get(firstColumnConstrains.size() - 1), secondColumnConstrains.get(secondColumnConstrains.size() - 1));
-        gridPanes.get(gridPanes.size() - 1).getRowConstraints().add(rowConstraints.get(rowConstraints.size() - 1));
-        gridPanes.get(gridPanes.size() - 1).setGridLinesVisible(true);
-        gridPanes.get(gridPanes.size() - 1).setId("gridPane");
-        gridPanes.get(gridPanes.size()-1).setFocusTraversable(false);
+        rowConstraints.get(index).setMinHeight(10.0);
+        rowConstraints.get(index).setPrefHeight(30.0);
+        rowConstraints.get(index).setVgrow(Priority.SOMETIMES);
+        gridPanes.get(index).getColumnConstraints().addAll(firstColumnConstrains.get(index), secondColumnConstrains.get(index));
+        gridPanes.get(index).getRowConstraints().add(rowConstraints.get(index));
+        gridPanes.get(index).setGridLinesVisible(true);
+        gridPanes.get(index).setId("gridPane");
+        gridPanes.get(index).setFocusTraversable(false);
 
         textAreas.add(new TextArea());
-        textAreas.get(textAreas.size() - 1).setId("textArea");
-        textAreas.get(textAreas.size() - 1).setFocusTraversable(false);
+        textAreas.get(index).setId("textArea");
+        textAreas.get(index).setFocusTraversable(false);
+        textAreas.get(index).textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
+                System.out.println("changed " + currentTabIndex);
+                jsonFileHandlerArrayList.get(currentTabIndex).commandWriter.setContent(textAreas.get(currentTabIndex).getText());
+                System.out.println(jsonFileHandlerArrayList.get(currentTabIndex).commandWriter.getContent());
+            }
+        });
 
         scrollPanes.add(new ScrollPane());
-        scrollPanes.get(scrollPanes.size() - 1).setId("darkMode_center_scrollPane");
-        scrollPanes.get(scrollPanes.size() - 1).setFocusTraversable(false);
+        scrollPanes.get(index).setId("darkMode_center_scrollPane");
+        scrollPanes.get(index).setFocusTraversable(false);
 
         commandContainers.add(new GridPane());
 
-        scrollPanes.get(scrollPanes.size() - 1).setContent(commandContainers.get(commandContainers.size() - 1));
-        gridPanes.get(gridPanes.size() - 1).add(scrollPanes.get(scrollPanes.size() - 1), 0, 0);
-        gridPanes.get(gridPanes.size() - 1).add(textAreas.get(textAreas.size() - 1), 1, 0);
-        innerAnchorPanes.get(innerAnchorPanes.size() - 1).getChildren().add(hBoxes.get(hBoxes.size() - 1));
-        vBoxes.get(vBoxes.size() - 1).getChildren().addAll(innerAnchorPanes.get(innerAnchorPanes.size() - 1), gridPanes.get(gridPanes.size() - 1));
-        outerAnchorPanes.get(outerAnchorPanes.size() - 1).getChildren().add(vBoxes.get(vBoxes.size() - 1));
-        tab.setContent(outerAnchorPanes.get(outerAnchorPanes.size() - 1));
+        scrollPanes.get(index).setContent(commandContainers.get(index));
+        gridPanes.get(index).add(scrollPanes.get(index), 0, 0);
+        gridPanes.get(index).add(textAreas.get(index), 1, 0);
+        innerAnchorPanes.get(index).getChildren().add(hBoxes.get(index));
+        vBoxes.get(index).getChildren().addAll(innerAnchorPanes.get(index), gridPanes.get(index));
+        outerAnchorPanes.get(index).getChildren().add(vBoxes.get(index));
+        tab.setContent(outerAnchorPanes.get(index));
 
         //add tab to tabPane
-        tabPane.getTabs().add(tabPane.getTabs().size() - 1, tab);
+        tabPane.getTabs().add(index, tab);
         //select newly created tab
         tabPane.getSelectionModel().select(tabPane.getTabs().size() - 2);
 
@@ -236,9 +249,6 @@ public class Controller {
 
         //set id of tab to its index in tabPane
         tab.setId(currentTabIndex + "");
-        //create new jsonFileHandler instance for new tab
-        jsonFileHandlerArrayList.add(new JSONFileHandler());
-        jsonFileHandlerArrayList.get(currentTabIndex).init("ciscoFile.json");
 
         String[] execModes = jsonFileHandlerArrayList.get(0).getModes();
         for (int i = 0; i < execModes.length; i++) {
@@ -251,27 +261,26 @@ public class Controller {
             });
             hBoxes.get(currentTabIndex).getChildren().add(button);
         }
-        scrollPanes.get(scrollPanes.size() - 1).setContent(commandContainers.get(commandContainers.size() - 1));
+        scrollPanes.get(index).setContent(commandContainers.get(index));
         updateCommands();
-        tab.setOnClosed(ex -> {
-            removeTab(tab);
+
+        tab.setOnCloseRequest(ex -> {
+            removeTab(Integer.parseInt(tab.getId()));
         });
 
         tab.setOnSelectionChanged(ex -> {
             if (tab.isSelected()) {
                 //if the tab is selected, change currentTabIndex to index of the selected tab
                 currentTabIndex = tabPane.getSelectionModel().getSelectedIndex();
-                System.out.println(currentTabIndex);
             }
         });
     }
 
-    public void removeTab(Tab tab) {
-        for (int i = Integer.parseInt(tab.getId()); i < tabPane.getTabs().size(); i++) {
-            tabPane.getTabs().get(i).setId("" + i);
+    public void removeTab(int tabID) {
+        for (int i = tabID; i < tabPane.getTabs().size() - 1; i++) {
+            tabPane.getTabs().get(i).setId((Integer.parseInt(tabPane.getTabs().get(i).getId()) - 1) + "");
         }
 
-        int tabID = Integer.parseInt(tab.getId());
         //remove jsonFileHandler instance as tab is closed and object is no longer needed
         jsonFileHandlerArrayList.remove(tabID);
 
@@ -314,11 +323,10 @@ public class Controller {
             filePathAtLastSave = selectedFile.getAbsolutePath();
             BufferedWriter output = Files.newBufferedWriter(selectedFile.toPath(), StandardCharsets.UTF_8);
             contentAtLastSave = textAreas.get(currentTabIndex).getText();
-            output.write(textAreas.get(currentTabIndex).getText());
+            output.write(shorten(textAreas.get(currentTabIndex).getText()));
             output.flush();
 
-            String[] pathParts = filePathAtLastSave.split("\\\\");
-            String fileName = pathParts[pathParts.length - 1].split("\\.")[0];
+            String fileName = selectedFile.getName().split("\\.")[0];
             tabPane.getTabs().get(currentTabIndex).setText(fileName + " ".repeat(30 - fileName.length()));
         } catch (Exception e) {
             System.out.println("Filesave aborted!");
@@ -331,7 +339,7 @@ public class Controller {
             try {
                 BufferedWriter output = Files.newBufferedWriter(Paths.get(filePathAtLastSave), StandardCharsets.UTF_8);
                 contentAtLastSave = textAreas.get(currentTabIndex).getText();
-                output.write(textAreas.get(currentTabIndex).getText());
+                output.write(shorten(textAreas.get(currentTabIndex).getText()));
                 output.flush();
             } catch (Exception e) {
                 System.out.println("Filesave aborted!");
@@ -342,7 +350,7 @@ public class Controller {
     }
 
     @FXML
-    private void openAboutPage() {
+    private void openAboutWindow() {
         if (!aboutPageOpen) {
             aboutPageOpen = true;
 
@@ -388,5 +396,18 @@ public class Controller {
                 aboutPageOpen = false;
             });
         }
+    }
+
+    private String shorten(String s) {
+        System.out.println("t" + s.charAt(0) + "t");
+        while ("\n".equals(s.charAt(0) + "") || "\t".equals(s.charAt(0) + "") || " ".equals(s.charAt(0) + "")) {
+            System.out.println("t" + s.charAt(0) + "t");
+            s = s.substring(1);
+        }
+
+        while ("\n".equals(s.charAt(s.length() - 1) + "") || "\t".equals(s.charAt(s.length() - 1) + "") || " ".equals(s.charAt(s.length() - 1) + "")) {
+            s = s.substring(0, s.length() - 1);
+        }
+        return s;
     }
 }

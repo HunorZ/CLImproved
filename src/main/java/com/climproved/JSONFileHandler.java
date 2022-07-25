@@ -37,7 +37,7 @@ public class JSONFileHandler {
     /**
      * @param file JSONfile that should be interpreted
      */
-    public void init(String file) throws UnsupportedOperationException  {
+    public void init(String file) throws UnsupportedOperationException {
         InputStream inputStream = null;
         try {
             inputStream = Files.newInputStream(Path.of(file));
@@ -157,8 +157,6 @@ public class JSONFileHandler {
 
                     //the next commands are loaded into nextCommands
                     nextCommands = multiCommands.peek().getJSONArray(currentMultiCommand.peek());
-
-                    System.out.println(nextCommands);
                     break;
 
                 case "param":

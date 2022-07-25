@@ -4,13 +4,18 @@
     "words": [
       {
         "type": "command",
+        "word": "connect",
+        "description": "Session number to resume"
+      },
+      {
+        "type": "command",
         "word": "enable",
         "description": "Turn on priviledged commands"
       },
       {
         "type": "command",
         "word": "ping",
-        "description": "sends a ping message",
+        "description": "Sends a ping message",
         "words": [
           {
             "type": "param",
@@ -32,7 +37,7 @@
       {
         "type": "command",
         "word": "show",
-        "description": "",
+        "description": "Show running system information",
         "words": [
           {
             "type": "command",
@@ -491,6 +496,33 @@
       },
       {
         "type": "command",
+        "word": "terminal",
+        "description": "Set terminal line parameters",
+        "words": [
+          {
+            "type": "command",
+            "word": "history",
+            "description": "Enable and control the command history function",
+            "words": [
+              {
+                "type": "command",
+                "word": "size",
+                "description": "Set history buffer size",
+                "words": [
+                  {
+                    "type": "param",
+                    "word": "0-256",
+                    "description": "Size of history buffer",
+                    "words": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "command",
         "word": "traceroute",
         "description": "traces the route to a destination",
         "words": [
@@ -513,62 +545,141 @@
           "words": [
             {
               "type": "command",
-              "word": "banner motd",
-              "description": "define a banner message of the day",
+              "word": "aaa",
+              "description": "Authentication, Authorization and Accounting.",
               "words": [
                 {
-                  "type": "param",
-                  "word": "message"
+                  "type": "command",
+                  "word": "accounting",
+                  "description": "Accounting configurations parameters.",
+                  "words": [
+                    {
+                      "type": "multiCommand",
+                      "word": "exec",
+                      "description": "For starting an exec (shell).",
+                      "words": [
+                        [
+                          {
+                            "type": "param",
+                            "word": "name",
+                            "description": "Named Accounting list."
+                          },
+                          {
+                            "type": "command",
+                            "word": "default",
+                            "description": "The default accounting list."
+                          }
+                        ],
+                        [
+                          {
+                            "type": "command",
+                            "word": "none",
+                            "description": "No accounting."
+                          },
+                          {
+                            "type": "command",
+                            "word": "start-stop",
+                            "description": "Record start and stop without waiting.",
+                            "words": [
+                              {
+                                "type": "command",
+                                "word": "group",
+                                "description": "Use Server-group",
+                                "words": [
+                                  {
+                                    "type": "command",
+                                    "word": "radius",
+                                    "description": "Use list of all Radius hosts."
+                                  },
+                                  {
+                                    "type": "command",
+                                    "word": "tacacs+",
+                                    "description": "Use list of all Tacacs+ hosts."
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "command",
+                            "word": "stop-only",
+                            "description": "Record stop when service terminates.",
+                            "words": [
+                              {
+                                "type": "command",
+                                "word": "radius",
+                                "description": "Use list of all Radius hosts."
+                              },
+                              {
+                                "type": "command",
+                                "word": "tacacs+",
+                                "description": "Use list of all Tacacs+ hosts."
+                              }
+                            ]
+                          }
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "command",
+                  "word": "authentication",
+                  "description": "Authentication configurations parameters."
+                },
+                {
+                  "type": "command",
+                  "word": "authorization",
+                  "description": "Authorization configurations parameters."
+                },
+                {
+                  "type": "command",
+                  "word": "new-model",
+                  "description": "Enable NEW access control commands and functions.(Disables OLD commands"
                 }
               ]
             },
             {
               "type": "command",
-              "word": "crypto",
-              "description": "encryption module",
+              "word": "access-list",
+              "description": "Add an access list entry",
               "words": [
                 {
-                  "type": "command",
-                  "word": "dynamic-map"
-                },
-                {
-                  "type": "command",
-                  "word": "ipsec"
-                },
-                {
-                  "type": "command",
-                  "word": "isakmp"
-                },
-                {
-                  "type": "command",
-                  "word": "key",
+                  "type": "param",
+                  "word": "<1-99>",
+                  "description": "IP standard access list",
                   "words": [
                     {
                       "type": "command",
-                      "word": "generate",
+                      "word": "deny",
+                      "description": "Specify packets to reject",
                       "words": [
                         {
-                          "type": "command",
-                          "word": "rsa",
+                          "type": "param",
+                          "word": "A.B.C.D",
+                          "description": "Address to match",
                           "words": [
                             {
-                              "type": "command",
-                              "word": "general-keys",
-                              "words": [
-                                {
-                                  "type": "command",
-                                  "word": "modulus",
-                                  "words": [
-                                    {
-                                      "type": "param",
-                                      "word": "Modulus Zahl 360-4096"
-                                    }
-                                  ]
-                                }
-                              ]
-                            },
+                              "type": "param",
+                              "word": "A.B.C.D",
+                              "description": "Wildcard bits"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "command",
+                          "word": "any",
+                          "description": "Any source host"
+                        },
+                        {
+                          "type": "command",
+                          "word": "host",
+                          "description": "A single host address",
+                          "words": [
                             {
-                              "type": "finish"
+                              "type": "param",
+                              "word": "A.B.C.D",
+                              "description": "Host address"
                             }
                           ]
                         }
@@ -576,108 +687,424 @@
                     },
                     {
                       "type": "command",
-                      "word": "zeroize"
+                      "word": "permit",
+                      "description": "Specify packets to forward",
+                      "words": [
+                        {
+                          "type": "param",
+                          "word": "A.B.C.D",
+                          "description": "Address to match",
+                          "words": [
+                            {
+                              "type": "param",
+                              "word": "A.B.C.D",
+                              "description": "Wildcard bits"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "command",
+                          "word": "any",
+                          "description": "Any source host"
+                        },
+                        {
+                          "type": "command",
+                          "word": "host",
+                          "description": "A single host address",
+                          "words": [
+                            {
+                              "type": "param",
+                              "word": "A.B.C.D",
+                              "description": "Host address"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "command",
+                      "word": "remark",
+                      "description": "Access list entry comment",
+                      "words": [
+                        {
+                          "type": "param",
+                          "word": "LINE",
+                          "description": "Comment up to 100 characters"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "param",
+                  "word": "<100-199>",
+                  "description": "IP extended access list",
+                  "words": [
+                    {
+                      "type": "multiCommand",
+                      "word": "deny",
+                      "description": "Specify packets to reject",
+                      "words": [
+                        [
+                          {
+                            "type": "command",
+                            "word": "ahp",
+                            "description": "Authentication Header Protocol"
+                          },
+                          {
+                            "type": "command",
+                            "word": "eigrp",
+                            "description": "Cisco's EIGRP routing protocol"
+                          },
+                          {
+                            "type": "command",
+                            "word": "esp",
+                            "description": "Encapsulation Security Payload"
+                          },
+                          {
+                            "type": "command",
+                            "word": "gre",
+                            "description": "Cisco's GRE tunneling"
+                          },
+                          {
+                            "type": "command",
+                            "word": "icmp",
+                            "description": "Internet Control Message Protocol"
+                          },
+                          {
+                            "type": "command",
+                            "word": "ip",
+                            "description": "Any Internet Protocol"
+                          },
+                          {
+                            "type": "command",
+                            "word": "ospf",
+                            "description": "OSPF routing protocol"
+                          },
+                          {
+                            "type": "command",
+                            "word": "tcp",
+                            "description": "Transmission Control Protocol"
+                          },
+                          {
+                            "type": "command",
+                            "word": "udp",
+                            "description": "User Datagram Protocol"
+                          }
+                        ],
+                        [
+                          {
+                            "type": "command",
+                            "word": "A.B.C.D",
+                            "description": "Source address",
+                            "words": [
+                              {
+                                "type": "command",
+                                "word": "A.B.C.D",
+                                "description": "Source wildcard bits"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "command",
+                            "word": "any",
+                            "description": "Any source host"
+                          },
+                          {
+                            "type": "command",
+                            "word": "host",
+                            "description": "A single source host",
+                            "words": [
+                              {
+                                "type": "command",
+                                "word": "A.B.C.D",
+                                "description": "Source address"
+                              }
+                            ]
+                          }
+                        ]
+                      ]
+                    },
+                    {
+                      "type": "command",
+                      "word": "permit",
+                      "description": "Specify packets to forward",
+                      "words": [
+                        [
+                          {
+                            "type": "command",
+                            "word": "ahp",
+                            "description": "Authentication Header Protocol"
+                          },
+                          {
+                            "type": "command",
+                            "word": "eigrp",
+                            "description": "Cisco's EIGRP routing protocol"
+                          },
+                          {
+                            "type": "command",
+                            "word": "esp",
+                            "description": "Encapsulation Security Payload"
+                          },
+                          {
+                            "type": "command",
+                            "word": "gre",
+                            "description": "Cisco's GRE tunneling"
+                          },
+                          {
+                            "type": "command",
+                            "word": "icmp",
+                            "description": "Internet Control Message Protocol"
+                          },
+                          {
+                            "type": "command",
+                            "word": "ip",
+                            "description": "Any Internet Protocol"
+                          },
+                          {
+                            "type": "command",
+                            "word": "ospf",
+                            "description": "OSPF routing protocol"
+                          },
+                          {
+                            "type": "command",
+                            "word": "tcp",
+                            "description": "Transmission Control Protocol"
+                          },
+                          {
+                            "type": "command",
+                            "word": "udp",
+                            "description": "User Datagram Protocol"
+                          }
+                        ],
+                        [
+                          {
+                            "type": "command",
+                            "word": "A.B.C.D",
+                            "description": "Source address",
+                            "words": [
+                              {
+                                "type": "command",
+                                "word": "A.B.C.D",
+                                "description": "Source wildcard bits"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "command",
+                            "word": "any",
+                            "description": "Any source host"
+                          },
+                          {
+                            "type": "command",
+                            "word": "host",
+                            "description": "A single source host",
+                            "words": [
+                              {
+                                "type": "command",
+                                "word": "A.B.C.D",
+                                "description": "Source address"
+                              }
+                            ]
+                          }
+                        ]
+                      ]
+                    },
+                    {
+                      "type": "command",
+                      "word": "remark",
+                      "description": "Access list entry comment",
+                      "words": [
+                        {
+                          "type": "command",
+                          "word": "LINE",
+                          "description": "Comment up to 100 characters"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "command",
+              "word": "banner",
+              "description": "Define a login banner",
+              "words": [
+                [
+                  {
+                    "type": "command",
+                    "word": "login",
+                    "description": "Set login banner"
+                  },
+                  {
+                    "type": "command",
+                    "word": "motd",
+                    "description": "Set Message of the Day banner"
+                  }
+                ],
+                [
+                  {
+                    "type": "param",
+                    "word": "LINE",
+                    "description": "c banner-text c, where 'c' is a delimiting character"
+                  }
+                ]
+              ]
+            },
+            {
+              "type": "command",
+              "word": "bba-group",
+              "description": "Configure BBA Group",
+              "words": [
+                {
+                  "type": "command",
+                  "word": "pppoe",
+                  "description": "PPPoE type",
+                  "words": [
+                    {
+                      "type": "param",
+                      "word": "WORD",
+                      "description": "BBA Group name"
+                    },
+                    {
+                      "type": "command",
+                      "word": "global",
+                      "description": "PPPoE global group"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "command",
+              "word": "boot",
+              "description": "Modify system boot parameters",
+              "words": [
+                {
+                  "type": "command",
+                  "word": "system",
+                  "description": "System image file",
+                  "words": [
+                    {
+                      "type": "param",
+                      "word": "WORD",
+                      "description": "TFTP filename or URL"
+                    },
+                    {
+                      "type": "command",
+                      "word": "flash",
+                      "description": "Boot from flash memory",
+                      "words": [
+                        {
+                          "type": "command",
+                          "word": "WORD",
+                          "description": "System image filename"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "command",
+                      "word": "tftp",
+                      "description": "Boot from a tftp server",
+                      "words": [
+                        {
+                          "type": "command",
+                          "word": "WORD",
+                          "description": "System image filename"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "command",
+              "word": "cdp",
+              "description": "Global CDP configuration subcommands",
+              "words": [
+                {
+                  "type": "command",
+                  "word": "run",
+                  "description": "Enable CDP"
+                }
+              ]
+            },
+            {
+              "type": "command",
+              "word": "class-map",
+              "description": "Configure Class Map",
+              "words": [
+                {
+                  "type": "command",
+                  "word": "WORD",
+                  "description": "class-map name"
+                },
+                {
+                  "type": "command",
+                  "word": "match-all",
+                  "description": "Logical-AND all matching statements under this classmap",
+                  "words": [
+                    {
+                      "type": "command",
+                      "word": "WORD",
+                      "description": "class-map name"
                     }
                   ]
                 },
                 {
                   "type": "command",
-                  "word": "map"
-                }
-              ]
-            },
-            {
-              "type": "multiCommand",
-              "word": "enable",
-              "description": "modify enable password parameters",
-              "words": [
-                [
-                  {
-                    "type": "command",
-                    "word": "password"
-                  },
-                  {
-                    "type": "command",
-                    "word": "secret"
-                  }
-                ],
-                [
-                  {
-                    "type": "param",
-                    "word": "password"
-                  }
-                ]
-              ]
-            },
-            {
-              "type": "command",
-              "word": "hostname",
-              "words": [
-                {
-                  "type": "param",
-                  "word": "name"
-                }
-              ]
-            },
-            {
-              "type": "command",
-              "word": "domain-name",
-              "words": [
-                {
-                  "type": "param",
-                  "word": "name"
-                }
-              ]
-            },
-            {
-              "type": "multiCommand",
-              "word": "username",
-              "words": [
-                [
-                  {
-                    "type": "param",
-                    "word": "username"
-                  }
-                ],
-                [
-                  {
-                    "type": "command",
-                    "word": "secret"
-                  }
-                ]
-              ]
-            },
-            {
-              "type": "command",
-              "word": "ipv6",
-              "words": [
-                {
-                  "type": "command",
-                  "word": "unicast-routing"
-                }
-              ]
-            },
-            {
-              "type": "command",
-              "word": "service",
-              "words": [
-                {
-                  "type": "command",
-                  "word": "password-encryption"
-                }
-              ]
-            },
-            {
-              "type": "command",
-              "word": "security passwords",
-              "words": [
-                {
-                  "type": "command",
-                  "word": "min-length",
+                  "word": "match-any",
+                  "description": "Logical-OR all matching statements under this classmap",
                   "words": [
                     {
-                      "type": "param",
-                      "word": "Length"
+                      "type": "command",
+                      "word": "WORD",
+                      "description": "class-map name"
+                    }
+                  ]
+                },
+                {
+                  "type": "command",
+                  "word": "type",
+                  "description": "type of the class-map",
+                  "words": [
+                    {
+                      "type": "command",
+                      "word": "inspect",
+                      "description": "Configure CBAC Class Map",
+                      "words": [
+                        {
+                          "type": "command",
+                          "word": "WORD",
+                          "description": "class-map name"
+                        },
+                        {
+                          "type": "command",
+                          "word": "match-all",
+                          "description": "Logical-AND all matching statements under this classmap",
+                          "words": [
+                            {
+                              "type": "command",
+                              "word": "WORD",
+                              "description": "class-map name"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "command",
+                          "word": "match-any",
+                          "description": "Logical-OR all matching statements under this classmap",
+                          "words": [
+                            {
+                              "type": "command",
+                              "word": "WORD",
+                              "description": "class-map name"
+                            }
+                          ]
+                        }
+                      ]
                     }
                   ]
                 }
@@ -685,35 +1112,79 @@
             },
             {
               "type": "command",
-              "word": "login",
+              "word": "clock",
+              "description": "Configure time-of-day clock",
               "words": [
                 {
                   "type": "command",
-                  "word": "block-for",
+                  "word": "timezone",
+                  "description": "Configure time zone",
                   "words": [
                     {
                       "type": "param",
-                      "word": "Zeit in s",
+                      "word": "WORD",
+                      "description": "name of time zone",
                       "words": [
                         {
-                          "type": "command",
-                          "word": "attempts",
+                          "type": "param",
+                          "word": "<-23 - 23>",
+                          "description": "Hours offset from UTC",
                           "words": [
                             {
-                              "type": "param",
-                              "word": "Versuche",
-                              "words": [
-                                {
-                                  "type": "word",
-                                  "word": "within",
-                                  "words": [
-                                    {
-                                      "type": "param",
-                                      "word": "Zeit in s"
-                                    }
-                                  ]
-                                }
-                              ]
+                              "type": "command",
+                              "word": "<0-59>",
+                              "description": "Minutes offset from UTC"
+                            },
+                            {
+                              "type": "finish"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "command",
+              "word": "config-register",
+              "description": "Define the configuration register",
+              "words": [
+                {
+                  "type": "param",
+                  "word": "WORD",
+                  "description": "Config register number"
+                }
+              ]
+            },
+            {
+              "type": "command",
+              "word": "crypto",
+              "description": "Encryption module",
+              "words": [
+                {
+                  "type": "command",
+                  "word": "dynamic-map",
+                  "description": "Specify a dynamic crypto map template",
+                  "words": [
+                    {
+                      "type": "param",
+                      "word": "WORD",
+                      "description": "Dynamic crypto map template tag",
+                      "words": [
+                        {
+                          "type": "param",
+                          "word": "<1-65535>",
+                          "description": "Sequence to insert into dynamic-map entry",
+                          "words": [
+                            {
+                              "type": "command",
+                              "word": "ipsec-isakmp",
+                              "description": "IPSEC w/ISAKMP"
+                            },
+                            {
+                              "type": "finish"
                             }
                           ]
                         }
@@ -723,96 +1194,380 @@
                 },
                 {
                   "type": "command",
-                  "word": "on-failure"
+                  "word": "ipsec",
+                  "description": "Configure IPSEC policy",
+                  "words": [
+                    {
+                      "type": "command",
+                      "word": "security-association",
+                      "description": "Security association parameters",
+                      "words": [
+                        {
+                          "type": "command",
+                          "word": "lifetime",
+                          "description": "security association lifetime",
+                          "words": [
+                            {
+                              "type": "command",
+                              "word": "seconds",
+                              "description": "Time-based key duration",
+                              "words": [
+                                {
+                                  "type": "param",
+                                  "word": "<120-86400>",
+                                  "description": "Security association duration in seconds"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "command",
+                      "word": "transform-set",
+                      "description": "Define transform and settings",
+                      "words": [
+                        {
+                          "type": "param",
+                          "word": "WORD",
+                          "description": "Transform set tag",
+                          "words": [
+                            {
+                              "type": "command",
+                              "word": "ah-md5-hmac",
+                              "description": "AH-HMAC-MD5 transform"
+                            },
+                            {
+                              "type": "command",
+                              "word": "ah-sha-hmac",
+                              "description": "AH-HMAC-SHA transform"
+                            },
+                            {
+                              "type": "command",
+                              "word": "esp-3des",
+                              "description": "ESP transform using 3DES(EDE) cipher (168 bits)"
+                            },
+                            {
+                              "type": "command",
+                              "word": "esp-aes",
+                              "description": "ESP transform using AES cipher"
+                            },
+                            {
+                              "type": "command",
+                              "word": "esp-des",
+                              "description": "ESP transform using DES cipher (56 bits)"
+                            },
+                            {
+                              "type": "command",
+                              "word": "esp-md5-hmac",
+                              "description": "ESP transform using HMAC-MD5 auth"
+                            },
+                            {
+                              "type": "command",
+                              "word": "esp-sha-hmac",
+                              "description": "ESP transform using HMAC-SHA auth"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
                 },
                 {
                   "type": "command",
-                  "word": "on-success"
+                  "word": "isakmp",
+                  "description": "Configure ISAKMP policy",
+                  "words": [
+                    {
+                      "type": "command",
+                      "word": "client",
+                      "description": "Set client configuration policy"
+                    },
+                    {
+                      "type": "command",
+                      "word": "enable",
+                      "description": "Enable ISAKMP"
+                    },
+                    {
+                      "type": "command",
+                      "word": "key",
+                      "description": "Set pre-shared key for remote peer"
+                    },
+                    {
+                      "type": "command",
+                      "word": "policy",
+                      "description": "Set policy for an ISAKMP protection suite"
+                    }
+                  ]
+                },
+                {
+                  "type": "command",
+                  "word": "key",
+                  "description": "Long term key operations"
+                },
+                {
+                  "type": "command",
+                  "word": "map",
+                  "description": "Enter a crypto map"
+                }
+              ]
+            },
+            {
+              "type": "command",
+              "word": "dot11",
+              "description": "IEEE 802.11 config commands",
+              "words": [
+                {
+                  "type": "command",
+                  "word": "ssid",
+                  "description": "Configure radio service set parameters",
+                  "words": [
+                    {
+                      "type": "param",
+                      "word": "LINE",
+                      "description": "radio Service Set ID (Up to 32 characters)"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "command",
+              "word": "enable",
+              "description": "Modify enable password parameters",
+              "words": [
+                {
+                  "type": "command",
+                  "word": "password",
+                  "description": "Assign the privileged level password",
+                  "words": [
+                    {
+                      "type": "command",
+                      "word": "7",
+                      "description": "Specifies a HIDDEN password will follow",
+                      "words": [
+                        {
+                          "type": "param",
+                          "word": "WORD",
+                          "description": "The HIDDEN 'enable' password string"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "param",
+                      "word": "LINE",
+                      "description": "The UNENCRYPTED (cleartext) 'enable' password"
+                    },
+                    {
+                      "type": "command",
+                      "word": "level",
+                      "description": "Set exec level password",
+                      "words": [
+                        {
+                          "type": "param",
+                          "word": "<1-15>",
+                          "description": "Level number",
+                          "words": [
+                            {
+                              "type": "command",
+                              "word": "7",
+                              "description": "Specifies a HIDDEN password will follow",
+                              "words": [
+                                {
+                                  "type": "command",
+                                  "word": "WORD",
+                                  "description": "The HIDDEN 'enable' password string"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "command",
+                              "word": "LINE",
+                              "description": "The UNENCRYPTED (cleartext) 'enable' password"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "command",
+                  "word": "secret",
+                  "description": "Assign the privileged level secret",
+                  "words": [
+                    {
+                      "type": "command",
+                      "word": "0",
+                      "description": "Specifies an UNENCRYPTED password will follow",
+                      "words": [
+                        {
+                          "type": "param",
+                          "word": "LINE",
+                          "description": "The UNENCRYPTED (cleartext) 'enable' secret"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "command",
+                      "word": "5",
+                      "description": "Specifies an ENCRYPTED secret will follow",
+                      "words": [
+                        {
+                          "type": "param",
+                          "word": "LINE",
+                          "description": "The ENCRYPTED 'enable' secret string"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "param",
+                      "word": "LINE",
+                      "description": "The UNENCRYPTED (cleartext) 'enable' secret"
+                    },
+                    {
+                      "type": "command",
+                      "word": "level",
+                      "description": "Set exec level password",
+                      "words": [
+                        {
+                          "type": "param",
+                          "word": "<1-15>",
+                          "description": "Level number",
+                          "words": [
+                            {
+                              "type": "command",
+                              "word": "0",
+                              "description": "Specifies an UNENCRYPTED password will follow",
+                              "words": [
+                                {
+                                  "type": "param",
+                                  "word": "LINE",
+                                  "description": "The UNENCRYPTED (cleartext) 'enable' secret"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "command",
+                              "word": "5",
+                              "description": "Specifies an ENCRYPTED secret will follow",
+                              "words": [
+                                {
+                                  "type": "param",
+                                  "word": "LINE",
+                                  "description": "The ENCRYPTED 'enable' secret string"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "param",
+                              "word": "LINE",
+                              "description": "The UNENCRYPTED (cleartext) 'enable' secret"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "command",
+              "word": "end",
+              "description": "Exit from configure mode"
+            },
+            {
+              "type": "exitSubMode",
+              "word": "exit",
+              "description": "Exit from configure mode"
+            },
+            {
+              "type": "command",
+              "word": "flow",
+              "description": "Global Flow configuration subcommands",
+              "words": [
+                {
+                  "type": "command",
+                  "word": "exporter",
+                  "description": "Define a Flow Exporter",
+                  "words": [
+                    {
+                      "type": "param",
+                      "word": "WORD",
+                      "description": "Flow Exporter name"
+                    }
+                  ]
+                },
+                {
+                  "type": "command",
+                  "word": "monitor",
+                  "description": "Define a Flow Monitor",
+                  "words": [
+                    {
+                      "type": "param",
+                      "word": "WORD",
+                      "description": "Flow Monitor name"
+                    }
+                  ]
+                },
+                {
+                  "type": "command",
+                  "word": "record",
+                  "description": "Define a Flow Record",
+                  "words": [
+                    {
+                      "type": "param",
+                      "word": "WORD",
+                      "description": "Flow Record name"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "command",
+              "word": "hostname",
+              "description": "Set system's network name",
+              "words": [
+                {
+                  "type": "command",
+                  "word": "WORD",
+                  "description": "This system's network name"
                 }
               ]
             },
             {
               "type": "command",
               "word": "interface",
+              "description": "Select an interface to configure",
               "words": [
                 {
                   "type": "command",
-                  "word": "FastEthernet",
+                  "word": "Dialer",
+                  "description": "Dialer interface",
                   "words": [
                     {
                       "type": "param/enterSubMode",
-                      "word": "Interface",
+                      "word": "<0-1199>",
+                      "description": "Dialer interface number",
                       "submode": {
                         "words": [
                           {
                             "type": "command",
-                            "word": "bandwidth",
-                            "words": [
-                              {
-                                "type": "param",
-                                "word": "Bandwidth in kilobits"
-                              }
-                            ]
-                          },
-                          {
-                            "type": "command",
-                            "word": "delay",
-                            "words": [
-                              {
-                                "type": "param",
-                                "word": "tens of microseconds"
-                              }
-                            ]
-                          },
-                          {
-                            "type": "command",
-                            "word": "description",
-                            "words": [
-                              {
-                                "type": "param",
-                                "word": "Description"
-                              }
-                            ]
-                          },
-                          {
-                            "type": "command",
-                            "word": "duplex",
+                            "word": "dialer",
+                            "description": "Dial-on-demand routing(DDR) commands",
                             "words": [
                               {
                                 "type": "command",
-                                "word": "auto"
-                              },
-                              {
-                                "type": "command",
-                                "word": "full"
-                              },
-                              {
-                                "type": "command",
-                                "word": "half"
-                              }
-                            ]
-                          },
-                          {
-                            "type": "command",
-                            "word": "ip",
-                            "words": [
-                              {
-                                "type": "command",
-                                "word": "address",
+                                "word": "pool",
+                                "description": "Specify dialer pool to be used",
                                 "words": [
                                   {
                                     "type": "param",
-                                    "word": "IP address",
-                                    "words": [
-                                      {
-                                        "type": "param",
-                                        "word": "IP subnet mask"
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "type": "command",
-                                    "word": "dhcp"
+                                    "word": "<1-255>",
+                                    "description": "Dialer pool number"
                                   }
                                 ]
                               }
@@ -820,27 +1575,267 @@
                           },
                           {
                             "type": "command",
-                            "word": "ipv6",
+                            "word": "encapsulation",
+                            "description": "Set encapsulation type for an interface",
+                            "words": [
+                              {
+                                "type": "command",
+                                "word": "ppp",
+                                "description": "Point-to-Point protocol"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "exitSubMode",
+                            "word": "exit",
+                            "description": "Exit from interface configuration mode"
+                          },
+                          {
+                            "type": "command",
+                            "word": "ip",
+                            "description": "Interface Internet Protocol config commands",
                             "words": [
                               {
                                 "type": "command",
                                 "word": "address",
+                                "description": "Set the IP address of an interface",
                                 "words": [
                                   {
                                     "type": "param",
-                                    "word": "IPv6 address",
-                                    "description": "IPv6 address WITHOUT prefix"
-                                  },
-                                  {
-                                    "type": "param",
-                                    "word": "IPv6 address",
-                                    "description": "IPv6 address WITH prefix",
+                                    "word": "A.B.C.D",
+                                    "description": "IP address",
                                     "words": [
                                       {
                                         "type": "command",
-                                        "word": "link-local"
+                                        "word": "A.B.C.D",
+                                        "description": "IP subnet mask"
                                       }
                                     ]
+                                  },
+                                  {
+                                    "type": "command",
+                                    "word": "negotiated",
+                                    "description": "IP Address negotiated over PPP"
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "command",
+                                "word": "mtu",
+                                "description": "Set IP Maximum Transmission Unit",
+                                "words": [
+                                  {
+                                    "type": "param",
+                                    "word": "<68-1500>",
+                                    "description": "MTU (bytes)"
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "multiCommand",
+                                "word": "unnumbered",
+                                "description": "Enable IP processing without an explicit address",
+                                "words": [
+                                  [
+                                    {
+                                      "type": "command",
+                                      "word": "Ethernet",
+                                      "description": "IEEE 802.3"
+                                    },
+                                    {
+                                      "type": "command",
+                                      "word": "FastEthernet",
+                                      "description": "FastEthernet IEEE 802.3"
+                                    },
+                                    {
+                                      "type": "command",
+                                      "word": "GigabitEthernet",
+                                      "description": "GigabitEthernet IEEE 802.3z"
+                                    }
+                                  ],
+                                  [
+                                    {
+                                      "type": "param",
+                                      "word": "x/x/x",
+                                      "description": "Ethernet interface number"
+                                    }
+                                  ]
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "command",
+                            "word": "ipv6",
+                            "description": "IPv6 interface subcommands",
+                            "words": [
+                              {
+                                "type": "command",
+                                "word": "address",
+                                "description": "Configure IPv6 address on interface",
+                                "words": [
+                                  {
+                                    "type": "command",
+                                    "word": "WORD",
+                                    "description": "General prefix name",
+                                    "words": [
+                                      {
+                                        "type": "param",
+                                        "word": "X:X:X:X::X/<0-128>",
+                                        "description": "IPv6 prefix"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "command",
+                                    "word": "X:X:X:X::X",
+                                    "description": "IPv6 link-local address",
+                                    "words": [
+                                      {
+                                        "type": "command",
+                                        "word": "link-local",
+                                        "description": "Use link-local address"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "command",
+                                    "word": "X:X:X:X::X/<0-128>",
+                                    "description": "IPv6 prefix",
+                                    "words": [
+                                      {
+                                        "type": "command",
+                                        "word": "anycast",
+                                        "description": "Configure as an anycast"
+                                      },
+                                      {
+                                        "type": "command",
+                                        "word": "eui-64",
+                                        "description": "Use eui-64 interface identifier"
+                                      },
+                                      {
+                                        "type": "finish"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "command",
+                                    "word": "autoconfig",
+                                    "description": "Obtain address using autoconfiguration"
+                                  },
+                                  {
+                                    "type": "command",
+                                    "word": "dhcp",
+                                    "description": "Obtain a ipv6 address using dhcp"
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "command",
+                                "word": "authentication",
+                                "description": "authentication subcommands",
+                                "words": [
+                                  {
+                                    "type": "command",
+                                    "word": "key-chain",
+                                    "description": "key-chain",
+                                    "words": [
+                                      {
+                                        "type": "command",
+                                        "word": "eigrp",
+                                        "description": "Enhanced Interior Gateway Routing Protocol (EIGRP)",
+                                        "words": [
+                                          {
+                                            "type": "param",
+                                            "word": "<1-65535>",
+                                            "description": "AS number",
+                                            "words": [
+                                              {
+                                                "type": "param",
+                                                "word": "WORD",
+                                                "description": "name of key-chain"
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "command",
+                                    "word": "mode",
+                                    "description": "mode",
+                                    "words": [
+                                      {
+                                        "type": "command",
+                                        "word": "eigrp",
+                                        "description": "Enhanced Interior Gateway Routing Protocol (EIGRP)",
+                                        "words": [
+                                          {
+                                            "type": "param",
+                                            "word": "<1-65535>",
+                                            "description": "AS number",
+                                            "words": [
+                                              {
+                                                "type": "command",
+                                                "word": "md5",
+                                                "description": "Keyed message digest"
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "command",
+                                "word": "dhcp",
+                                "description": "IPv6 DHCP interface subcommands",
+                                "words": [
+                                  {
+                                    "type": "command",
+                                    "word": "client",
+                                    "description": "Act as an IPv6 DHCP client",
+                                    "words": [
+                                      {
+                                        "type": "command",
+                                        "word": "pd",
+                                        "description": "Prefix-Delegation",
+                                        "words": [
+                                          {
+                                            "type": "param",
+                                            "word": "WORD",
+                                            "description": "Prefix name"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "command",
+                                    "word": "server",
+                                    "description": "Act as an IPv6 DHCP server",
+                                    "words": [
+                                      {
+                                        "type": "param",
+                                        "word": "WORD",
+                                        "description": "Name of IPv6 DHCP pool"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "command",
+                                "word": "eigrp",
+                                "description": "Configure EIGRP IPv6 on interface",
+                                "words": [
+                                  {
+                                    "type": "param",
+                                    "word": "<1-65535>",
+                                    "description": "AS number"
                                   }
                                 ]
                               },
@@ -851,112 +1846,1241 @@
                               },
                               {
                                 "type": "command",
-                                "word": "mac-address",
-                                "description": "Manually set interface MAC address"
-                              }
-                            ]
-                          },
-                          {
-                            "type": "command",
-                            "word": "no",
-                            "words": [
+                                "word": "flow",
+                                "description": "NetFlow Related commands",
+                                "words": [
+                                  {
+                                    "type": "command",
+                                    "word": "monitor",
+                                    "description": "Apply a Flow Monitor to this interface",
+                                    "words": [
+                                      {
+                                        "type": "param",
+                                        "word": "WORD",
+                                        "description": "User defined flow monitor",
+                                        "words": [
+                                          {
+                                            "type": "command",
+                                            "word": "input",
+                                            "description": "Apply Flow Monitor on input traffic"
+                                          },
+                                          {
+                                            "type": "command",
+                                            "word": "output",
+                                            "description": "Apply Flow Monitor on output traffic"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
                               {
                                 "type": "command",
-                                "word": "shutdown"
+                                "word": "hello-interval",
+                                "description": "Configures IP-EIGRP hello interval",
+                                "words": [
+                                  {
+                                    "type": "command",
+                                    "word": "eigrp",
+                                    "description": "Enhanced Interior Gateway Routing Protocol (EIGRP)",
+                                    "words": [
+                                      {
+                                        "type": "param",
+                                        "word": "<1-65535>",
+                                        "description": "Autonomous system number",
+                                        "words": [
+                                          {
+                                            "type": "param",
+                                            "word": "<1-65535>",
+                                            "description": "Seconds between hello transmissions"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "command",
+                                "word": "inspect",
+                                "description": "Apply inspect name",
+                                "words": [
+                                  {
+                                    "type": "param",
+                                    "word": "WORD",
+                                    "description": "Name of inspection defined",
+                                    "words": [
+                                      {
+                                        "type": "command",
+                                        "word": "in",
+                                        "description": "Inbound inspection"
+                                      },
+                                      {
+                                        "type": "command",
+                                        "word": "out",
+                                        "description": "Outbound inspection"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "command",
+                                "word": "mtu",
+                                "description": "Set IPv6 Maximum Transmission Unit",
+                                "words": [
+                                  {
+                                    "type": "param",
+                                    "word": "<1280-1500>",
+                                    "description": "MTU (bytes)"
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "command",
+                                "word": "nat",
+                                "description": "Enable IPv6 NAT on interface",
+                                "words": [
+                                  {
+                                    "type": "command",
+                                    "word": "prefix",
+                                    "description": "Configure NAT-PT prefix on interface",
+                                    "words": [
+                                      {
+                                        "type": "param",
+                                        "word": "X:X:X:X::X/<0-128>",
+                                        "description": "IPv6 prefix",
+                                        "words": [
+                                          {
+                                            "type": "command",
+                                            "word": "v4-mapped",
+                                            "description": "Use the 32 bits of the destination v6 address",
+                                            "words": [
+                                              {
+                                                "type": "command",
+                                                "word": "WORD",
+                                                "description": "Access list name for local addresses"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "type": "finish"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "finish"
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "command",
+                                "word": "nd",
+                                "description": "IPv6 interface Neighbor Discovery subcommands",
+                                "words": [
+                                  {
+                                    "type": "command",
+                                    "word": "managed-config-flag",
+                                    "description": "Hosts should use DHCP for address config"
+                                  },
+                                  {
+                                    "type": "command",
+                                    "word": "other-config-flag",
+                                    "description": "Other stateful configuration flag"
+                                  },
+                                  {
+                                    "type": "command",
+                                    "word": "ra",
+                                    "description": "Router Advertisement control",
+                                    "words": [
+                                      {
+                                        "type": "command",
+                                        "word": "suppress",
+                                        "description": "Suppress IPv6 Router Advertisements"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "command",
+                                "word": "ospf",
+                                "description": "OSPF interface commands",
+                                "words": [
+                                  {
+                                    "type": "param",
+                                    "word": "<1-65535>",
+                                    "description": "Process ID",
+                                    "words": [
+                                      {
+                                        "type": "multiCommand",
+                                        "word": "area",
+                                        "description": "Set the OSPF area ID",
+                                        "words": [
+                                          [
+                                            {
+                                              "type": "param",
+                                              "word": "<0-4294967295>",
+                                              "description": "OSPF area ID as a decimal value"
+                                            },
+                                            {
+                                              "type": "param",
+                                              "word": "A.B.C.D",
+                                              "description": "OSPF area ID in IP address format"
+                                            }
+                                          ],
+                                          [
+                                            {
+                                              "type": "command",
+                                              "word": "instance",
+                                              "description": "Set the OSPF instance",
+                                              "words": [
+                                                {
+                                                  "type": "command",
+                                                  "word": "<0-255>",
+                                                  "description": "Instance ID"
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "type": "finish"
+                                            }
+                                          ]
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "command",
+                                    "word": "cost",
+                                    "description": "Interface cost",
+                                    "words": [
+                                      {
+                                        "type": "param",
+                                        "word": "<1-65535>",
+                                        "description": "Cost"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "command",
+                                    "word": "dead-interval",
+                                    "description": "Interval after which a neighbor is declared dead",
+                                    "words": [
+                                      {
+                                        "type": "param",
+                                        "word": "<1-65535>",
+                                        "description": "Seconds"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "command",
+                                    "word": "hello-interval",
+                                    "description": "Time between HELLO packets",
+                                    "words": [
+                                      {
+                                        "type": "param",
+                                        "word": "<1-65535>",
+                                        "description": "Seconds"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "command",
+                                    "word": "neighbor",
+                                    "description": "OSPF neighbor",
+                                    "words": [
+                                      {
+                                        "type": "param",
+                                        "word": "X:X:X:X::X",
+                                        "description": "Neighbor IPv6 address"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "command",
+                                    "word": "priority",
+                                    "description": "Router priority",
+                                    "words": [
+                                      {
+                                        "type": "param",
+                                        "word": "<0-255>",
+                                        "description": "Priority"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "command",
+                                "word": "rip",
+                                "description": "Configure RIP routing protocol",
+                                "words": [
+                                  {
+                                    "type": "param",
+                                    "word": "WORD",
+                                    "description": "User selected string identifying this RIP process",
+                                    "words": [
+                                      {
+                                        "type": "command",
+                                        "word": "default-information",
+                                        "description": "Configure handling of default route",
+                                        "words": [
+                                          {
+                                            "type": "command",
+                                            "word": "originate",
+                                            "description": "Originate the default route"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "type": "command",
+                                        "word": "enable",
+                                        "description": "Enable/disable RIP routing"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "command",
+                                "word": "summary-address",
+                                "description": "Summary prefix",
+                                "words": [
+                                  {
+                                    "type": "command",
+                                    "word": "eigrp",
+                                    "description": "Enhanced Interior Gateway Routing Protocol (EIGRP)",
+                                    "words": [
+                                      {
+                                        "type": "param",
+                                        "word": "<1-65535>",
+                                        "description": "Autonomous system number",
+                                        "words": [
+                                          {
+                                            "type": "param",
+                                            "word": "X:X:X:X::X/<0-128>",
+                                            "description": "IPv6 prefix",
+                                            "words": [
+                                              {
+                                                "type": "command",
+                                                "word": "<1-255>",
+                                                "description": "Administrative distanc"
+                                              },
+                                              {
+                                                "type": "finish"
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "command",
+                                "word": "traffic-filter",
+                                "description": "Access control list for packets",
+                                "words": [
+                                  {
+                                    "type": "param",
+                                    "word": "WORD",
+                                    "description": "Access-list name",
+                                    "words": [
+                                      {
+                                        "type": "command",
+                                        "word": "in",
+                                        "description": "inbound packets"
+                                      },
+                                      {
+                                        "type": "command",
+                                        "word": "out",
+                                        "description": "outbound packets"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "command",
+                                "word": "unnumbered",
+                                "description": "Preferred interface for source address selection",
+                                "words": [
+                                  {
+                                    "type": "command",
+                                    "word": "Ethernet",
+                                    "description": "IEEE 802.3"
+                                  },
+                                  {
+                                    "type": "command",
+                                    "word": "FastEthernet",
+                                    "description": "FastEthernet IEEE 802.3"
+                                  },
+                                  {
+                                    "type": "command",
+                                    "word": "GigabitEthernet",
+                                    "description": "GigabitEthernet IEEE 802.3z"
+                                  }
+                                ]
                               }
                             ]
                           },
                           {
                             "type": "command",
-                            "word": "shutdown"
+                            "word": "mtu",
+                            "description": "Set the interface Maximum Transmission Unit (MTU)",
+                            "words": [
+                              {
+                                "type": "param",
+                                "word": "<64-17940>",
+                                "description": "MTU size in bytes"
+                              }
+                            ]
                           },
                           {
-                            "type": "exitSubMode",
-                            "word": "exit"
+                            "type": "command",
+                            "word": "ppp",
+                            "description": "Point-to-Point Protocol",
+                            "words": [
+                              {
+                                "type": "multiCommand",
+                                "word": "authentication",
+                                "description": "Set PPP link authentication method",
+                                "words": [
+                                  [
+                                    {
+                                      "type": "command",
+                                      "word": "chap",
+                                      "description": "Challenge Handshake Authentication Protocol (CHAP)",
+                                      "words": [
+                                      ]
+                                    },
+                                    {
+                                      "type": "command",
+                                      "word": "pap",
+                                      "description": "Password Authentication Protocol (PAP)"
+                                    }
+                                  ],
+                                  [
+                                    {
+                                      "type": "param",
+                                      "word": "WORD",
+                                      "description": "Use an authentication list with this name"
+                                    },
+                                    {
+                                      "type": "command",
+                                      "word": "default",
+                                      "description": "Use the default authentication list"
+                                    },
+                                    {
+                                      "type": "finish"
+                                    }
+                                  ]
+                                ]
+                              },
+                              {
+                                "type": "command",
+                                "word": "chap",
+                                "description": "Set CHAP authentication parameters",
+                                "words": [
+                                  {
+                                    "type": "command",
+                                    "word": "hostname",
+                                    "description": "Set alternate CHAP hostname",
+                                    "words": [
+                                      {
+                                        "type": "param",
+                                        "word": "WORD",
+                                        "description": "Alternate CHAP hostname"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "command",
+                                    "word": "password",
+                                    "description": "Set default CHAP password",
+                                    "words": [
+                                      {
+                                        "type": "param",
+                                        "word": "LINE",
+                                        "description": "Default PPP authentication password"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "command",
+                                "word": "pap",
+                                "description": "Set PAP authentication parameters",
+                                "words": [
+                                  {
+                                    "type": "command",
+                                    "word": "sent-username",
+                                    "description": "Set outbound PAP username",
+                                    "words": [
+                                      {
+                                        "type": "param",
+                                        "word": "WORD",
+                                        "description": "Outbound PAP username",
+                                        "words": [
+                                          {
+                                            "type": "command",
+                                            "word": "password",
+                                            "description": "Set outbound PAP password",
+                                            "words": [
+                                              {
+                                                "type": "command",
+                                                "word": "0",
+                                                "description": "Encryption type (0=not yet encrypted)",
+                                                "words": [
+                                                  {
+                                                    "type": "command",
+                                                    "word": "LINE",
+                                                    "description": "Outbound PAP password"
+                                                  }
+                                                ]
+                                              },
+                                              {
+                                                "type": "param",
+                                                "word": "LINE",
+                                                "description": "Outbound PAP password"
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "command",
+                            "word": "shutdown",
+                            "description": "Shutdown the selected interface"
                           }
                         ]
                       }
                     }
                   ]
+                },
+                {
+                  "type": "command",
+                  "word": "FastEthernet",
+                  "description": "FastEthernet IEEE 802.3"
                 },
                 {
                   "type": "command",
                   "word": "GigabitEthernet",
+                  "description": "GigabitEthernet IEEE 802.3z",
                   "words": [
                     {
                       "type": "param/enterSubMode",
-                      "word": "Interface",
+                      "word": "number",
                       "submode": {
                         "words": [
                           {
                             "type": "command",
+                            "word": "arp",
+                            "description": "Set arp type (arpa, probe, snap) or timeout",
+                            "words": [
+                              {
+                                "type": "command",
+                                "word": "timeout",
+                                "description": "Set ARP cache timeout",
+                                "words": [
+                                  {
+                                    "type": "param",
+                                    "word": "<0-2147483>",
+                                    "description": "Seconds"
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "command",
                             "word": "bandwidth",
+                            "description": "Set bandwidth informational parameter",
                             "words": [
                               {
                                 "type": "param",
-                                "word": "Bandwidth in kilobits"
+                                "word": "<1-10000000>",
+                                "description": "Bandwidth in kilobits"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "command",
+                            "word": "cdp",
+                            "description": "CDP interface subcommands",
+                            "words": [
+                              {
+                                "type": "command",
+                                "word": "enable",
+                                "description": "Enable CDP on interface"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "command",
+                            "word": "channel-group",
+                            "description": "Add this interface to an Etherchannel group",
+                            "words": [
+                              {
+                                "type": "param",
+                                "word": "<0-4096>",
+                                "description": "Queue length",
+                                "words": [
+                                  {
+                                    "type": "command",
+                                    "word": "out",
+                                    "description": "Output queue"
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "command",
+                            "word": "crypto",
+                            "description": "Encryption/Decryption commands",
+                            "words": [
+                              {
+                                "type": "command",
+                                "word": "map",
+                                "description": "Assign a Crypto Map",
+                                "words": [
+                                  {
+                                    "type": "param",
+                                    "word": "WORD",
+                                    "description": "Crypto Map tag"
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "command",
+                            "word": "custom-queue-list",
+                            "description": "Assign a custom queue list to an interface",
+                            "words": [
+                              {
+                                "type": "param",
+                                "word": "<1-16>",
+                                "description": "Custom queue list number"
                               }
                             ]
                           },
                           {
                             "type": "command",
                             "word": "delay",
+                            "description": "Specify interface throughput delay",
                             "words": [
                               {
                                 "type": "param",
-                                "word": "tens of microseconds"
+                                "word": "<1-16777215>",
+                                "description": "Throughput delay (tens of microseconds)"
                               }
                             ]
                           },
                           {
                             "type": "command",
                             "word": "description",
+                            "description": "Interface specific description",
                             "words": [
                               {
                                 "type": "param",
-                                "word": "Description"
+                                "word": "LINE",
+                                "description": "Up to 240 characters describing this interface"
                               }
                             ]
                           },
                           {
                             "type": "command",
                             "word": "duplex",
+                            "description": "Configure duplex operation.",
                             "words": [
                               {
                                 "type": "command",
-                                "word": "auto"
+                                "word": "auto",
+                                "description": "Enable AUTO duplex configuration"
                               },
                               {
                                 "type": "command",
-                                "word": "full"
+                                "word": "full",
+                                "description": "Force full duplex operation"
                               },
                               {
                                 "type": "command",
-                                "word": "half"
+                                "word": "half",
+                                "description": "Force half-duplex operation"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "exitSubMode",
+                            "word": "exit",
+                            "description": "Exit from interface configuration mode"
+                          },
+                          {
+                            "type": "command",
+                            "word": "fair-queue",
+                            "description": "Enable Fair Queuing on an Interface",
+                            "words": [
+                              {
+                                "type": "param",
+                                "word": "<1-4096>",
+                                "description": "Congestive Discard Threshold",
+                                "words": [
+                                  {
+                                    "type": "command",
+                                    "word": "<16-4096>",
+                                    "description": "Number Dynamic Conversation Queues",
+                                    "words": [
+                                      {
+                                        "type": "command",
+                                        "word": "<0-1000>",
+                                        "description": "Number Reservable Conversation Queues"
+                                      },
+                                      {
+                                        "type": "finish"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "finish"
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "finish"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "command",
+                            "word": "hold-queue",
+                            "description": "Set hold queue depth",
+                            "words": [
+                              {
+                                "type": "param",
+                                "word": "<0-4096>",
+                                "description": "Queue length",
+                                "words": [
+                                  {
+                                    "type": "command",
+                                    "word": "out",
+                                    "description": "Output queue"
+                                  }
+                                ]
                               }
                             ]
                           },
                           {
                             "type": "command",
                             "word": "ip",
+                            "description": "Interface Internet Protocol config commands",
                             "words": [
+                              {
+                                "type": "multiCommand",
+                                "word": "access-group",
+                                "description": "Specify access control for packets",
+                                "words": [
+                                  [
+                                    {
+                                      "type": "param",
+                                      "word": "<1-199>",
+                                      "description": "IP access list (standard or extended)"
+                                    },
+                                    {
+                                      "type": "param",
+                                      "word": "WORD",
+                                      "description": "Access-list name"
+                                    }
+                                  ],
+                                  [
+                                    {
+                                      "type": "command",
+                                      "word": "in",
+                                      "description": "inbound packets"
+                                    },
+                                    {
+                                      "type": "command",
+                                      "word": "out",
+                                      "description": "outbound packets"
+                                    }
+                                  ]
+                                ]
+                              },
                               {
                                 "type": "command",
                                 "word": "address",
+                                "description": "Set the IP address of an interface",
                                 "words": [
                                   {
                                     "type": "param",
-                                    "word": "IP address",
+                                    "word": "A.B.C.D",
+                                    "description": "IP address",
                                     "words": [
                                       {
                                         "type": "param",
-                                        "word": "IP subnet mask"
+                                        "word": "A.B.C.D",
+                                        "description": "IP subnet mask"
                                       }
                                     ]
                                   },
                                   {
                                     "type": "command",
-                                    "word": "dhcp"
+                                    "word": "dhcp",
+                                    "description": "IP Address negotiated via DHCP"
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "command",
+                                "word": "authentication",
+                                "description": "authentication subcommands",
+                                "words": [
+                                  {
+                                    "type": "command",
+                                    "word": "key-chain",
+                                    "description": "key-chain",
+                                    "words": [
+                                      {
+                                        "type": "command",
+                                        "word": "eigrp",
+                                        "description": "Enhanced Interior Gateway Routing Protocol (EIGRP)",
+                                        "words": [
+                                          {
+                                            "type": "param",
+                                            "word": "<1-65535>",
+                                            "description": "AS number",
+                                            "words": [
+                                              {
+                                                "type": "command",
+                                                "word": "WORD",
+                                                "description": "name of key-chain"
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "command",
+                                    "word": "mode",
+                                    "words": [
+                                      {
+                                        "type": "command",
+                                        "word": "eigrp",
+                                        "description": "Enhanced Interior Gateway Routing Protocol (EIGRP)",
+                                        "words": [
+                                          {
+                                            "type": "param",
+                                            "word": "<1-65535>",
+                                            "description": "AS number",
+                                            "words": [
+                                              {
+                                                "type": "command",
+                                                "word": "md5",
+                                                "description": "Keyed message digest"
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "command",
+                                "word": "flow",
+                                "description": "NetFlow Related commands",
+                                "words": [
+                                  {
+                                    "type": "command",
+                                    "word": "egress",
+                                    "description": "Enable outbound NetFlow"
+                                  },
+                                  {
+                                    "type": "command",
+                                    "word": "ingress",
+                                    "description": "Enable inbound NetFlow"
+                                  },
+                                  {
+                                    "type": "command",
+                                    "word": "monitor",
+                                    "description": "Apply a Flow Monitor to this interface",
+                                    "words": [
+                                      {
+                                        "type": "param",
+                                        "word": "WORD",
+                                        "description": "User defined flow monitor",
+                                        "words": [
+                                          {
+                                            "type": "command",
+                                            "word": "input",
+                                            "description": "Apply Flow Monitor on input traffic"
+                                          },
+                                          {
+                                            "type": "command",
+                                            "word": "output",
+                                            "description": "Apply Flow Monitor on output traffic"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "command",
+                                "word": "hello-interval",
+                                "description": "Configures IP-EIGRP hello interval",
+                                "words": [
+                                  {
+                                    "type": "command",
+                                    "word": "eigrp",
+                                    "description": "Enhanced Interior Gateway Routing Protocol (EIGRP)",
+                                    "words": [
+                                      {
+                                        "type": "param",
+                                        "word": "<1-65535>",
+                                        "description": "Autonomous system number",
+                                        "words": [
+                                          {
+                                            "type": "param",
+                                            "word": "<1-65535>",
+                                            "description": "Seconds between hello transmissions"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "command",
+                                "word": "helper-address",
+                                "description": "Specify a destination address for UDP broadcasts",
+                                "words": [
+                                  {
+                                    "type": "param",
+                                    "word": "A.B.C.D",
+                                    "description": "IP destination address"
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "command",
+                                "word": "inspect",
+                                "description": "Apply inspect name",
+                                "words": [
+                                  {
+                                    "type": "param",
+                                    "word": "WORD",
+                                    "description": "Name of inspection defined",
+                                    "words": [
+                                      {
+                                        "type": "command",
+                                        "word": "in",
+                                        "description": "Inbound inspection"
+                                      },
+                                      {
+                                        "type": "command",
+                                        "word": "out",
+                                        "description": "Outbound inspection"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "command",
+                                "word": "ips",
+                                "description": "Create IPS rule",
+                                "words": [
+                                  {
+                                    "type": "param",
+                                    "word": "WORD",
+                                    "description": "Name of define IPS rule",
+                                    "words": [
+                                      {
+                                        "type": "command",
+                                        "word": "in",
+                                        "description": "Inbound IPS"
+                                      },
+                                      {
+                                        "type": "command",
+                                        "word": "out",
+                                        "description": "Outbound IPS"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "command",
+                                "word": "mtu",
+                                "description": "Set IP Maximum Transmission Unit",
+                                "words": [
+                                  {
+                                    "type": "param",
+                                    "word": "<68-1500>",
+                                    "description": "MTU (bytes)"
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "command",
+                                "word": "nat",
+                                "description": "NAT interface commands",
+                                "words": [
+                                  {
+                                    "type": "command",
+                                    "word": "inside",
+                                    "description": "Inside interface for address translation"
+                                  },
+                                  {
+                                    "type": "command",
+                                    "word": "outside",
+                                    "description": "Outside interface for address translation"
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "command",
+                                "word": "ospf",
+                                "description": "OSPF interface commands",
+                                "words": [
+                                  {
+                                    "type": "param",
+                                    "word": "<1-65535>",
+                                    "description": "Process ID",
+                                    "words": [
+                                      {
+                                        "type": "command",
+                                        "word": "area",
+                                        "description": "Set the OSPF area ID",
+                                        "words": [
+                                          {
+                                            "type": "command",
+                                            "word": "<0-4294967295>",
+                                            "description": "OSPF area ID as a decimal value"
+                                          },
+                                          {
+                                            "type": "command",
+                                            "word": "A.B.C.D",
+                                            "description": "OSPF area ID in IP address format"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "command",
+                                    "word": "authentication",
+                                    "description": "Enable authentication",
+                                    "words": [
+                                      {
+                                        "type": "command",
+                                        "word": "key-chain",
+                                        "description": "Use a key-chain for cryptographic authentication keys",
+                                        "words": [
+                                          {
+                                            "type": "param",
+                                            "word": "WORD",
+                                            "description": "Key-chain name"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "type": "command",
+                                        "word": "message-digest",
+                                        "description": "Use message-digest authentication"
+                                      },
+                                      {
+                                        "type": "command",
+                                        "word": "null",
+                                        "description": "Use no authentication"
+                                      },
+                                      {
+                                        "type": "finish"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "command",
+                                    "word": "authentication-key",
+                                    "description": "Authentication password (key)",
+                                    "words": [
+                                      {
+                                        "type": "param",
+                                        "word": "<0-7>",
+                                        "description": "Encryption type (0 for not yet encrypted, 7 for proprietary)",
+                                        "words": [
+                                          {
+                                            "type": "command",
+                                            "word": "WORD",
+                                            "description": "The OSPF password (key) (maximum 8 characters)"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "type": "param",
+                                        "word": "WORD",
+                                        "description": "The OSPF password (key) (maximum 8 characters)"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "command",
+                                    "word": "cost",
+                                    "description": "Interface cost",
+                                    "words": [
+                                      {
+                                        "type": "command",
+                                        "word": "<1-65535>",
+                                        "description": "Cost"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "command",
+                                    "word": "dead-interval",
+                                    "description": "Interval after which a neighbor is declared dead",
+                                    "words": [
+                                      {
+                                        "type": "param",
+                                        "word": "<1-65535>",
+                                        "description": "Seconds"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "command",
+                                    "word": "hello-interval",
+                                    "description": "Time between HELLO packets",
+                                    "words": [
+                                      {
+                                        "type": "param",
+                                        "word": "<1-65535>",
+                                        "description": "Seconds"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "command",
+                                    "word": "message-digest-key",
+                                    "description": "Message digest authentication password (key)",
+                                    "words": [
+                                      {
+                                        "type": "param",
+                                        "word": "<1-255>",
+                                        "description": "Key ID",
+                                        "words": [
+                                          {
+                                            "type": "command",
+                                            "word": "md5",
+                                            "description": "Use MD5 algorithm",
+                                            "words": [
+                                              {
+                                                "type": "param",
+                                                "word": "LINE",
+                                                "description": "The OSPF password (key) (maximum 16 characters)"
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "command",
+                                    "word": "network",
+                                    "description": "Network type",
+                                    "words": [
+                                      {
+                                        "type": "command",
+                                        "word": "point-to-point",
+                                        "description": "Specify OSPF point-to-point network"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "command",
+                                    "word": "priority",
+                                    "description": "Router priority",
+                                    "words": [
+                                      {
+                                        "type": "param",
+                                        "word": "<0-255>",
+                                        "description": "Priority"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "command",
+                                "word": "proxy-arp",
+                                "description": "Enable proxy ARP"
+                              },
+                              {
+                                "type": "command",
+                                "word": "split-horizon",
+                                "description": "Perform split horizon"
+                              },
+                              {
+                                "type": "command",
+                                "word": "summary-address",
+                                "description": "Perform address summarization",
+                                "words": [
+                                  {
+                                    "type": "command",
+                                    "word": "eigrp",
+                                    "description": "Enhanced Interior Gateway Routing Protocol (EIGRP)",
+                                    "words": [
+                                      {
+                                        "type": "param",
+                                        "word": "<1-65535>",
+                                        "description": "Autonomous system number",
+                                        "words": [
+                                          {
+                                            "type": "param",
+                                            "word": "A.B.C.D",
+                                            "description": "IP address",
+                                            "words": [
+                                              {
+                                                "type": "param",
+                                                "word": "A.B.C.D",
+                                                "description": "IP network mask",
+                                                "words": [
+                                                  {
+                                                    "type": "param",
+                                                    "word": "<1-255>",
+                                                    "description": "Administrative distance"
+                                                  },
+                                                  {
+                                                    "type": "finish"
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
                                   }
                                 ]
                               }
@@ -965,58 +3089,77 @@
                           {
                             "type": "command",
                             "word": "ipv6",
-                            "words": [
-                              {
-                                "type": "command",
-                                "word": "address",
-                                "words": [
-                                  {
-                                    "type": "param",
-                                    "word": "IPv6 address",
-                                    "description": "IPv6 address WITHOUT prefix"
-                                  },
-                                  {
-                                    "type": "param",
-                                    "word": "IPv6 address",
-                                    "description": "IPv6 address WITH prefix",
-                                    "words": [
-                                      {
-                                        "type": "command",
-                                        "word": "link-local"
-                                      }
-                                    ]
-                                  }
-                                ]
-                              },
-                              {
-                                "type": "command",
-                                "word": "enable",
-                                "description": "Enable IPv6 on interface"
-                              },
-                              {
-                                "type": "command",
-                                "word": "mac-address",
-                                "description": "Manually set interface MAC address"
-                              }
-                            ]
+                            "description": "IPv6 interface subcommands"
+                          },
+                          {
+                            "type": "command",
+                            "word": "lldp",
+                            "description": "LLDP interface subcommands"
+                          },
+                          {
+                            "type": "command",
+                            "word": "mac-address",
+                            "description": "Manually set interface MAC address"
+                          },
+                          {
+                            "type": "command",
+                            "word": "media-type",
+                            "description": "Configure media type"
+                          },
+                          {
+                            "type": "command",
+                            "word": "mtu",
+                            "description": "Set the interface Maximum Transmission Unit (MTU)"
                           },
                           {
                             "type": "command",
                             "word": "no",
-                            "words": [
-                              {
-                                "type": "command",
-                                "word": "shutdown"
-                              }
-                            ]
+                            "description": "Negate a command or set its defaults"
                           },
                           {
                             "type": "command",
-                            "word": "shutdown"
+                            "word": "pppoe",
+                            "description": "pppoe interface subcommands"
                           },
                           {
-                            "type": "exitSubMode",
-                            "word": "exit"
+                            "type": "command",
+                            "word": "pppoe-client",
+                            "description": "pppoe client"
+                          },
+                          {
+                            "type": "command",
+                            "word": "priority-group",
+                            "description": "Assign a priority group to an interface"
+                          },
+                          {
+                            "type": "command",
+                            "word": "service-policy",
+                            "description": "Configure QoS Service Policy"
+                          },
+                          {
+                            "type": "command",
+                            "word": "shutdown",
+                            "description": "Shutdown the selected interface"
+                          },
+                          {
+                            "type": "command",
+                            "word": "speed",
+                            "description": "Configure speed operation."
+                          },
+                          {
+                            "type": "command",
+                            "word": "standby",
+                            "description": "HSRP interface configuration commands"
+                          },
+                          {
+                            "type": "command",
+                            "word": "tx-ring-limit",
+                            "description": "Configure PA level transmit ring limit"
+                          },
+                          {
+                            "type": "command",
+                            "word": "zone-member",
+                            "description": "Apply zone name"
                           }
                         ]
                       }
@@ -1025,68 +3168,561 @@
                 },
                 {
                   "type": "command",
+                  "word": "Loopback",
+                  "description": "Loopback interface"
+                },
+                {
+                  "type": "command",
+                  "word": "Port-channel",
+                  "description": "Ethernet Channel of interfaces"
+                },
+                {
+                  "type": "command",
+                  "word": "Serial",
+                  "description": "Serial"
+                },
+                {
+                  "type": "command",
+                  "word": "Tunnel",
+                  "description": "Tunnel interface"
+                },
+                {
+                  "type": "command",
+                  "word": "Virtual-Template",
+                  "description": "Virtual Template interface"
+                },
+                {
+                  "type": "command",
                   "word": "Vlan",
-                  "words": [
-                    {
-                      "type": "param/enterSubMode",
-                      "word": "Vlan ID",
-                      "submode": {
-                        "words": [
-                          {
-                            "type": "command",
-                            "word": "description",
-                            "words": [
-                            ]
-                          }
-                        ]
-                      }
-                    }
-                  ]
+                  "description": "Catalyst Vlans"
+                },
+                {
+                  "type": "command",
+                  "word": "range",
+                  "description": "interface range command"
                 }
               ]
             },
             {
-              "type": "exitSubMode",
-              "word": "exit"
+              "type": "command",
+              "word": "ip",
+              "description": "Global IP configuration subcommands"
+            },
+            {
+              "type": "command",
+              "word": "ipv6",
+              "description": "Global IPv6 configuration commands"
+            },
+            {
+              "type": "command",
+              "word": "key",
+              "description": "Key management"
+            },
+            {
+              "type": "command",
+              "word": "license",
+              "description": "Configure license features"
+            },
+            {
+              "type": "command",
+              "word": "line",
+              "description": "Configure a terminal line"
+            },
+            {
+              "type": "command",
+              "word": "lldp",
+              "description": "Global LLDP configuration subcommands"
+            },
+            {
+              "type": "command",
+              "word": "logging",
+              "description": "Modify message logging facilities"
+            },
+            {
+              "type": "command",
+              "word": "login",
+              "description": "Enable secure login checking"
+            },
+            {
+              "type": "command",
+              "word": "mac-address-table",
+              "description": "Configure the MAC address table"
+            },
+            {
+              "type": "command",
+              "word": "no",
+              "description": "Negate a command or set its defaults"
+            },
+            {
+              "type": "command",
+              "word": "ntp",
+              "description": "Configure NTP"
+            },
+            {
+              "type": "command",
+              "word": "parameter-map",
+              "description": "parameter map"
+            },
+            {
+              "type": "command",
+              "word": "parser",
+              "description": "Configure parser"
+            },
+            {
+              "type": "command",
+              "word": "policy-map",
+              "description": "Configure QoS Policy Map"
+            },
+            {
+              "type": "command",
+              "word": "port-channel",
+              "description": "EtherChannel configuration"
+            },
+            {
+              "type": "command",
+              "word": "priority-list",
+              "description": "Build a priority list"
+            },
+            {
+              "type": "command",
+              "word": "privilege",
+              "description": "Command privilege parameters"
+            },
+            {
+              "type": "command",
+              "word": "queue-list",
+              "description": "Build a custom queue list"
+            },
+            {
+              "type": "command",
+              "word": "router",
+              "description": "Enable a routing process"
+            },
+            {
+              "type": "command",
+              "word": "secure",
+              "description": "Secure image and configuration archival commands"
+            },
+            {
+              "type": "command",
+              "word": "security",
+              "description": "Infra Security CLIs"
+            },
+            {
+              "type": "command",
+              "word": "service",
+              "description": "Modify use of network based services"
+            },
+            {
+              "type": "command",
+              "word": "snmp-server",
+              "description": "Modify SNMP engine parameters"
+            },
+            {
+              "type": "command",
+              "word": "spanning-tree",
+              "description": "Spanning Tree Subsystem"
+            },
+            {
+              "type": "command",
+              "word": "tacacs-server",
+              "description": "Modify TACACS query parameters"
+            },
+            {
+              "type": "command",
+              "word": "username",
+              "description": "Establish User Name Authentication"
+            },
+            {
+              "type": "command",
+              "word": "vpdn",
+              "description": "Virtual Private Dialup Network"
+            },
+            {
+              "type": "command",
+              "word": "vpdn-group",
+              "description": "VPDN group configuration"
+            },
+            {
+              "type": "command",
+              "word": "zone",
+              "description": "FW with zoning"
+            },
+            {
+              "type": "command",
+              "word": "zone-pair",
+              "description": "Zone pair command"
             }
           ]
         }
       },
       {
         "type": "command",
-        "word": "clock set",
+        "word": "clear",
+        "description": "Reset functions",
         "words": [
           {
-            "type": "param",
-            "word": "hh:mm:ss",
+            "type": "command",
+            "word": "aaa",
+            "description": "Clear AAA values",
             "words": [
               {
-                "type": "param",
-                "word": "day 1-31",
+                "type": "command",
+                "word": "local",
+                "description": "Clear AAA local method options",
+                "words": [
+                  {
+                    "type": "command",
+                    "word": "user",
+                    "description": "Clear local AAA users",
+                    "words": [
+                      {
+                        "type": "command",
+                        "word": "lockout",
+                        "description": "Clear locked out local AAA users",
+                        "words": [
+                          {
+                            "type": "command",
+                            "word": "all",
+                            "description": "Clear all the locked users"
+                          },
+                          {
+                            "type": "command",
+                            "word": "username",
+                            "description": "Username of the locked-user",
+                            "words": [
+                              {
+                                "type": "param",
+                                "word": "username",
+                                "description": "Specify the username of the locked user"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "command",
+            "word": "access-list",
+            "description": "Clear access list statistical information",
+            "words": [
+              {
+                "type": "command",
+                "word": "counters",
+                "description": "Clear access list counters",
                 "words": [
                   {
                     "type": "param",
-                    "word": "month",
+                    "word": "<1-199>",
+                    "description": "Access list number"
+                  },
+                  {
+                    "type": "param",
+                    "word": "<1300-2699>",
+                    "description": "Access list number (expanded range)"
+                  },
+                  {
+                    "type": "command",
+                    "word": "name",
+                    "description": "Access list name"
+                  },
+                  {
+                    "type": "finish"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "command",
+            "word": "arp-cache",
+            "description": "Clear the entire ARP cache"
+          },
+          {
+            "type": "command",
+            "word": "cdp",
+            "description": "Reset cdp information",
+            "words": [
+              {
+                "type": "command",
+                "word": "table",
+                "description": "Clear cdp table"
+              }
+            ]
+          },
+          {
+            "type": "command",
+            "word": "frame-relay",
+            "description": "Clear Frame Relay information",
+            "words": [
+              {
+                "type": "command",
+                "word": "counter",
+                "description": "Clear Frame Relay counters"
+              },
+              {
+                "type": "command",
+                "word": "inarp",
+                "description": "Clear inverse ARP entries from the map table"
+              }
+            ]
+          },
+          {
+            "type": "command",
+            "word": "ip",
+            "description": "IP",
+            "words": [
+              {
+                "type": "command",
+                "word": "bgp",
+                "description": "Clear BGP connections",
+                "words": [
+                  {
+                    "type": "command",
+                    "word": "*",
+                    "description": "Clear all peers"
+                  }
+                ]
+              },
+              {
+                "type": "command",
+                "word": "dhcp",
+                "description": "Delete items from the DHCP database",
+                "words": [
+                  {
+                    "type": "command",
+                    "word": "conflict",
+                    "description": "DHCP address conflicts",
                     "words": [
                       {
-                        "type": "param",
-                        "word": "year"
+                        "type": "command",
+                        "word": "*",
+                        "description": "Clear all address conflicts"
                       }
                     ]
                   }
                 ]
               },
               {
-                "type": "param",
-                "word": "month",
+                "type": "command",
+                "word": "nat",
+                "description": "Clear NAT",
+                "words": [
+                  {
+                    "type": "command",
+                    "word": "translation",
+                    "description": "Clear dynamic translation",
+                    "words": [
+                      {
+                        "type": "command",
+                        "word": "*",
+                        "description": "Deletes all dynamic translations"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "command",
+                "word": "ospf",
+                "description": "OSPF clear commands",
+                "words": [
+                  {
+                    "type": "command",
+                    "word": "process",
+                    "description": "Reset OSPF process"
+                  }
+                ]
+              },
+              {
+                "type": "command",
+                "word": "route",
+                "description": "Delete route table entries",
+                "words": [
+                  {
+                    "type": "command",
+                    "word": "*",
+                    "description": "Delete all routes"
+                  },
+                  {
+                    "type": "param",
+                    "word": "A.B.C.D",
+                    "description": "Destination network route to delete"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "command",
+            "word": "ipv6",
+            "description": "IPv6",
+            "words": [
+              {
+                "type": "command",
+                "word": "dhcp",
+                "description": "Clear IPv6 DHCP information",
+                "words": [
+                  {
+                    "type": "command",
+                    "word": "binding",
+                    "description": "IPv6 DHCP bindings"
+                  }
+                ]
+              },
+              {
+                "type": "command",
+                "word": "nat",
+                "description": "Clear NAT-PT",
+                "words": [
+                  {
+                    "type": "command",
+                    "word": "translation",
+                    "description": "Clear dynamic translation",
+                    "words": [
+                      {
+                        "type": "command",
+                        "word": "*",
+                        "description": "Delete all dynamic translations"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "command",
+                "word": "neighbors",
+                "description": "Clear IPv6 ND Entry Cache"
+              },
+              {
+                "type": "command",
+                "word": "ospf",
+                "description": "OSPF clear commands",
+                "words": [
+                  {
+                    "type": "command",
+                    "word": "process",
+                    "description": "Reset OSPF process"
+                  }
+                ]
+              },
+              {
+                "type": "command",
+                "word": "route",
+                "description": "Clear IPv6 route table entries",
+                "words": [
+                  {
+                    "type": "command",
+                    "word": "*",
+                    "description": "All IPv6 routes"
+                  },
+                  {
+                    "type": "param",
+                    "word": "X:X:X:X::X(/<0-128>)",
+                    "description": "IPv6 address (with optional prefix)"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "command",
+            "word": "line",
+            "description": "Reset a terminal line",
+            "words": [
+              {
+                "type": "command",
+                "word": "tty",
+                "description": "Terminal controller",
                 "words": [
                   {
                     "type": "param",
-                    "word": "day 1-31",
+                    "word": "<2-90>",
+                    "description": "Line number"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "command",
+            "word": "mac-address-table",
+            "description": "MAC forwarding table",
+            "words": [
+              {
+                "type": "command",
+                "word": "dynamic",
+                "description": "Clear 802.1d dynamic addresses"
+              },
+              {
+                "type": "finish"
+              }
+            ]
+          },
+          {
+            "type": "command",
+            "word": "vtp",
+            "description": "Clear VTP items",
+            "words": [
+              {
+                "type": "command",
+                "word": "counters",
+                "description": "Clear VTP counters"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "command",
+        "word": "clock",
+        "description": "Manage the system clock",
+        "words": [
+          {
+            "type": "command",
+            "word": "set",
+            "description": "Set the time and date",
+            "words": [
+              {
+                "type": "param",
+                "word": "hh:mm:ss",
+                "description": "current daytime",
+                "words": [
+                  {
+                    "type": "param",
+                    "word": "1-31",
+                    "description": "Day of the month",
                     "words": [
                       {
                         "type": "param",
-                        "word": "year"
+                        "word": "month",
+                        "words": [
+                          {
+                            "type": "param",
+                            "word": "year"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "param",
+                    "word": "month",
+                    "words": [
+                      {
+                        "type": "param",
+                        "word": "day 1-31",
+                        "words": [
+                          {
+                            "type": "param",
+                            "word": "year"
+                          }
+                        ]
                       }
                     ]
                   }
@@ -1099,6 +3735,7 @@
       {
         "type": "command",
         "word": "copy",
+        "description": "Copy from one file to another",
         "words": [
           {
             "type": "command",
@@ -1117,6 +3754,349 @@
               {
                 "type": "command",
                 "word": "running-config"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "command",
+        "word": "debug",
+        "description": "Debugging functions (see also 'undebug')",
+        "words": [
+          {
+            "type": "command",
+            "word": "aaa",
+            "description": "AAA Authentication, Authorization and Accounting",
+            "words": [
+              {
+                "type": "command",
+                "word": "authentication"
+              }
+            ]
+          },
+          {
+            "type": "command",
+            "word": "crypto",
+            "description": "Cryptographic subsystem",
+            "words": [
+              {
+                "type": "command",
+                "word": "ipsec",
+                "description": "IPSEC processing"
+              },
+              {
+                "type": "command",
+                "word": "isakmp",
+                "description": "ISAKMP Key Management"
+              }
+            ]
+          },
+          {
+            "type": "command",
+            "word": "custom-queue",
+            "description": "Custom output queueing"
+          },
+          {
+            "type": "command",
+            "word": "eigrp",
+            "description": "EIGRP Protocol information",
+            "words": [
+              {
+                "type": "command",
+                "word": "fsm",
+                "description": "EIGRP Dual Finite State Machine events/actions"
+              },
+              {
+                "type": "command",
+                "word": "packets",
+                "description": "EIGRP packets"
+              }
+            ]
+          },
+          {
+            "type": "command",
+            "word": "frame-relay",
+            "description": "Frame Relay",
+            "words": [
+              {
+                "type": "command",
+                "word": "lmi",
+                "description": "LMI packet exchanges with service provider"
+              }
+            ]
+          },
+          {
+            "type": "command",
+            "word": "ip",
+            "description": "IP information",
+            "words": [
+              {
+                "type": "command",
+                "word": "eigrp",
+                "description": "IP-EIGRP information",
+                "words": [
+                  {
+                    "type": "command",
+                    "word": "summary",
+                    "description": "IP-EIGRP summary route processing"
+                  }
+                ]
+              },
+              {
+                "type": "command",
+                "word": "icmp",
+                "description": "ICMP transactions"
+              },
+              {
+                "type": "command",
+                "word": "inspect",
+                "description": "Stateful inspection events",
+                "words": [
+                  {
+                    "type": "command",
+                    "word": "detailed",
+                    "description": "Inspection Detailed Debug Records"
+                  },
+                  {
+                    "type": "command",
+                    "word": "events",
+                    "description": "Inspection events"
+                  },
+                  {
+                    "type": "command",
+                    "word": "function-trace",
+                    "description": "Inspection function trace"
+                  },
+                  {
+                    "type": "command",
+                    "word": "object-creation",
+                    "description": "Inspection Object Creations"
+                  },
+                  {
+                    "type": "command",
+                    "word": "object-deletion",
+                    "description": "Inspection Object Deletions"
+                  },
+                  {
+                    "type": "command",
+                    "word": "protocol",
+                    "description": "protocol-specific-debug",
+                    "words": [
+                      {
+                        "type": "command",
+                        "word": "http",
+                        "description": "Inspection HTTP"
+                      },
+                      {
+                        "type": "command",
+                        "word": "icmp",
+                        "description": "Inspection ICMP"
+                      },
+                      {
+                        "type": "command",
+                        "word": "tcp",
+                        "description": "Inspection TCP"
+                      },
+                      {
+                        "type": "command",
+                        "word": "udp",
+                        "description": "Inspection UDP"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "command",
+                    "word": "timers",
+                    "description": "Inspection Timer related events"
+                  }
+                ]
+              },
+              {
+                "type": "command",
+                "word": "nat",
+                "description": "NAT events"
+              },
+              {
+                "type": "command",
+                "word": "ospf",
+                "description": "OSPF information",
+                "words": [
+                  {
+                    "type": "command",
+                    "word": "adj",
+                    "description": "OSPF adjacency events"
+                  },
+                  {
+                    "type": "command",
+                    "word": "events",
+                    "description": "OSPF events"
+                  }
+                ]
+              },
+              {
+                "type": "command",
+                "word": "packet",
+                "description": "Packet information"
+              },
+              {
+                "type": "command",
+                "word": "rip",
+                "description": "RIP protocol transactions",
+                "words": [
+                  {
+                    "type": "command",
+                    "word": "events",
+                    "description": "RIP protocol events"
+                  },
+                  {
+                    "type": "finish"
+                  }
+                ]
+              },
+              {
+                "type": "command",
+                "word": "routing",
+                "description": "Routing table events"
+              }
+            ]
+          },
+          {
+            "type": "command",
+            "word": "ipv6",
+            "description": "IPv6 information",
+            "words": [
+              {
+                "type": "command",
+                "word": "dhcp",
+                "description": "IPv6 DHCP debugging",
+                "words": [
+                  {
+                    "type": "command",
+                    "word": "detail",
+                    "description": "IPv6 DHCP packet content"
+                  }
+                ]
+              },
+              {
+                "type": "command",
+                "word": "inspect",
+                "description": "Stateful inspection events",
+                "words": [
+                  {
+                    "type": "command",
+                    "word": "detailed",
+                    "description": "Inspection Detailed Debug Records"
+                  },
+                  {
+                    "type": "command",
+                    "word": "events",
+                    "description": "Inspection events"
+                  },
+                  {
+                    "type": "command",
+                    "word": "function-trace",
+                    "description": "Inspection function trace"
+                  },
+                  {
+                    "type": "command",
+                    "word": "icmp",
+                    "description": "Inspection ICMP"
+                  },
+                  {
+                    "type": "command",
+                    "word": "object-creation",
+                    "description": "Inspection Object Creations"
+                  },
+                  {
+                    "type": "command",
+                    "word": "object-deletion",
+                    "description": "Inspection Object Deletions"
+                  },
+                  {
+                    "type": "command",
+                    "word": "tcp",
+                    "description": "Inspection TCP"
+                  },
+                  {
+                    "type": "command",
+                    "word": "timers",
+                    "description": "Inspection Timer related events"
+                  },
+                  {
+                    "type": "command",
+                    "word": "udp",
+                    "description": "Inspection UDP"
+                  }
+                ]
+              },
+              {
+                "type": "command",
+                "word": "nd",
+                "description": "IPv6 Neighbor Discovery debugging"
+              },
+              {
+                "type": "command",
+                "word": "ospf",
+                "description": "OSPF information",
+                "words": [
+                  {
+                    "type": "command",
+                    "word": "adj",
+                    "description": "OSPF adjacency events"
+                  },
+                  {
+                    "type": "command",
+                    "word": "events",
+                    "description": "OSPF events"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "command",
+            "word": "ntp",
+            "description": "NTP information",
+            "words": [
+              {
+                "type": "command",
+                "word": "packets",
+                "description": "NTP packets"
+              }
+            ]
+          },
+          {
+            "type": "command",
+            "word": "ppp",
+            "description": "PPP (Point to Point Protocol) information",
+            "words": [
+              {
+                "type": "command",
+                "word": "authentication",
+                "description": "CHAP and PAP authentication"
+              },
+              {
+                "type": "command",
+                "word": "negotiation",
+                "description": "Protocol parameter negotiation"
+              },
+              {
+                "type": "command",
+                "word": "packet",
+                "description": "Low-level PPP packet dump"
+              }
+            ]
+          },
+          {
+            "type": "command",
+            "word": "standby",
+            "description": "Hot Standby Router Protocol (HSRP)",
+            "words": [
+              {
+                "type": "command",
+                "word": "packets",
+                "description": "HSRP packets"
               }
             ]
           }
@@ -1160,12 +4140,12 @@
       {
         "type": "command",
         "word": "disable",
-        "description": " Wechselt in den user EXEC mode"
+        "description": "Turn off privileged commands"
       },
       {
         "type": "command",
         "word": "erase startup-config",
-        "description": "Setzt alle Einstellungen zurück"
+        "description": "Erase contents ofo configuration memory"
       },
       {
         "type": "command",
@@ -1184,253 +4164,246 @@
       {
         "type": "command",
         "word": "reload",
-        "description": "Startet das System neu"
+        "description": "perform a cold restart"
       },
       {
         "type": "multiCommand",
         "word": "show",
-        "description": "bruh",
+        "description": "Show running system information",
         "words": [
           [
             {
               "type": "command",
-              "word": "arp"
+              "word": "aaa",
+              "description": "Show AAA values",
+              "words": [
+                {
+                  "type": "command",
+                  "word": "local",
+                  "description": "Show AAA local method options",
+                  "words": [
+                    {
+                      "type": "command",
+                      "word": "user",
+                      "description": "AAA Local user",
+                      "words": [
+                        {
+                          "type": "command",
+                          "word": "lockout",
+                          "description": "AAA Local locked-out user"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "command",
+                  "word": "sessions",
+                  "description": "Show AAA sessions as seen by AAA Session MIB",
+                  "words": [
+                    {
+                      "type": "param",
+                      "word": "<1-4294967295>",
+                      "description": "Unique Id for a single user"
+                    },
+                    {
+                      "type": "command",
+                      "word": "all",
+                      "description": "Show users active in AAA subsystem"
+                    }
+                  ]
+                },
+                {
+                  "type": "command",
+                  "word": "user",
+                  "description": "Show users active in AAA subsystem"
+                }
+              ]
+            },
+            {
+              "type": "command",
+              "word": "access-lists",
+              "description": "List access lists",
+              "words": [
+                {
+                  "type": "command",
+                  "word": "<1-199>",
+                  "description": "ACL number"
+                },
+                {
+                  "type": "command",
+                  "word": "WORD",
+                  "description": "ACL name"
+                },
+                {
+                  "type": "finish"
+                }
+              ]
+            },
+            {
+              "type": "command",
+              "word": "arp",
+              "description": "Arp table"
+            },
+            {
+              "type": "command",
+              "word": "cdp",
+              "description": "CDP information",
+              "words": [
+                {
+                  "type": "multiCommand",
+                  "word": "entry",
+                  "description": "Information for specific neighbor entry",
+                  "words": [
+                    [
+                      {
+                        "type": "command",
+                        "word": "*",
+                        "description": "all CDP neighbor entries"
+                      },
+                      {
+                        "type": "command",
+                        "word": "WORD",
+                        "description": "Name of CDP neighbor entry"
+                      }
+                    ],
+                    [
+                      {
+                        "type": "command",
+                        "word": "protocol",
+                        "description": "Protocol information"
+                      },
+                      {
+                        "type": "command",
+                        "word": "version",
+                        "description": "Version information"
+                      },
+                      {
+                        "type": "finish"
+                      }
+                    ]
+                  ]
+                },
+                {
+                  "type": "multiCommand",
+                  "word": "interface",
+                  "description": "CDP interface status and configuration",
+                  "words": [
+                    [
+                      {
+                        "type": "command",
+                        "word": "Ethernet",
+                        "description": "IEEE 802.3"
+                      },
+                      {
+                        "type": "command",
+                        "word": "FastEthernet",
+                        "description": "FastEthernet IEEE 802.3"
+                      },
+                      {
+                        "type": "command",
+                        "word": "GigabitEthernet",
+                        "description": "GigabitEthernet IEEE 802.3z"
+                      },
+                      {
+                        "type": "command",
+                        "word": "Serial",
+                        "description": "Serial"
+                      }
+                    ],
+                    [
+                      {
+                        "type": "param",
+                        "word": "x/x(/x)",
+                        "description": "ethernet interface number"
+                      }
+                    ]
+                  ]
+                },
+                {
+                  "type": "command",
+                  "word": "neighbors",
+                  "description": "CDP neighbor entries",
+                  "words": [
+                    {
+                      "type": "command",
+                      "word": "detail",
+                      "description": "Show detailed information"
+                    },
+                    {
+                      "type": "finish"
+                    }
+                  ]
+                },
+                {
+                  "type": "finish"
+                }
+              ]
+            },
+            {
+              "type": "command",
+              "word": "class-map",
+              "description": "Show QoS Class Map"
             },
             {
               "type": "command",
               "word": "clock",
-              "words": [
-                {
-                  "type": "command",
-                  "word": "detail"
-                },
-                {
-                  "type": "finish"
-                }
-              ]
+              "description": "Display the system clock"
+            },
+            {
+              "type": "command",
+              "word": "controllers",
+              "description": "Interface controllers status"
             },
             {
               "type": "command",
               "word": "crypto",
-              "words": [
-                {
-                  "type": "command",
-                  "word": "key",
-                  "words": [
-                    {
-                      "type": "command",
-                      "word": "mypubkey",
-                      "words": [
-                        {
-                          "type": "command",
-                          "word": "rsa"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
+              "description": "Encryption module"
             },
             {
               "type": "command",
-              "word": "debugging"
+              "word": "debugging",
+              "description": "State of each debugging option"
             },
             {
               "type": "command",
               "word": "dhcp",
-              "words": [
-                {
-                  "type": "command",
-                  "word": "lease"
-                }
-              ]
+              "description": "Dynamic Host Configuration Protocol status"
             },
             {
               "type": "command",
-              "word": "dotll",
-              "words": [
-                {
-                  "type": "command",
-                  "word": "interface"
-                }
-              ]
+              "word": "dot11",
+              "description": "IEEE 802.11 show information"
             },
             {
               "type": "command",
-              "word": "history"
+              "word": "file",
+              "description": "Show filesystem information"
             },
             {
               "type": "command",
-              "word": "hosts"
+              "word": "flash:",
+              "description": "display information about flash: file system"
             },
             {
               "type": "command",
-              "word": "interfaces",
-              "words": [
-                {
-                  "type": "command",
-                  "word": "Ethernet",
-                  "words": [
-                    {
-                      "type": "param",
-                      "word": "Port",
-                      "words": [
-                        {
-                          "type": "command",
-                          "word": "status"
-                        },
-                        {
-                          "type": "command",
-                          "word": "switchport"
-                        },
-                        {
-                          "type": "finish"
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "type": "command",
-                  "word": "FastEthernet",
-                  "words": [
-                    {
-                      "type": "param",
-                      "word": "FastEthernet interface number",
-                      "words": [
-                        {
-                          "type": "command",
-                          "word": "status"
-                        },
-                        {
-                          "type": "command",
-                          "word": "switchport"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "finish"
-                    }
-                  ]
-                },
-                {
-                  "type": "command",
-                  "word": "GigabitEthernet",
-                  "words": [
-                    {
-                      "type": "param",
-                      "word": "GigabitEthernet interface number",
-                      "words": [
-                        {
-                          "type": "command",
-                          "word": "status"
-                        },
-                        {
-                          "type": "command",
-                          "word": "switchport"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "finish"
-                    }
-                  ]
-                },
-                {
-                  "type": "command",
-                  "word": "loopback",
-                  "words": [
-                    {
-                      "type": "param",
-                      "word": "Loopback interface number",
-                      "words": [
-                        {
-                          "type": "command",
-                          "word": "switchport"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "finish"
-                    }
-                  ]
-                },
-                {
-                  "type": "command",
-                  "word": "vlan",
-                  "words": [
-                    {
-                      "type": "param",
-                      "word": "VLAN interface number"
-                    }
-                  ]
-                },
-                {
-                  "type": "command",
-                  "word": "status"
-                },
-                {
-                  "type": "command",
-                  "word": "switchport"
-                },
-                {
-                  "type": "command",
-                  "word": "trunk"
-                },
-                {
-                  "type": "finish"
-                }
-              ]
+              "word": "flow",
+              "description": "Flow information"
             },
             {
               "type": "command",
-              "word": "dtp"
+              "word": "frame-relay",
+              "description": "Frame-Relay information"
             },
             {
               "type": "command",
-              "word": "ip",
-              "words": [
-                {
-                  "type": "command",
-                  "word": "interface",
-                  "words": [
-                    {
-                      "type": "command",
-                      "word": "brief"
-                    },
-                    {
-                      "type": "finish"
-                    }
-                  ]
-                },
-                {
-                  "type": "command",
-                  "word": "route"
-                }
-              ]
+              "word": "history",
+              "description": "Display the session command history"
             },
             {
               "type": "command",
-              "word": "ipv6",
-              "words": [
-                {
-                  "type": "command",
-                  "word": "interface",
-                  "words": [
-                    {
-                      "type": "command",
-                      "word": "brief"
-                    },
-                    {
-                      "type": "finish"
-                    }
-                  ]
-                },
-                {
-                  "type": "command",
-                  "word": "route"
-                }
-              ]
+              "word": "hosts",
+              "description": "IP domain-name, lookup style, nameservers, and host"
             }
           ],
           [
@@ -1482,6 +4455,49 @@
       },
       {
         "type": "command",
+        "word": "terminal",
+        "description": "Set terminal line parameters",
+        "words": [
+          {
+            "type": "command",
+            "word": "history",
+            "description": "Enable and control the command history function",
+            "words": [
+              {
+                "type": "command",
+                "word": "size",
+                "description": "Set history buffer size",
+                "words": [
+                  {
+                    "type": "param",
+                    "word": "<0-256>",
+                    "description": "Size of history buffer"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "command",
+            "word": "monitor",
+            "description": "Enable logging on the terminal line."
+          },
+          {
+            "type": "command",
+            "word": "no",
+            "description": "Negate a command",
+            "words": [
+              {
+                "type": "command",
+                "word": "monitor",
+                "description": "Disable system logging on the terminal line"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "command",
         "word": "traceroute",
         "words": [
           {
@@ -1492,20 +4508,35 @@
       },
       {
         "type": "command",
+        "word": "vlan",
+        "description": "Configure VLAN parameters",
+        "words": [
+          {
+            "type": "command",
+            "word": "database",
+            "description": "Configure VLAN database"
+          }
+        ]
+      },
+      {
+        "type": "command",
         "word": "write",
         "description": "Speichert alle Einstellungen",
         "words": [
           {
             "type": "command",
-            "word": "erase"
+            "word": "erase",
+            "description": "Erase NV memory"
           },
           {
             "type": "command",
-            "word": "memory"
+            "word": "memory",
+            "description": "Write to NV memory"
           },
           {
             "type": "command",
-            "word": "terminal"
+            "word": "terminal",
+            "description": "Write to terminal"
           }
         ]
       }

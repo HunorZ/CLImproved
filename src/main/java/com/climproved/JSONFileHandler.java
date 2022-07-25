@@ -42,7 +42,7 @@ public class JSONFileHandler {
         try {
             inputStream = Files.newInputStream(Path.of(file));
         } catch (IOException e) {
-            System.out.println("File konnte nicht gelesen werden");
+
         }
         //the content of the json-file is stored inside fileContent
         JSONTokener tokener = new JSONTokener(inputStream);

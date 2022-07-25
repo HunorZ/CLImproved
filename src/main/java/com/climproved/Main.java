@@ -3,15 +3,13 @@ package com.climproved;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.awt.*;
-
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Objects;
 
 public class Main extends Application {
     static Stage stage;
@@ -24,10 +22,10 @@ public class Main extends Application {
         Main.stage.setWidth(((size.getHeight() * 0.7) / 9) * 16);
         Main.stage.getIcons().add(new Image(new FileInputStream("assets\\CLImproved_newLogo.png")));
 
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("hello-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("main.fxml"));
 
         Scene scene = new Scene(fxmlLoader.load());
-        scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("application.css")).toExternalForm());
         Main.stage.setTitle("CLImproved");
         Main.stage.setScene(scene);
         Main.stage.setResizable(true);

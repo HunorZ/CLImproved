@@ -1,7 +1,5 @@
 package com.climproved;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -72,11 +70,9 @@ public class Controller {
         //add first tab at init
         createNewTab();
         //addTab function
-        addTab.setOnSelectionChanged(e -> {
-            createNewTab();
-        });
+        addTab.setOnSelectionChanged(e -> createNewTab());
 
-        Main.stage.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+        Main.stage.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<>() {
             final KeyCombination keyComb = new KeyCodeCombination(KeyCode.S,
                     KeyCombination.CONTROL_DOWN);
 
@@ -88,7 +84,7 @@ public class Controller {
             }
         });
 
-        Main.stage.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+        Main.stage.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<>() {
             final KeyCombination keyComb = new KeyCodeCombination(KeyCode.T,
                     KeyCombination.CONTROL_DOWN);
 
@@ -99,7 +95,7 @@ public class Controller {
                 }
             }
         });
-        Main.stage.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+        Main.stage.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<>() {
             final KeyCombination keyComb = new KeyCodeCombination(KeyCode.W,
                     KeyCombination.CONTROL_DOWN);
 
@@ -216,14 +212,7 @@ public class Controller {
         textAreas.add(new TextArea());
         textAreas.get(index).setId("textArea");
         textAreas.get(index).setFocusTraversable(false);
-        textAreas.get(index).textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
-                System.out.println("changed " + currentTabIndex);
-                jsonFileHandlerArrayList.get(currentTabIndex).commandWriter.setContent(textAreas.get(currentTabIndex).getText());
-                System.out.println(jsonFileHandlerArrayList.get(currentTabIndex).commandWriter.getContent());
-            }
-        });
+        textAreas.get(index).textProperty().addListener((observableValue, s, t1) -> jsonFileHandlerArrayList.get(currentTabIndex).commandWriter.setContent(textAreas.get(currentTabIndex).getText()));
 
         scrollPanes.add(new ScrollPane());
         scrollPanes.get(index).setId("darkMode_center_scrollPane");
@@ -264,9 +253,7 @@ public class Controller {
         scrollPanes.get(index).setContent(commandContainers.get(index));
         updateCommands();
 
-        tab.setOnCloseRequest(ex -> {
-            removeTab(Integer.parseInt(tab.getId()));
-        });
+        tab.setOnCloseRequest(ex -> removeTab(Integer.parseInt(tab.getId())));
 
         tab.setOnSelectionChanged(ex -> {
             if (tab.isSelected()) {
@@ -329,7 +316,7 @@ public class Controller {
             String fileName = selectedFile.getName().split("\\.")[0];
             tabPane.getTabs().get(currentTabIndex).setText(fileName + " ".repeat(30 - fileName.length()));
         } catch (Exception e) {
-            System.out.println("Filesave aborted!");
+            //Filesave aborted!
         }
     }
 
@@ -342,7 +329,7 @@ public class Controller {
                 output.write(shorten(textAreas.get(currentTabIndex).getText()));
                 output.flush();
             } catch (Exception e) {
-                System.out.println("Filesave aborted!");
+                //Filesave aborted!
             }
         } else {
             saveAs();
@@ -392,16 +379,12 @@ public class Controller {
             aboutStage.setScene(aboutStage_scene);
             aboutStage.show();
 
-            aboutStage.setOnCloseRequest(e -> {
-                aboutPageOpen = false;
-            });
+            aboutStage.setOnCloseRequest(e -> aboutPageOpen = false);
         }
     }
 
     private String shorten(String s) {
-        System.out.println("t" + s.charAt(0) + "t");
         while ("\n".equals(s.charAt(0) + "") || "\t".equals(s.charAt(0) + "") || " ".equals(s.charAt(0) + "")) {
-            System.out.println("t" + s.charAt(0) + "t");
             s = s.substring(1);
         }
 

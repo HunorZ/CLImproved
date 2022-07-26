@@ -2,8 +2,10 @@ package com.climproved;
 
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -17,14 +19,16 @@ import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import javax.net.ssl.HttpsURLConnection;
+import java.io.*;
+import java.net.URL;
+import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class Controller {
 
@@ -84,7 +88,7 @@ public class Controller {
             }
         });
 
-        Main.stage.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<>() {
+        Main.stage.addEventFilter(KeyEvent.KEY_RELEASED, new EventHandler<>() {
             final KeyCombination keyComb = new KeyCodeCombination(KeyCode.T,
                     KeyCombination.CONTROL_DOWN);
 
@@ -95,18 +99,64 @@ public class Controller {
                 }
             }
         });
-        Main.stage.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<>() {
-            final KeyCombination keyComb = new KeyCodeCombination(KeyCode.W,
-                    KeyCombination.CONTROL_DOWN);
+        Main.stage.addEventFilter(KeyEvent.KEY_RELEASED
+                , new EventHandler<>() {
+                    final KeyCombination keyComb = new KeyCodeCombination(KeyCode.W,
+                            KeyCombination.CONTROL_DOWN);
 
-            public void handle(KeyEvent ke) {
-                if (keyComb.match(ke)) {
-                    removeTab(currentTabIndex);
-                    tabPane.getTabs().remove(currentTabIndex);
-                    ke.consume(); // <-- stops passing the event to next node
-                }
+                    public void handle(KeyEvent ke) {
+                        if (keyComb.match(ke)) {
+                            removeTab(currentTabIndex);
+                            tabPane.getTabs().remove(currentTabIndex);
+                            ke.consume(); // <-- stops passing the event to next node
+                        }
+                    }
+                });
+    }
+
+    @FXML
+    public void updateDataSet() {
+        try {
+            String link =
+                    "https://raw.githubusercontent.com/HunorZ/CLImproved/main/ciscoFile.json";
+            String fileName = "ciscoFile.json";
+            URL url = new URL(link);
+            try {
+                URLConnection connection = new URL(link).openConnection();
+                connection.connect();
+            } catch (IOException e) {
+                PopUp.print("Internet is not connected, dataset could not be updated!");
+                return;
             }
-        });
+            HttpsURLConnection https = (HttpsURLConnection) url.openConnection();
+            Map<String, List<String>> header = https.getHeaderFields();
+            while (isRedirected(header)) {
+                link = header.get("Location").get(0);
+                url = new URL(link);
+                https = (HttpsURLConnection) url.openConnection();
+                header = https.getHeaderFields();
+            }
+            InputStream input = https.getInputStream();
+            byte[] buffer = new byte[4096];
+            int n = -1;
+            OutputStream output = new FileOutputStream(new File(fileName));
+            while ((n = input.read(buffer)) != -1) {
+                output.write(buffer, 0, n);
+            }
+            output.close();
+        } catch (Exception e) {
+            PopUp.print("File could be updated because the source is not available any more");
+        }
+        createNewTab();
+
+    }
+
+    private boolean isRedirected(Map<String, List<String>> header) {
+        for (String hv : header.get(null)) {
+            if (hv.contains(" 301 ")
+                    || hv.contains(" 302 ")) return true;
+        }
+        return false;
     }
 
     public void updateCommands() {
@@ -263,7 +313,8 @@ public class Controller {
         });
     }
 
-    public void removeTab(int tabID) {
+    private void removeTab(int tabID) {
+
         for (int i = tabID; i < tabPane.getTabs().size() - 1; i++) {
             tabPane.getTabs().get(i).setId((Integer.parseInt(tabPane.getTabs().get(i).getId()) - 1) + "");
         }
@@ -384,13 +435,17 @@ public class Controller {
     }
 
     private String shorten(String s) {
-        while ("\n".equals(s.charAt(0) + "") || "\t".equals(s.charAt(0) + "") || " ".equals(s.charAt(0) + "")) {
-            s = s.substring(1);
-        }
+        if (!s.equals("")) {
+            while ("\n".equals(s.charAt(0) + "") || "\t".equals(s.charAt(0) + "") || " ".equals(s.charAt(0) + "")) {
+                s = s.substring(1);
+            }
 
-        while ("\n".equals(s.charAt(s.length() - 1) + "") || "\t".equals(s.charAt(s.length() - 1) + "") || " ".equals(s.charAt(s.length() - 1) + "")) {
-            s = s.substring(0, s.length() - 1);
+            while ("\n".equals(s.charAt(s.length() - 1) + "") || "\t".equals(s.charAt(s.length() - 1) + "") || " ".equals(s.charAt(s.length() - 1) + "")) {
+                s = s.substring(0, s.length() - 1);
+            }
+            return s;
         }
-        return s;
+        return "";
     }
+
 }

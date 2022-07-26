@@ -23,6 +23,7 @@
                 <Menu mnemonicParsing="false" text="Options">
                   <items>
                     <MenuItem mnemonicParsing="false" text="Appereance" />
+                     <MenuItem mnemonicParsing="false" onAction="#updateDataSet" text="Update dataset" />
                   </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help">

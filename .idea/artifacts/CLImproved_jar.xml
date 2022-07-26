@@ -1,0 +1,19 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="CLImproved:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/CLImproved_jar</output-path>
+    <root id="archive" name="CLImproved.jar">
+      <element id="module-output" name="CLImproved" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/json-20220320.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-base/16/javafx-base-16.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-graphics/16/javafx-graphics-16-win.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-controls/16/javafx-controls-16.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-graphics/16/javafx-graphics-16.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jetbrains/annotations/23.0.0/annotations-23.0.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-fxml/16/javafx-fxml-16-win.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-controls/16/javafx-controls-16-win.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-base/16/javafx-base-16-win.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-fxml/16/javafx-fxml-16.jar" path-in-jar="/" />
+      <element id="library" level="project" name="json-20220320" />
+    </root>
+  </artifact>
+</component>

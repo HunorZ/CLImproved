@@ -512,8 +512,7 @@
                   {
                     "type": "param",
                     "word": "0-256",
-                    "description": "Size of history buffer",
-                    "words": []
+                    "description": "Size of history buffer"
                   }
                 ]
               }

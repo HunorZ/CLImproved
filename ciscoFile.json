@@ -1,13 +1,4 @@
 [
-  {"category":"test123",
-  "words":[
-    {
-    "type":"command",
-      "word":"test",
-      "description":"longtest"
-    }
-  ]
-  },
   {
     "category": "user EXEC mode",
     "words": [

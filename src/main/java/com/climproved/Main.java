@@ -16,6 +16,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        //create main stage
         Main.stage = stage;
         Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
         Main.stage.setHeight(size.getHeight() * 0.7);

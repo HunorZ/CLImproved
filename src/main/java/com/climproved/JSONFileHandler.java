@@ -136,15 +136,14 @@ public class JSONFileHandler {
     public void loadNextWords(int indexOfPressedCommand) {
         try {
             switch (nextCommands.getJSONObject(indexOfPressedCommand).getString("type")) {
-                case "command":
+                case "command" -> {
                     //gets the value of the object "word" and writes it into the file
                     commandWriter.writeWord(nextCommands.getJSONObject(indexOfPressedCommand).getString("word"));
                     //loads the following commands of command with "indexOfPressedCommand",
                     //throws an error if no further commands are available
                     nextCommands = nextCommands.getJSONObject(indexOfPressedCommand).getJSONArray("words");
-                    break;
-
-                case "multiCommand":
+                }
+                case "multiCommand" -> {
                     //gets the value of the object "word" and writes it into the file
                     commandWriter.writeWord(nextCommands.getJSONObject(indexOfPressedCommand).getString("word"));
 
@@ -157,14 +156,12 @@ public class JSONFileHandler {
 
                     //the next commands are loaded into nextCommands
                     nextCommands = multiCommands.peek().getJSONArray(currentMultiCommand.peek());
-                    break;
-
-                case "param":
+                }
+                case "param" ->
                     //as parameters are handeld by the frontend no further operations have to be done and
                     //the next commands can be loaded into nextCommands
-                    nextCommands = nextCommands.getJSONObject(indexOfPressedCommand).getJSONArray("words");
-                    break;
-                case "param/enterSubMode":
+                        nextCommands = nextCommands.getJSONObject(indexOfPressedCommand).getJSONArray("words");
+                case "param/enterSubMode" -> {
                     //isInSubMode is set to true
                     //the submode is pushed onto the "accessedMode" stack
                     isInSubMode = true;
@@ -178,9 +175,8 @@ public class JSONFileHandler {
 
                     //the next commands are loaded into nextCommands
                     nextCommands = accessedModes.peek().getJSONArray("words");
-                    break;
-
-                case "command/enterSubMode":
+                }
+                case "command/enterSubMode" -> {
                     //gets the value of the object "word" and writes it into the file,
                     //makes a brake as no further commands are available and
                     //a tab is added to visualize the submode in the final txt document
@@ -196,9 +192,8 @@ public class JSONFileHandler {
 
                     //the next commands are loaded into nextCommands
                     nextCommands = accessedModes.peek().getJSONArray("words");
-                    break;
-
-                case "exitSubMode":
+                }
+                case "exitSubMode" -> {
                     //gets the value of the object "word" and writes it into the file,
                     //makes a brake as no further commands are available and
                     //a tab is removed to visualize the exit of the submode in the final txt document
@@ -219,11 +214,10 @@ public class JSONFileHandler {
                     if (accessedModes.size() == 1) {
                         isInSubMode = false;
                     }
-                    break;
-
-                case "finish":
+                }
+                case "finish" ->
                     //force into catch block as no further operations have to be made
-                    throw new JSONException("");
+                        throw new JSONException("");
             }
         } catch (JSONException e) {
             //if the user is currently in a multicommand and there are still  elements in the array left:
@@ -263,9 +257,6 @@ public class JSONFileHandler {
     public boolean isParam(int indexOfPressedCommand) {
         //if the value of the object key "type" equals "param" return true
         String currenPressedCommand = nextCommands.getJSONObject(indexOfPressedCommand).getString("type");
-        if (currenPressedCommand.equals("param") || currenPressedCommand.equals("param/enterSubMode")) {
-            return true;
-        }
-        return false;
+        return currenPressedCommand.equals("param") || currenPressedCommand.equals("param/enterSubMode");
     }
 }

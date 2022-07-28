@@ -2,10 +2,8 @@ package com.climproved;
 
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -125,7 +123,7 @@ public class Controller {
                 URLConnection connection = new URL(link).openConnection();
                 connection.connect();
             } catch (IOException e) {
-                PopUp.print("Internet is not connected, dataset could not be updated!");
+                new Alert("Internet is not connected\nDataset could not be updated!").fire();
                 return;
             }
             HttpsURLConnection https = (HttpsURLConnection) url.openConnection();
@@ -138,16 +136,18 @@ public class Controller {
             }
             InputStream input = https.getInputStream();
             byte[] buffer = new byte[4096];
-            int n = -1;
-            OutputStream output = new FileOutputStream(new File(fileName));
+            int n;
+            OutputStream output = new FileOutputStream(fileName);
             while ((n = input.read(buffer)) != -1) {
                 output.write(buffer, 0, n);
             }
             output.close();
+            createNewTab();
+            new Alert("Dataset successfully updated!\nOnly new tabs have the new dataset applied.").fire();
         } catch (Exception e) {
-            PopUp.print("File could be updated because the source is not available any more");
+            new Alert("Dataset could not be updated!\nPlease make sure to have a stable internet connection.").fire();
         }
-        createNewTab();
+
 
     }
 
@@ -170,10 +170,14 @@ public class Controller {
         commandContainers.get(currentTabIndex).setHgap(50);
         for (int i = 0; i < words.length; i++) {
             Button button = new Button();
-            int finalI = i;
+            //variable used in lambda expression must be final or effectively final
+            final int finalI = i;
+
+
             button.setOnAction(actionEvent -> {
                 if (jsonFileHandlerArrayList.get(currentTabIndex).isParam(finalI)) {
-                    String parameter = PopUp.readLine(jsonFileHandlerArrayList.get(currentTabIndex).getWords()[finalI]);
+                    String parameter = new Input(jsonFileHandlerArrayList.get(currentTabIndex).getWords()[finalI] + "\n" +
+                            jsonFileHandlerArrayList.get(currentTabIndex).getDescriptions()[finalI]).fire();
                     jsonFileHandlerArrayList.get(currentTabIndex).commandWriter.writeWord(parameter);
                 }
                 jsonFileHandlerArrayList.get(currentTabIndex).loadNextWords(finalI);
@@ -289,6 +293,7 @@ public class Controller {
         //set id of tab to its index in tabPane
         tab.setId(currentTabIndex + "");
 
+        //get modes and display them
         String[] execModes = jsonFileHandlerArrayList.get(0).getModes();
         for (int i = 0; i < execModes.length; i++) {
             Button button = new Button(execModes[i]);
@@ -305,9 +310,10 @@ public class Controller {
 
         tab.setOnCloseRequest(ex -> removeTab(Integer.parseInt(tab.getId())));
 
+        //if a tab is selected, change currentTabIndex to the index of the selected tab
         tab.setOnSelectionChanged(ex -> {
             if (tab.isSelected()) {
-                //if the tab is selected, change currentTabIndex to index of the selected tab
+
                 currentTabIndex = tabPane.getSelectionModel().getSelectedIndex();
             }
         });

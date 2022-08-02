@@ -5,47 +5,35 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.climproved.Controller">
-<VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" BorderPane.alignment="CENTER">
-         <children>
-            <MenuBar>
-              <menus>
-                <Menu mnemonicParsing="false" text="File">
-                  <items>
-                    <MenuItem mnemonicParsing="false" onAction="#saveAs" text="Save As" />
-                        <MenuItem mnemonicParsing="false" onAction="#save" text="Save" />
-                  </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Options">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="Appereance" />
-                     <MenuItem mnemonicParsing="false" onAction="#updateDataSet" text="Update dataset" />
-                  </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Help">
-                  <items>
-                    <MenuItem mnemonicParsing="false" onAction="#openAboutWindow" text="About" />
-                  </items>
-                </Menu>
-              </menus>
-            </MenuBar>
-            <AnchorPane>
-               <children>
-                  <TabPane fx:id="tabPane" tabClosingPolicy="ALL_TABS" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                    <tabs>
-                        <Tab fx:id="addTab" closable="false" text="+">
-                            <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="800" prefWidth="450" />
-                            </content>
-                        </Tab>
-                    </tabs>
-                  </TabPane>
-               </children>
-            </AnchorPane>
-         </children></VBox>
-
-</AnchorPane>
+<VBox id="tst" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.climproved.Controller">
+   <children>
+      <MenuBar>
+         <menus>
+            <Menu mnemonicParsing="false" text="File">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#saveAs" text="Save As" />
+                  <MenuItem mnemonicParsing="false" onAction="#save" text="Save" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Options">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Appereance" />
+                  <MenuItem mnemonicParsing="false" onAction="#updateDataSet" text="Update dataset" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Help">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#openAboutWindow" text="About" />
+               </items>
+            </Menu>
+         </menus>
+      </MenuBar>
+      <TabPane fx:id="tabPane" tabClosingPolicy="ALL_TABS">
+         <tabs>
+            <Tab fx:id="addTab" closable="false" text="+" />
+         </tabs>
+      </TabPane>
+   </children>
+</VBox>

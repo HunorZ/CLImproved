@@ -1,109 +1,146 @@
-.root {
-    -fx-background-color: #2b2b2b;
-    -fx-border-radius: 0;
-    -fx-faint-focus-color: #2b2b2b;
-    -fx-focus-color: #2b2b2b;
+.menu-bar {
+    -fx-background-color: #2e495c;
+    -fx-spacing: 0.5em;
+    -fx-padding: 0.5em;
 }
 
-#tabPane {
-
-    -fx-background-color: #3C3F41;
+.menu:openvertically {
+    -fx-background-color: #3D7778;
 }
 
-#textArea {
-    -fx-control-inner-background: #2b2b2b;
-    -fx-text-fill: #A9B7C6;
-    -fx-border-radius: 0px;
-    -fx-padding: -4px;
-    -fx-background-insets: 10;
-    -fx-effect: null;
-
-    -fx-border-width: 3px;
-    -fx-border-color: #515151 #515151 #515151 transparent;
+.menu:openvertically > .label {
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 1.3em;
 }
 
-#textArea.content {
-    -fx-background-color: #2b2b2b;
-    fx-background-radius: 0;
+.menu:openvertically > .label:hover {
+    -fx-text-fill: #bbbbbb;
 }
 
-#button_commands {
+.context-menu {
+    -fx-text-fill: #ffffff;
+    -fx-background-color: #2e495c;
+    -fx-padding: 0.5em;
+}
+
+.menu-item > .label {
+    -fx-font-size: 1.1em;
+    -fx-text-fill: #ffffff;
+}
+
+.menu-item:focused {
+    -fx-background-color: #006872;
+}
+
+
+.tab-header-background {
+    -fx-background-color: #145483;
+}
+
+
+.tab-label {
+    -fx-alignment: CENTER;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 1.2em;
+}
+
+.tab {
+    -fx-background-color: #2e495c;
+    -fx-pref-height: 3em;
+    -fx-alignment: CENTER;
+}
+
+.tab-content-area {
+    -fx-pref-height: 9000px;
+}
+
+.tab:selected {
+    -fx-background-color: #3D7778;
+}
+
+.tab:selected .focus-indicator {
+    -fx-border-width: 0;
+}
+
+.tab:selected > .tab-container > .tab-close-button {
+    -fx-background-color: #ffffff;
+}
+
+#modeContainer {
+    -fx-alignment: center-left;
+    -fx-min-height: 6em;
+    -fx-spacing: 1.5em;
+    -fx-padding: 0 0 0 8em;
+
+    -fx-background-color: #2e495c;
+}
+
+#modeContainer > .button {
+    -fx-background-color: #3D7778;
+    -fx-border-width: 0px;
+
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 1.5em;
+}
+
+#gridPane {
+    -fx-background-color: #145483;
+    -fx-padding: 0.5em;
+    -fx-hgap: 0.5em;
+}
+
+#scrollPane {
+    -fx-background-color: #2e495c;
+    -fx-fit-to-width: true;
+    -fx-fit-to-height: true;
+}
+
+
+#wordsGrid {
+    -fx-background-color: #2e495c;
+    -fx-hgap: 6em;
+    -fx-vgap: 0.9em;
+}
+
+#wordsGrid > .label {
+    -fx-font-size: 1.3em;
+    -fx-text-fill: #ffffff;
+}
+
+#wordButton {
     -fx-border-color: transparent;
     -fx-border-width: 0;
     -fx-background-radius: 0;
     -fx-background-color: transparent;
 }
 
-#darkMode_header_modeButton {
-    -fx-background-color: #3E869E;
-    -fx-background-radius: 20px;
-    -fx-border-color: #222222;
-    -fx-border-radius: 20px;
-    -fx-border-width: 2px;
-    -fx-background-insets: 2px;
-}
-
-.label {
-    -fx-text-fill: #FFFFFF;
-    -fx-background-color: transparent;
-    -fx-color: #555555;
-}
-
-#darkMode_center_scrollPane {
-
-    -fx-background: #3C3F41;
-    -fx-text-fill: #BBBBBB;
-    -fx-border-width: 2px;
-    -fx-border-color: #515151;
-
-}
-
-.menu-bar {
-    -fx-background-color: #555555;
-}
-
-.menu-bar .context-menu {
-    -fx-background-color: #555555;
-}
-
-.menu {
-    -fx-text-fill: #FFFFFF;
-    -fx-background-color: transparent;
-    -fx-color: #555555;
-}
-
-.menu:hover {
-    -fx-background-color: #00a8ff;
-}
-
-.menu-item {
-    -fx-background-color: #555555;
-}
-
-.menu-item:focused {
-    -fx-background-color: #00a8ff;
-}
-
-.tab-pane {
-    -fx-open-tab-animation: GROW;
-    -fx-close-tab-animation: GROW;
-}
-
-.tab-pane .tab-header-background {
-    -fx-background-color: #2b2b2b;
+#textArea {
+    -fx-control-inner-background: #2e495c;
+    -fx-background-color: #2e495c;
     -fx-effect: null;
-
+    -fx-padding: 0px;
+    -fx-font-size: 1.3em;
 }
 
-.tab {
-    -fx-background-color: #3C3F41;
-    -fx-color: #ffffff;
-    -fx-text-base-color: #ffffff;
-    -fx-font-family: Symbol;
-    -fx-font-size: 110%;
+
+.scroll-bar:vertical > .increment-button,
+.scroll-bar:vertical > .decrement-button {
+    -fx-padding: 0 0 0 0;
 }
 
-.tab:selected {
-    -fx-background-color: #555555;
-    -fx-text-fill: #ffffff;
+.scroll-bar:vertical {
+    -fx-pref-width: 1.2em;
+}
+
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #3D7778;
+}
+
+.scroll-bar:vertical .track {
+    -fx-background-color: #88aaab;
+}
+
+.scroll-bar:vertical > .increment-button > .increment-arrow,
+.scroll-bar:vertical > .decrement-button > .decrement-arrow {
+    -fx-padding: 0 0 0 0;
 }

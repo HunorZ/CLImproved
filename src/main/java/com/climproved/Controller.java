@@ -6,6 +6,10 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -18,6 +22,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import javax.net.ssl.HttpsURLConnection;
+import java.awt.*;
 import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
@@ -38,16 +43,8 @@ public class Controller {
 
     ArrayList<JSONFileHandler> jsonFileHandlerArrayList = new ArrayList<>();
 
-    ArrayList<AnchorPane> outerAnchorPanes = new ArrayList<>();
-    ArrayList<VBox> vBoxes = new ArrayList<>();
-    ArrayList<AnchorPane> innerAnchorPanes = new ArrayList<>();
     ArrayList<HBox> hBoxes = new ArrayList<>();
-    ArrayList<GridPane> gridPanes = new ArrayList<>();
-    ArrayList<ColumnConstraints> firstColumnConstrains = new ArrayList<>();
-    ArrayList<ColumnConstraints> secondColumnConstrains = new ArrayList<>();
-    ArrayList<RowConstraints> rowConstraints = new ArrayList<>();
     ArrayList<TextArea> textAreas = new ArrayList<>();
-    ArrayList<ScrollPane> scrollPanes = new ArrayList<>();
     ArrayList<GridPane> commandContainers = new ArrayList<>();
 
     int currentTabIndex = 0;
@@ -164,10 +161,10 @@ public class Controller {
         String content = jsonFileHandlerArrayList.get(currentTabIndex).commandWriter.getContent();
         textAreas.get(currentTabIndex).clear();
         textAreas.get(currentTabIndex).appendText(content);
+
         String[] words = jsonFileHandlerArrayList.get(currentTabIndex).getWords();
         String[] descriptions = jsonFileHandlerArrayList.get(currentTabIndex).getDescriptions();
-        commandContainers.get(currentTabIndex).setVgap(5);
-        commandContainers.get(currentTabIndex).setHgap(50);
+
         for (int i = 0; i < words.length; i++) {
             Button button = new Button();
             //variable used in lambda expression must be final or effectively final
@@ -189,7 +186,7 @@ public class Controller {
                 break;
             }
             button.setGraphic(new ImageView(center_addButton_image));
-            button.setId("button_commands");
+            button.setId("wordButton");
             commandContainers.get(currentTabIndex).add(button, 0, i);
             commandContainers.get(currentTabIndex).add(new Label(words[i]), 1, i);
             commandContainers.get(currentTabIndex).add(new Label(descriptions[i]), 2, i);
@@ -202,85 +199,60 @@ public class Controller {
         Tab tab = new Tab("tab");
         tab.setText("Untitled                      ");
 
-
         //create new jsonFileHandler instance for new tab
         jsonFileHandlerArrayList.add(new JSONFileHandler());
         jsonFileHandlerArrayList.get(jsonFileHandlerArrayList.size() - 1).init("ciscoFile.json");
 
         int index = jsonFileHandlerArrayList.size() - 1;
 
-        outerAnchorPanes.add(new AnchorPane());
-        outerAnchorPanes.get(index).maxWidth(1.7976931348623157E308);
-        outerAnchorPanes.get(index).maxHeight(1.7976931348623157E308);
-        outerAnchorPanes.get(index).minWidth(0.0);
-        outerAnchorPanes.get(index).minHeight(0.0);
 
-        vBoxes.add(new VBox());
-        vBoxes.get(index).setAlignment(Pos.TOP_CENTER);
-        AnchorPane.setBottomAnchor(vBoxes.get(index), 0.0);
-        AnchorPane.setLeftAnchor(vBoxes.get(index), 0.0);
-        AnchorPane.setRightAnchor(vBoxes.get(index), 0.0);
-        AnchorPane.setTopAnchor(vBoxes.get(index), 0.0);
+        AnchorPane anchorPane = new AnchorPane();
 
-        innerAnchorPanes.add(new AnchorPane());
-        innerAnchorPanes.get(index).setPrefHeight(50.0);
+        VBox vBox = new VBox();
+        AnchorPane.setTopAnchor(vBox, 0.0);
+        AnchorPane.setBottomAnchor(vBox, 0.0);
+        AnchorPane.setRightAnchor(vBox, 0.0);
+        AnchorPane.setLeftAnchor(vBox, 0.0);
 
         hBoxes.add(new HBox());
-        hBoxes.get(index).setAlignment(Pos.CENTER_LEFT);
-        hBoxes.get(index).setFillHeight(false);
-        hBoxes.get(index).prefHeight(46.0);
-        hBoxes.get(index).setSpacing(30.0);
-        hBoxes.get(index).setPadding(new Insets(0, 0, 0, 100));
+        hBoxes.get(index).setId("modeContainer");
 
-        AnchorPane.setBottomAnchor(hBoxes.get(index), 0.0);
-        AnchorPane.setLeftAnchor(hBoxes.get(index), 0.0);
-        AnchorPane.setRightAnchor(hBoxes.get(index), 0.0);
-        AnchorPane.setTopAnchor(hBoxes.get(index), 0.0);
+        GridPane gridPane = new GridPane();
 
-        gridPanes.add(new GridPane());
-        gridPanes.get(index).setAlignment(Pos.CENTER);
-        VBox.setVgrow(gridPanes.get(index), Priority.ALWAYS);
+        gridPane.setId("gridPane");
 
-        firstColumnConstrains.add(new ColumnConstraints());
-        firstColumnConstrains.get(index).setHgrow(Priority.SOMETIMES);
-        firstColumnConstrains.get(index).setMinWidth(10);
-        firstColumnConstrains.get(index).setPercentWidth(60.0);
-        firstColumnConstrains.get(index).setPrefWidth(100.0);
+        ColumnConstraints left = new ColumnConstraints();
+        left.setPercentWidth(60);
 
-        secondColumnConstrains.add(new ColumnConstraints());
-        secondColumnConstrains.get(index).setHgrow(Priority.SOMETIMES);
-        secondColumnConstrains.get(index).setMinWidth(10);
-        secondColumnConstrains.get(index).setPercentWidth(40.0);
-        secondColumnConstrains.get(index).setPrefWidth(100.0);
+        ColumnConstraints right = new ColumnConstraints();
+        right.setPercentWidth(40);
 
-        rowConstraints.add(new RowConstraints());
-        rowConstraints.get(index).setMinHeight(10.0);
-        rowConstraints.get(index).setPrefHeight(30.0);
-        rowConstraints.get(index).setVgrow(Priority.SOMETIMES);
-        gridPanes.get(index).getColumnConstraints().addAll(firstColumnConstrains.get(index), secondColumnConstrains.get(index));
-        gridPanes.get(index).getRowConstraints().add(rowConstraints.get(index));
-        gridPanes.get(index).setGridLinesVisible(true);
-        gridPanes.get(index).setId("gridPane");
-        gridPanes.get(index).setFocusTraversable(false);
+        RowConstraints rowConstraints = new RowConstraints();
+        rowConstraints.setVgrow(Priority.SOMETIMES);
+
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setId("scrollPane");
+
+        commandContainers.add(new GridPane());
+        commandContainers.get(index).setId("wordsGrid");
 
         textAreas.add(new TextArea());
         textAreas.get(index).setId("textArea");
-        textAreas.get(index).setFocusTraversable(false);
-        textAreas.get(index).textProperty().addListener((observableValue, s, t1) -> jsonFileHandlerArrayList.get(currentTabIndex).commandWriter.setContent(textAreas.get(currentTabIndex).getText()));
+        textAreas.get(index).textProperty().addListener(
+                (observableValue, s, t1) -> jsonFileHandlerArrayList.get(currentTabIndex).commandWriter
+                        .setContent(textAreas.get(currentTabIndex).getText()));
 
-        scrollPanes.add(new ScrollPane());
-        scrollPanes.get(index).setId("darkMode_center_scrollPane");
-        scrollPanes.get(index).setFocusTraversable(false);
+        gridPane.getColumnConstraints().addAll(left, right);
+        gridPane.getRowConstraints().add(rowConstraints);
 
-        commandContainers.add(new GridPane());
+        scrollPane.setContent(commandContainers.get(index));
+        gridPane.add(scrollPane, 0, 0);
+        gridPane.add(textAreas.get(index), 1, 0);
+        vBox.getChildren().addAll(hBoxes.get(index), gridPane);
+        VBox.setVgrow(gridPane, Priority.ALWAYS);
+        anchorPane.getChildren().add(vBox);
+        tab.setContent(anchorPane);
 
-        scrollPanes.get(index).setContent(commandContainers.get(index));
-        gridPanes.get(index).add(scrollPanes.get(index), 0, 0);
-        gridPanes.get(index).add(textAreas.get(index), 1, 0);
-        innerAnchorPanes.get(index).getChildren().add(hBoxes.get(index));
-        vBoxes.get(index).getChildren().addAll(innerAnchorPanes.get(index), gridPanes.get(index));
-        outerAnchorPanes.get(index).getChildren().add(vBoxes.get(index));
-        tab.setContent(outerAnchorPanes.get(index));
 
         //add tab to tabPane
         tabPane.getTabs().add(index, tab);
@@ -297,7 +269,6 @@ public class Controller {
         String[] execModes = jsonFileHandlerArrayList.get(0).getModes();
         for (int i = 0; i < execModes.length; i++) {
             Button button = new Button(execModes[i]);
-            button.setId("darkMode_header_modeButton");
             int finalI = i;
             button.setOnAction(actionEvent -> {
                 jsonFileHandlerArrayList.get(currentTabIndex).changeMode(finalI);
@@ -305,7 +276,6 @@ public class Controller {
             });
             hBoxes.get(currentTabIndex).getChildren().add(button);
         }
-        scrollPanes.get(index).setContent(commandContainers.get(index));
         updateCommands();
 
         tab.setOnCloseRequest(ex -> removeTab(Integer.parseInt(tab.getId())));
@@ -329,17 +299,10 @@ public class Controller {
         jsonFileHandlerArrayList.remove(tabID);
 
         //remove all JavaFx components, as they are no longer displayed
-        outerAnchorPanes.remove(tabID);
-        vBoxes.remove(tabID);
-        innerAnchorPanes.remove(tabID);
         hBoxes.remove(tabID);
-        gridPanes.remove(tabID);
-        firstColumnConstrains.remove(tabID);
-        secondColumnConstrains.remove(tabID);
-        rowConstraints.remove(tabID);
         textAreas.remove(tabID);
-        scrollPanes.remove(tabID);
         commandContainers.remove(tabID);
+
         if (tabPane.getTabs().size() == 1) {
             createNewTab();
         }
@@ -430,7 +393,7 @@ public class Controller {
             aboutStage.setResizable(false);
             aboutStage.setWidth(330);
             aboutStage.setHeight(300);
-
+            aboutStage.initOwner(Main.stage);
             aboutStage.setTitle("About");
             aboutStage.getIcons().add(header_logo_image);
             aboutStage.setScene(aboutStage_scene);

@@ -43,6 +43,7 @@ public class Question extends Notification {
         stage.setWidth(400);
         stage.setHeight(message.chars().filter(ch -> ch == '\n').count() * 20 + 140);
         stage.initStyle(StageStyle.UNDECORATED);
+        stage.initOwner(Main.stage);
         stage.setScene(scene);
     }
 

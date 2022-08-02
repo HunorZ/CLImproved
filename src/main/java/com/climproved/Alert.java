@@ -30,6 +30,7 @@ public class Alert extends Notification {
         stage = new Stage();
         stage.setWidth(400);
         stage.setHeight(message.chars().filter(ch -> ch == '\n').count() * 20 + 140);
+        stage.initOwner(Main.stage);
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(scene);
 

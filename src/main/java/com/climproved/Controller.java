@@ -41,6 +41,8 @@ public class Controller {
     @FXML
     private Tab addTab;
 
+    String userInput = "";
+
     ArrayList<JSONFileHandler> jsonFileHandlerArrayList = new ArrayList<>();
 
     ArrayList<HBox> hBoxes = new ArrayList<>();
@@ -230,8 +232,21 @@ public class Controller {
         RowConstraints rowConstraints = new RowConstraints();
         rowConstraints.setVgrow(Priority.SOMETIMES);
 
+        VBox leftVBox = new VBox();
+
+        AnchorPane labelAnchor = new AnchorPane();
+
+        Label label = new Label();
+        label.setText("");
+        label.setId("inWords");
+        AnchorPane.setTopAnchor(label, 0.0);
+        AnchorPane.setBottomAnchor(label, 0.0);
+        AnchorPane.setRightAnchor(label, 0.0);
+        AnchorPane.setLeftAnchor(label, 0.0);
+
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setId("scrollPane");
+        VBox.setVgrow(scrollPane, Priority.ALWAYS);
 
         commandContainers.add(new GridPane());
         commandContainers.get(index).setId("wordsGrid");
@@ -239,14 +254,18 @@ public class Controller {
         textAreas.add(new TextArea());
         textAreas.get(index).setId("textArea");
         textAreas.get(index).textProperty().addListener(
-                (observableValue, s, t1) -> jsonFileHandlerArrayList.get(currentTabIndex).commandWriter
-                        .setContent(textAreas.get(currentTabIndex).getText()));
+                (observableValue, s, t1) -> {
+                    jsonFileHandlerArrayList.get(currentTabIndex).commandWriter
+                            .setContent(textAreas.get(currentTabIndex).getText());
+                });
 
         gridPane.getColumnConstraints().addAll(left, right);
         gridPane.getRowConstraints().add(rowConstraints);
 
+        labelAnchor.getChildren().add(label);
         scrollPane.setContent(commandContainers.get(index));
-        gridPane.add(scrollPane, 0, 0);
+        leftVBox.getChildren().addAll(labelAnchor, scrollPane);
+        gridPane.add(leftVBox, 0, 0);
         gridPane.add(textAreas.get(index), 1, 0);
         vBox.getChildren().addAll(hBoxes.get(index), gridPane);
         VBox.setVgrow(gridPane, Priority.ALWAYS);

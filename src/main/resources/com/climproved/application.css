@@ -1,11 +1,17 @@
+* {
+    -fx-primary: #2e495c;
+    -fx-secondary: #145483;
+    -fx-tertiary: #3D7778;
+}
+
 .menu-bar {
-    -fx-background-color: #2e495c;
+    -fx-background-color: -fx-primary;
     -fx-spacing: 0.5em;
     -fx-padding: 0.5em;
 }
 
 .menu:openvertically {
-    -fx-background-color: #3D7778;
+    -fx-background-color: -fx-tertiary;
 }
 
 .menu:openvertically > .label {
@@ -19,7 +25,7 @@
 
 .context-menu {
     -fx-text-fill: #ffffff;
-    -fx-background-color: #2e495c;
+    -fx-background-color: -fx-primary;
     -fx-padding: 0.5em;
 }
 
@@ -29,12 +35,12 @@
 }
 
 .menu-item:focused {
-    -fx-background-color: #006872;
+    -fx-background-color: -fx-tertiary;
 }
 
 
 .tab-header-background {
-    -fx-background-color: #145483;
+    -fx-background-color: -fx-secondary;
 }
 
 
@@ -45,7 +51,7 @@
 }
 
 .tab {
-    -fx-background-color: #2e495c;
+    -fx-background-color: -fx-primary;
     -fx-pref-height: 3em;
     -fx-alignment: CENTER;
 }
@@ -55,7 +61,7 @@
 }
 
 .tab:selected {
-    -fx-background-color: #3D7778;
+    -fx-background-color: -fx-tertiary;
 }
 
 .tab:selected .focus-indicator {
@@ -69,14 +75,14 @@
 #modeContainer {
     -fx-alignment: center-left;
     -fx-min-height: 6em;
-    -fx-spacing: 1.5em;
-    -fx-padding: 0 0 0 8em;
+    -fx-spacing: 4.3em;
+    -fx-padding: 0 0 0 13em;
 
-    -fx-background-color: #2e495c;
+    -fx-background-color: -fx-primary;
 }
 
 #modeContainer > .button {
-    -fx-background-color: #3D7778;
+    -fx-background-color: -fx-tertiary;
     -fx-border-width: 0px;
 
     -fx-text-fill: #ffffff;
@@ -84,20 +90,29 @@
 }
 
 #gridPane {
-    -fx-background-color: #145483;
+    -fx-background-color: -fx-secondary;
     -fx-padding: 0.5em;
     -fx-hgap: 0.5em;
 }
 
+#inWords{
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 1.2em;
+    -fx-min-height: 3em;
+    -fx-padding: 0 0 0 5em;
+    -fx-background-color: -fx-primary;
+
+}
+
 #scrollPane {
-    -fx-background-color: #2e495c;
+    -fx-background-color: -fx-primary;
     -fx-fit-to-width: true;
     -fx-fit-to-height: true;
 }
 
 
 #wordsGrid {
-    -fx-background-color: #2e495c;
+    -fx-background-color: -fx-primary;
     -fx-hgap: 6em;
     -fx-vgap: 0.9em;
 }
@@ -115,8 +130,8 @@
 }
 
 #textArea {
-    -fx-control-inner-background: #2e495c;
-    -fx-background-color: #2e495c;
+    -fx-control-inner-background: -fx-primary;
+    -fx-background-color: -fx-primary;
     -fx-effect: null;
     -fx-padding: 0px;
     -fx-font-size: 1.3em;
@@ -133,7 +148,7 @@
 }
 
 .scroll-bar:vertical .thumb {
-    -fx-background-color: #3D7778;
+    -fx-background-color: -fx-tertiary;
 }
 
 .scroll-bar:vertical .track {

@@ -27,6 +27,7 @@ public class Main extends Application {
 
         Scene scene = new Scene(fxmlLoader.load());
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("application.css")).toExternalForm());
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("application.css")).toExternalForm());
         Main.stage.setTitle("CLImproved");
         Main.stage.setScene(scene);
         Main.stage.setResizable(true);

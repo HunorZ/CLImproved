@@ -926,7 +926,7 @@
               ]
             },
             {
-              "type": "command",
+              "type": "multiCommand",
               "word": "banner",
               "description": "Define a login banner",
               "words": [
@@ -1333,6 +1333,18 @@
             },
             {
               "type": "command",
+              "word": "domain-name",
+              "description": "IEEE 802.11 config commands",
+              "words": [
+                {
+                  "type": "param",
+                  "word": "WORD",
+                  "description": "Specifies the domain name"
+                }
+              ]
+            },
+            {
+              "type": "command",
               "word": "enable",
               "description": "Modify enable password parameters",
               "words": [
@@ -1531,7 +1543,7 @@
               "description": "Set system's network name",
               "words": [
                 {
-                  "type": "command",
+                  "type": "param",
                   "word": "WORD",
                   "description": "This system's network name"
                 }
@@ -3210,7 +3222,14 @@
             {
               "type": "command",
               "word": "ipv6",
-              "description": "Global IPv6 configuration commands"
+              "description": "Global IPv6 configuration commands",
+              "words": [
+                {
+                  "type":"command",
+                  "word":"unicast-routing",
+                  "description": "Enable unicast routing"
+                }
+              ]
             },
             {
               "type": "command",
@@ -3240,7 +3259,49 @@
             {
               "type": "command",
               "word": "login",
-              "description": "Enable secure login checking"
+              "description": "Enable secure login checking",
+              "words": [
+                {
+                  "type": "command",
+                  "word": "block-for",
+                  "description": "Set quit-mode active time period",
+                  "words": [
+                    {
+                      "type": "param",
+                      "word": "<1-65535>",
+                      "description": "Time period in seconds",
+                      "words": [
+                        {
+                          "type": "command",
+                          "word": "attempts",
+                          "description": "Set max number of fail attempts",
+                          "words": [
+                            {
+                              "type": "param",
+                              "word": "<1-65535>",
+                              "description": "Fail attempts max value",
+                              "words": [
+                                {
+                                  "type": "command",
+                                  "word": "within",
+                                  "description": "Watch period for fail attempts",
+                                  "words": [
+                                    {
+                                      "type": "param",
+                                      "word": "<1-65535>",
+                                      "description": "Time period in seconds"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
             },
             {
               "type": "command",
@@ -3305,12 +3366,40 @@
             {
               "type": "command",
               "word": "security",
-              "description": "Infra Security CLIs"
+              "description": "Infra Security CLIs",
+              "words": [
+                {
+                  "type": "command",
+                  "word": "passwords",
+                  "description": "Password security CLIs",
+                  "words": [
+                    {
+                      "type": "command",
+                      "word": "min-length",
+                      "description": "Minimum length of passwords",
+                      "words": [
+                        {
+                        "type": "param",
+                        "word": "<0-16>",
+                        "description": "Minimum length of all user/enable passwords"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
             },
             {
               "type": "command",
               "word": "service",
-              "description": "Modify use of network based services"
+              "description": "Modify use of network based services",
+              "words": [
+                {
+                  "type": "command",
+                  "word": "password-encryption",
+                  "description": "Encrypt system passwords"
+                }
+              ]
             },
             {
               "type": "command",
@@ -3330,7 +3419,27 @@
             {
               "type": "command",
               "word": "username",
-              "description": "Establish User Name Authentication"
+              "description": "Establish User Name Authentication",
+              "words": [
+                {
+                  "type": "param",
+                  "word": "Username",
+                  "words": [
+                    {
+                      "type": "command",
+                      "word": "secret",
+                      "description": "Specify the secret for the user",
+                      "words": [
+                        {
+                          "type": "param",
+                          "word": "LINE",
+                          "description": "The UNENCRYPTED (cleartext) user secret"
+                        }
+                      ]
+                  }
+                  ]
+            }
+              ]
             },
             {
               "type": "command",

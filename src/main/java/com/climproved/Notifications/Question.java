@@ -1,5 +1,6 @@
-package com.climproved;
+package com.climproved.Notifications;
 
+import com.climproved.Main;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
@@ -43,7 +44,7 @@ public class Question extends Notification {
         stage.setWidth(400);
         stage.setHeight(message.chars().filter(ch -> ch == '\n').count() * 20 + 140);
         stage.initStyle(StageStyle.UNDECORATED);
-        stage.initOwner(Main.stage);
+        stage.initOwner(owner);
         stage.setScene(scene);
     }
 

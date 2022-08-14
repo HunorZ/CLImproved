@@ -1,5 +1,6 @@
-package com.climproved;
+package com.climproved.Notifications;
 
+import com.climproved.Main;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
@@ -11,7 +12,7 @@ public class Alert extends Notification {
 
     Button button = new Button("Ok");
 
-    Alert(String message) {
+    public Alert(String message) {
         setMessage(message);
 
         button.setPrefWidth(70);
@@ -30,7 +31,7 @@ public class Alert extends Notification {
         stage = new Stage();
         stage.setWidth(400);
         stage.setHeight(message.chars().filter(ch -> ch == '\n').count() * 20 + 140);
-        stage.initOwner(Main.stage);
+        stage.initOwner(owner);
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(scene);
 

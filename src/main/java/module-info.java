@@ -7,4 +7,6 @@ module com.climproved {
 
     opens com.climproved to javafx.fxml;
     exports com.climproved;
+    exports com.climproved.Notifications;
+    opens com.climproved.Notifications to javafx.fxml;
 }

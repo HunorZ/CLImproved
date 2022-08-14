@@ -1,5 +1,6 @@
-package com.climproved;
+package com.climproved.Notifications;
 
+import com.climproved.Main;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -38,7 +39,7 @@ public class Input extends Notification {
         stage.setWidth(400);
         stage.setHeight(170 + message.chars().filter(ch -> ch == '\n').count() * 20);
         stage.setResizable(false);
-        stage.initOwner(Main.stage);
+        stage.initOwner(owner);
         stage.initStyle(StageStyle.UNDECORATED);
 
         scene = new Scene(anchorPane);

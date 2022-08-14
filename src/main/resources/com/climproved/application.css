@@ -135,6 +135,7 @@
     -fx-effect: null;
     -fx-padding: 0px;
     -fx-font-size: 1.3em;
+    -fx-highlight-fill: -fx-tertiary;
 }
 
 

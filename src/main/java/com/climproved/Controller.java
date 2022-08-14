@@ -1,15 +1,13 @@
 package com.climproved;
 
+import com.climproved.Notifications.Alert;
+import com.climproved.Notifications.Input;
+import com.climproved.Notifications.Notification;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -22,7 +20,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import javax.net.ssl.HttpsURLConnection;
-import java.awt.*;
 import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
@@ -40,8 +37,6 @@ public class Controller {
 
     @FXML
     private Tab addTab;
-
-    String userInput = "";
 
     ArrayList<JSONFileHandler> jsonFileHandlerArrayList = new ArrayList<>();
 
@@ -68,6 +63,7 @@ public class Controller {
     }
 
     public void initialize() {
+        Notification.owner = Main.stage;
         //add first tab at init
         createNewTab();
         //addTab function
@@ -122,7 +118,7 @@ public class Controller {
                 URLConnection connection = new URL(link).openConnection();
                 connection.connect();
             } catch (IOException e) {
-                new Alert("Internet is not connected\nDataset could not be updated!").fire();
+                new com.climproved.Notifications.Alert("Internet is not connected\nDataset could not be updated!").fire();
                 return;
             }
             HttpsURLConnection https = (HttpsURLConnection) url.openConnection();
@@ -142,7 +138,7 @@ public class Controller {
             }
             output.close();
             createNewTab();
-            new Alert("Dataset successfully updated!\nOnly new tabs have the new dataset applied.").fire();
+            new com.climproved.Notifications.Alert("Dataset successfully updated!\nOnly new tabs have the new dataset applied.").fire();
         } catch (Exception e) {
             new Alert("Dataset could not be updated!\nPlease make sure to have a stable internet connection.").fire();
         }

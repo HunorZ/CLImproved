@@ -15,7 +15,7 @@ public class Question extends Notification {
 
     boolean answer = false;
 
-    Question(String message) {
+    public Question(String message) {
         setMessage(message);
         setMessage(message);
 
@@ -24,12 +24,12 @@ public class Question extends Notification {
             answer = true;
             stage.close();
         });
-        AnchorPane.setRightAnchor(apply, 150.0);
+        AnchorPane.setRightAnchor(apply, 140.0);
         AnchorPane.setBottomAnchor(apply, 25.0);
 
         deny.setPrefWidth(70);
         deny.setOnAction(actionEvent -> stage.close());
-        AnchorPane.setRightAnchor(deny, 50.0);
+        AnchorPane.setRightAnchor(deny, 40.0);
         AnchorPane.setBottomAnchor(deny, 25.0);
 
         label.setFont(new Font(15));

@@ -3,6 +3,7 @@ package com.climproved;
 import com.climproved.Notifications.Alert;
 import com.climproved.Notifications.Input;
 import com.climproved.Notifications.Notification;
+import com.climproved.Notifications.Question;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -25,6 +26,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,11 +45,13 @@ public class Controller {
     ArrayList<HBox> hBoxes = new ArrayList<>();
     ArrayList<TextArea> textAreas = new ArrayList<>();
     ArrayList<GridPane> commandContainers = new ArrayList<>();
+    ArrayList<String> filePathsAtLastSave = new ArrayList<>();
+
+    String typeWord = "";
 
     int currentTabIndex = 0;
     boolean aboutPageOpen = false;
 
-    String filePathAtLastSave = "";
     String contentAtLastSave;
 
     Image center_addButton_image;
@@ -81,7 +85,7 @@ public class Controller {
             }
         });
 
-        Main.stage.addEventFilter(KeyEvent.KEY_RELEASED, new EventHandler<>() {
+        Main.stage.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<>() {
             final KeyCombination keyComb = new KeyCodeCombination(KeyCode.T,
                     KeyCombination.CONTROL_DOWN);
 
@@ -230,6 +234,7 @@ public class Controller {
 
         VBox leftVBox = new VBox();
 
+        /*
         AnchorPane labelAnchor = new AnchorPane();
 
         Label label = new Label();
@@ -239,6 +244,7 @@ public class Controller {
         AnchorPane.setBottomAnchor(label, 0.0);
         AnchorPane.setRightAnchor(label, 0.0);
         AnchorPane.setLeftAnchor(label, 0.0);
+        */
 
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setId("scrollPane");
@@ -253,14 +259,15 @@ public class Controller {
                 (observableValue, s, t1) -> {
                     jsonFileHandlerArrayList.get(currentTabIndex).commandWriter
                             .setContent(textAreas.get(currentTabIndex).getText());
+
                 });
 
         gridPane.getColumnConstraints().addAll(left, right);
         gridPane.getRowConstraints().add(rowConstraints);
 
-        labelAnchor.getChildren().add(label);
+        //labelAnchor.getChildren().add(label);
         scrollPane.setContent(commandContainers.get(index));
-        leftVBox.getChildren().addAll(labelAnchor, scrollPane);
+        leftVBox.getChildren().addAll(scrollPane);
         gridPane.add(leftVBox, 0, 0);
         gridPane.add(textAreas.get(index), 1, 0);
         vBox.getChildren().addAll(hBoxes.get(index), gridPane);
@@ -268,6 +275,7 @@ public class Controller {
         anchorPane.getChildren().add(vBox);
         tab.setContent(anchorPane);
 
+        filePathsAtLastSave.add("");
 
         //add tab to tabPane
         tabPane.getTabs().add(index, tab);
@@ -305,6 +313,18 @@ public class Controller {
     }
 
     private void removeTab(int tabID) {
+        String s = "";
+        try {
+            s = new String(Files.readAllBytes(Path.of(filePathsAtLastSave.get(tabID))));
+        } catch (IOException ignored) {
+        }
+
+        if (!s.equals(textAreas.get(tabID).getText())) {
+            if (new Question("There are unsaved changes left!\n" +
+                    "Do you want to save them?").fire()) {
+                save();
+            }
+        }
 
         for (int i = tabID; i < tabPane.getTabs().size() - 1; i++) {
             tabPane.getTabs().get(i).setId((Integer.parseInt(tabPane.getTabs().get(i).getId()) - 1) + "");
@@ -317,6 +337,7 @@ public class Controller {
         hBoxes.remove(tabID);
         textAreas.remove(tabID);
         commandContainers.remove(tabID);
+        filePathsAtLastSave.remove(tabID);
 
         if (tabPane.getTabs().size() == 1) {
             createNewTab();
@@ -342,7 +363,7 @@ public class Controller {
                 .add(new FileChooser.ExtensionFilter("Text files (*.txt)", "*.txt"));
         try {
             File selectedFile = fileChooser.showSaveDialog(Main.stage);
-            filePathAtLastSave = selectedFile.getAbsolutePath();
+            filePathsAtLastSave.set(currentTabIndex, selectedFile.getAbsolutePath());
             BufferedWriter output = Files.newBufferedWriter(selectedFile.toPath(), StandardCharsets.UTF_8);
             contentAtLastSave = textAreas.get(currentTabIndex).getText();
             output.write(shorten(textAreas.get(currentTabIndex).getText()));
@@ -357,9 +378,9 @@ public class Controller {
 
     @FXML
     private void save() {
-        if (!filePathAtLastSave.equals("")) {
+        if (!filePathsAtLastSave.get(currentTabIndex).equals("")) {
             try {
-                BufferedWriter output = Files.newBufferedWriter(Paths.get(filePathAtLastSave), StandardCharsets.UTF_8);
+                BufferedWriter output = Files.newBufferedWriter(Paths.get(filePathsAtLastSave.get(currentTabIndex)), StandardCharsets.UTF_8);
                 contentAtLastSave = textAreas.get(currentTabIndex).getText();
                 output.write(shorten(textAreas.get(currentTabIndex).getText()));
                 output.flush();
@@ -383,8 +404,8 @@ public class Controller {
             ImageView aboutPagelogoImage = new ImageView(header_logo_image);
             HBox picuteHBox = new HBox(aboutPagelogoImage);
             Label infoLabel = new Label("CLImproved for Windows\n" +
-                    "Version 1.3.1\n" +
-                    "GUI Version 1.0\n\n" +
+                    "Version 1.4.0\n" +
+                    "GUI Version 2.0\n\n" +
                     "Made by\n" +
                     "-Felix Payer\n" +
                     "-Hunor Zakarias\n\n" +

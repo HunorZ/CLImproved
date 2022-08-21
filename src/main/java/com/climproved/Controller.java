@@ -16,6 +16,7 @@ import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -47,8 +48,6 @@ public class Controller {
     ArrayList<GridPane> commandContainers = new ArrayList<>();
     ArrayList<String> filePathsAtLastSave = new ArrayList<>();
 
-    String typeWord = "";
-
     int currentTabIndex = 0;
     boolean aboutPageOpen = false;
 
@@ -67,6 +66,8 @@ public class Controller {
     }
 
     public void initialize() {
+
+
         Notification.owner = Main.stage;
         //add first tab at init
         createNewTab();
@@ -158,14 +159,12 @@ public class Controller {
         return false;
     }
 
-    public void updateCommands() {
+    public void updateCommands(Word[] words) {
         commandContainers.get(currentTabIndex).getChildren().clear();
         String content = jsonFileHandlerArrayList.get(currentTabIndex).commandWriter.getContent();
         textAreas.get(currentTabIndex).clear();
         textAreas.get(currentTabIndex).appendText(content);
 
-        String[] words = jsonFileHandlerArrayList.get(currentTabIndex).getWords();
-        String[] descriptions = jsonFileHandlerArrayList.get(currentTabIndex).getDescriptions();
 
         for (int i = 0; i < words.length; i++) {
             Button button = new Button();
@@ -174,27 +173,50 @@ public class Controller {
 
 
             button.setOnAction(actionEvent -> {
-                if (jsonFileHandlerArrayList.get(currentTabIndex).isParam(finalI)) {
-                    String parameter = new Input(jsonFileHandlerArrayList.get(currentTabIndex).getWords()[finalI] + "\n" +
-                            jsonFileHandlerArrayList.get(currentTabIndex).getDescriptions()[finalI]).fire();
+                if (words[finalI].type == Word.Type.PARAM || words[finalI].type == Word.Type.PARAM_ENTERSUBMODE) {
+                    String parameter = new Input(words[finalI].word + "\n" +
+                            words[finalI].description).fire();
                     jsonFileHandlerArrayList.get(currentTabIndex).commandWriter.writeWord(parameter);
                 }
-                jsonFileHandlerArrayList.get(currentTabIndex).loadNextWords(finalI);
+                updateCommands(jsonFileHandlerArrayList.get(currentTabIndex).getNextCommands(finalI));
 
-                updateCommands();
             });
-            if (jsonFileHandlerArrayList.get(currentTabIndex).getWords().length == 1) {
+            if (words.length == 1) {
                 button.fire();
                 break;
             }
             button.setGraphic(new ImageView(center_addButton_image));
             button.setId("wordButton");
+
+            Label[] labels = {new Label(words[i].word), new Label(words[i].description)};
+
+
+            for (Label label : labels) {
+                label.setId("wordLabel");
+                AnchorPane.setLeftAnchor(label, 0.0);
+                AnchorPane.setTopAnchor(label, 0.0);
+                AnchorPane.setRightAnchor(label, 0.0);
+                AnchorPane.setBottomAnchor(label, 0.0);
+                switch (words[i].type) {
+                    case FINISH, EXITSUBMODE -> label.setBackground(new Background(new BackgroundFill(
+                            Color.rgb(107, 65, 65), CornerRadii.EMPTY, Insets.EMPTY)));
+
+                    case COMMAND_ENTERSUBMODE, PARAM_ENTERSUBMODE -> label.setBackground(new Background(new BackgroundFill(
+                            Color.rgb(67, 103, 58), CornerRadii.EMPTY, Insets.EMPTY)));
+                }
+            }
+            switch (words[i].type) {
+                case FINISH, EXITSUBMODE -> button.setStyle("-fx-background-color: #6B4141");
+
+                case COMMAND_ENTERSUBMODE, PARAM_ENTERSUBMODE -> button.setStyle("-fx-background-color: #43673A");
+            }
+
+
             commandContainers.get(currentTabIndex).add(button, 0, i);
-            commandContainers.get(currentTabIndex).add(new Label(words[i]), 1, i);
-            commandContainers.get(currentTabIndex).add(new Label(descriptions[i]), 2, i);
+            commandContainers.get(currentTabIndex).add(new AnchorPane(labels[0]), 1, i);
+            commandContainers.get(currentTabIndex).add(new AnchorPane(labels[1]), 2, i);
         }
     }
-
 
     public void createNewTab() {
         //new Tab
@@ -232,8 +254,6 @@ public class Controller {
         RowConstraints rowConstraints = new RowConstraints();
         rowConstraints.setVgrow(Priority.SOMETIMES);
 
-        VBox leftVBox = new VBox();
-
         /*
         AnchorPane labelAnchor = new AnchorPane();
 
@@ -248,7 +268,6 @@ public class Controller {
 
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setId("scrollPane");
-        VBox.setVgrow(scrollPane, Priority.ALWAYS);
 
         commandContainers.add(new GridPane());
         commandContainers.get(index).setId("wordsGrid");
@@ -256,19 +275,15 @@ public class Controller {
         textAreas.add(new TextArea());
         textAreas.get(index).setId("textArea");
         textAreas.get(index).textProperty().addListener(
-                (observableValue, s, t1) -> {
-                    jsonFileHandlerArrayList.get(currentTabIndex).commandWriter
-                            .setContent(textAreas.get(currentTabIndex).getText());
-
-                });
+                (observableValue, s, t1) -> jsonFileHandlerArrayList.get(currentTabIndex).commandWriter
+                        .setContent(textAreas.get(currentTabIndex).getText()));
 
         gridPane.getColumnConstraints().addAll(left, right);
         gridPane.getRowConstraints().add(rowConstraints);
 
         //labelAnchor.getChildren().add(label);
         scrollPane.setContent(commandContainers.get(index));
-        leftVBox.getChildren().addAll(scrollPane);
-        gridPane.add(leftVBox, 0, 0);
+        gridPane.add(scrollPane, 0, 0);
         gridPane.add(textAreas.get(index), 1, 0);
         vBox.getChildren().addAll(hBoxes.get(index), gridPane);
         VBox.setVgrow(gridPane, Priority.ALWAYS);
@@ -293,13 +308,11 @@ public class Controller {
         for (int i = 0; i < execModes.length; i++) {
             Button button = new Button(execModes[i]);
             int finalI = i;
-            button.setOnAction(actionEvent -> {
-                jsonFileHandlerArrayList.get(currentTabIndex).changeMode(finalI);
-                updateCommands();
-            });
+            button.setOnAction(actionEvent ->
+                    updateCommands(jsonFileHandlerArrayList.get(currentTabIndex).changeMode(finalI)));
             hBoxes.get(currentTabIndex).getChildren().add(button);
         }
-        updateCommands();
+        updateCommands(jsonFileHandlerArrayList.get(currentTabIndex).changeMode(0));
 
         tab.setOnCloseRequest(ex -> removeTab(Integer.parseInt(tab.getId())));
 

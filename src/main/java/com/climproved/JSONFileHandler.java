@@ -2,7 +2,6 @@ package com.climproved;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import java.io.IOException;
@@ -22,7 +21,7 @@ public class JSONFileHandler {
     private JSONArray nextCommands;
 
     //all currently accessed modes
-    private Stack<JSONObject> accessedModes = new Stack<>();
+    private Stack<JSONArray> accessedModes = new Stack<>();
     private boolean isInSubMode = false;
 
     //all accessed multicommands
@@ -33,16 +32,19 @@ public class JSONFileHandler {
 
     public CommandWriter commandWriter = new CommandWriter();
 
+    //store the index of the current mode
+    private int currentMode = 0;
+
 
     /**
      * @param file JSONfile that should be interpreted
      */
     public void init(String file) throws UnsupportedOperationException {
-        InputStream inputStream = null;
+        InputStream inputStream;
         try {
             inputStream = Files.newInputStream(Path.of(file));
         } catch (IOException e) {
-
+            throw new UnsupportedOperationException("The path could not be found");
         }
         //the content of the json-file is stored inside fileContent
         JSONTokener tokener = new JSONTokener(inputStream);
@@ -75,57 +77,18 @@ public class JSONFileHandler {
     /**
      * @param index changes the mode to the index
      */
-    public void changeMode(int index) {
+    public Word[] changeMode(int index) {
         if (!isInSubMode) {
             //executes code only, if the user is not in a submode as submodes must be exited
             nextCommands = fileContent.getJSONObject(index).getJSONArray("words");
+            currentMode = index;
+
             //as the method can only change the mode to one of the outer ones, the stack can be cleared
             // and the changed mode can be pushed onto the stack
             accessedModes.clear();
-            accessedModes.push(fileContent.getJSONObject(index));
         }
-    }
 
-    /**
-     * @return array with all currently available words
-     */
-    public String[] getWords() {
-        String[] words = new String[nextCommands.length()];
-
-        //loops through every element and gets the value for the object key "word"
-        for (int i = 0; i < words.length; i++) {
-            if (nextCommands.getJSONObject(i).getString("type").equals("finish")) {
-                words[i] = "end";
-            } else {
-                try {
-                    //tries to get the value for the object key "word"
-                    words[i] = nextCommands.getJSONObject(i).getString("word");
-                } catch (Exception e) {
-                    //executes if object key "word" is not available
-                    words[i] = "";
-                }
-            }
-        }
-        return words;
-    }
-
-    /**
-     * @return a string array with all descriptions of the current words in the correct order
-     */
-    public String[] getDescriptions() {
-        String[] descriptions = new String[nextCommands.length()];
-
-        //loops through every element and gets the value for the object key "description"
-        for (int i = 0; i < descriptions.length; i++) {
-            try {
-                //tries to get the value for the object key "description"
-                descriptions[i] = nextCommands.getJSONObject(i).getString("description");
-            } catch (Exception e) {
-                //executes if object key "description" is not available
-                descriptions[i] = "No Description";
-            }
-        }
-        return descriptions;
+        return getWords();
     }
 
     /**
@@ -133,18 +96,21 @@ public class JSONFileHandler {
      *
      * @param indexOfPressedCommand index of the command from which the subcommands should be loaded
      */
-    public void loadNextWords(int indexOfPressedCommand) {
+    public Word[] getNextCommands(int indexOfPressedCommand) {
         try {
             switch (nextCommands.getJSONObject(indexOfPressedCommand).getString("type")) {
                 case "command" -> {
-                    //gets the value of the object "word" and writes it into the file
+                    //gets the value of the object "word" and writes it into the file and writes it into the file
                     commandWriter.writeWord(nextCommands.getJSONObject(indexOfPressedCommand).getString("word"));
+
                     //loads the following commands of command with "indexOfPressedCommand",
                     //throws an error if no further commands are available
                     nextCommands = nextCommands.getJSONObject(indexOfPressedCommand).getJSONArray("words");
+
+
                 }
                 case "multiCommand" -> {
-                    //gets the value of the object "word" and writes it into the file
+                    //gets the value of the object "word" and writes it into the file as well as into the stack
                     commandWriter.writeWord(nextCommands.getJSONObject(indexOfPressedCommand).getString("word"));
 
                     //as the chosen command is a multicommand, isInMultiCommand is set to true
@@ -158,14 +124,16 @@ public class JSONFileHandler {
                     nextCommands = multiCommands.peek().getJSONArray(currentMultiCommand.peek());
                 }
                 case "param" ->
-                    //as parameters are handeld by the frontend no further operations have to be done and
-                    //the next commands can be loaded into nextCommands
+                        //as parameters are handeld by the frontend no further operations have to be done and
+                        //the next commands can be loaded into nextCommands
                         nextCommands = nextCommands.getJSONObject(indexOfPressedCommand).getJSONArray("words");
-                case "param/enterSubMode" -> {
+
+                case "param_enterSubMode" -> {
                     //isInSubMode is set to true
                     //the submode is pushed onto the "accessedMode" stack
                     isInSubMode = true;
-                    accessedModes.push(nextCommands.getJSONObject(indexOfPressedCommand).getJSONObject("submode"));
+                    accessedModes.push(nextCommands.getJSONObject(indexOfPressedCommand).getJSONArray("words"));
+
 
                     //makes a brake as no further commands are available and
                     //a tab is added to visualize the submode in the final txt document
@@ -174,9 +142,9 @@ public class JSONFileHandler {
 
 
                     //the next commands are loaded into nextCommands
-                    nextCommands = accessedModes.peek().getJSONArray("words");
+                    nextCommands = accessedModes.peek();
                 }
-                case "command/enterSubMode" -> {
+                case "command_enterSubMode" -> {
                     //gets the value of the object "word" and writes it into the file,
                     //makes a brake as no further commands are available and
                     //a tab is added to visualize the submode in the final txt document
@@ -188,10 +156,10 @@ public class JSONFileHandler {
                     //isInSubMode is set to true
                     //the submode is pushed onto the "accessedMode" stack
                     isInSubMode = true;
-                    accessedModes.push(nextCommands.getJSONObject(indexOfPressedCommand).getJSONObject("submode"));
+                    accessedModes.push(nextCommands.getJSONObject(indexOfPressedCommand).getJSONArray("words"));
 
                     //the next commands are loaded into nextCommands
-                    nextCommands = accessedModes.peek().getJSONArray("words");
+                    nextCommands = accessedModes.peek();
                 }
                 case "exitSubMode" -> {
                     //gets the value of the object "word" and writes it into the file,
@@ -207,16 +175,19 @@ public class JSONFileHandler {
                     accessedModes.pop();
 
                     //the next commands are loaded into nextCommands
-                    nextCommands = accessedModes.peek().getJSONArray("words");
+                    if (accessedModes.size() > 0) {
+                        nextCommands = accessedModes.peek();
+                    }
 
-                    //if the size of the stack is 1, "isInSubMode" is set to false as this is the outermost mode
-                    //which cannot be exited
-                    if (accessedModes.size() == 1) {
+                    //if the size of the stack is 0, "isInSubMode" is set to false
+                    if (accessedModes.size() == 0) {
                         isInSubMode = false;
+                        //load next commands
+                        nextCommands = fileContent.getJSONObject(currentMode).getJSONArray("words");
                     }
                 }
                 case "finish" ->
-                    //force into catch block as no further operations have to be made
+                        //force into catch block as no further operations have to be made
                         throw new JSONException("");
             }
         } catch (JSONException e) {
@@ -230,14 +201,18 @@ public class JSONFileHandler {
             } else {
 
                 //as the condition was false, no more multicommands are available
-                //and the object can be ramoved from the stack
+                //and the object can be removed from the stack
                 if (isInMultiCommand) {
                     multiCommands.pop();
                     currentMultiCommand.pop();
                 }
 
-                //the next commands are loaded from the mode-stack
-                nextCommands = accessedModes.peek().getJSONArray("words");
+                //if the size of the stack is 0, the content is loaded from the file
+                if (accessedModes.size() == 0) {
+                    nextCommands = fileContent.getJSONObject(currentMode).getJSONArray("words");
+                } else {
+                    nextCommands = accessedModes.peek();
+                }
 
                 //sets "isInMultiCommand" to false if the "multiCommands" stack is empty
                 if (multiCommands.empty()) {
@@ -246,17 +221,37 @@ public class JSONFileHandler {
                 commandWriter.makeBreak();
             }
         }
+        return getWords();
     }
 
-    /**
-     * <p>checks if a word is a parameter</p>
-     *
-     * @param indexOfPressedCommand index of the word which should be checked
-     * @return the boolean value
-     */
-    public boolean isParam(int indexOfPressedCommand) {
-        //if the value of the object key "type" equals "param" return true
-        String currenPressedCommand = nextCommands.getJSONObject(indexOfPressedCommand).getString("type");
-        return currenPressedCommand.equals("param") || currenPressedCommand.equals("param/enterSubMode");
+    private Word[] getWords() {
+        Word[] words = new Word[nextCommands.length()];
+        for (int i = 0; i < nextCommands.length(); i++) {
+
+            String word;
+            if (nextCommands.getJSONObject(i).getString("type").equals("finish")) {
+                word = "finish";
+            } else {
+                try {
+                    //tries to get the value for the object key "word"
+                    word = nextCommands.getJSONObject(i).getString("word");
+                } catch (Exception e) {
+                    //executes if object key "word" is not available
+                    word = "";
+                }
+            }
+
+            String description;
+            try {
+                //tries to get the value for the object key "description"
+                description = nextCommands.getJSONObject(i).getString("description");
+            } catch (Exception e) {
+                //executes if object key "description" is not available
+                description = "No Description";
+            }
+            words[i] = new Word(word, description,
+                    Enum.valueOf(Word.Type.class, nextCommands.getJSONObject(i).getString("type").toUpperCase()));
+        }
+        return words;
     }
 }

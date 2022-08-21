@@ -90,22 +90,26 @@
 }
 
 #gridPane {
-    -fx-background-color: -fx-secondary;
     -fx-padding: 0.5em;
     -fx-hgap: 0.5em;
+
+    -fx-background-color: -fx-secondary;
 }
 
-#inWords{
+#inWords {
     -fx-text-fill: #ffffff;
     -fx-font-size: 1.2em;
+
     -fx-min-height: 3em;
     -fx-padding: 0 0 0 5em;
-    -fx-background-color: -fx-primary;
 
+    -fx-background-color: -fx-primary;
 }
 
 #scrollPane {
-    -fx-background-color: -fx-primary;
+    -fx-background: -fx-secondary;
+    -fx-background-color: -fx-secondary;
+
     -fx-fit-to-width: true;
     -fx-fit-to-height: true;
 }
@@ -113,20 +117,25 @@
 
 #wordsGrid {
     -fx-background-color: -fx-primary;
-    -fx-hgap: 6em;
+
+    -fx-hgap: 0em;
     -fx-vgap: 0.9em;
 }
 
-#wordsGrid > .label {
+#wordLabel {
     -fx-font-size: 1.3em;
     -fx-text-fill: #ffffff;
+-fx-padding: 0em 0em 0em 5em;
+    -fx-border-style: solid;
+    -fx-border-color: -fx-primary;
 }
 
 #wordButton {
     -fx-border-color: transparent;
     -fx-border-width: 0;
-    -fx-background-radius: 0;
+
     -fx-background-color: transparent;
+    -fx-background-radius: 0;
 }
 
 #textArea {
@@ -160,3 +169,4 @@
 .scroll-bar:vertical > .decrement-button > .decrement-arrow {
     -fx-padding: 0 0 0 0;
 }
+

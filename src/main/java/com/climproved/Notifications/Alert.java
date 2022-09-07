@@ -39,6 +39,6 @@ public class Alert extends Notification {
 
 
     public void fire() {
-        stage.show();
+        stage.showAndWait();
     }
 }

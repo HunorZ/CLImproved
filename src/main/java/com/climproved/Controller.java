@@ -9,6 +9,10 @@ import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -22,6 +26,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import javax.net.ssl.HttpsURLConnection;
+import javax.swing.*;
 import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
@@ -32,6 +37,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class Controller {
 
@@ -57,12 +63,10 @@ public class Controller {
     Image header_logo_image;
 
     {
-        try {
-            center_addButton_image = new Image(new FileInputStream("assets\\add_button.png"));
-            header_logo_image = new Image(new FileInputStream("assets\\CLImproved_newLogo.png"));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        center_addButton_image = new Image(
+                Objects.requireNonNull(this.getClass().getResourceAsStream("add_button.png")));
+        header_logo_image = new Image(
+                Objects.requireNonNull(this.getClass().getResourceAsStream("CLImproved_newLogo.png")));
     }
 
     public void initialize() {
@@ -123,7 +127,7 @@ public class Controller {
                 URLConnection connection = new URL(link).openConnection();
                 connection.connect();
             } catch (IOException e) {
-                new com.climproved.Notifications.Alert("Internet is not connected\nDataset could not be updated!").fire();
+                new Alert("Internet is not connected\nDataset could not be updated!").fire();
                 return;
             }
             HttpsURLConnection https = (HttpsURLConnection) url.openConnection();
@@ -137,24 +141,20 @@ public class Controller {
             InputStream input = https.getInputStream();
             byte[] buffer = new byte[4096];
             int n;
-            try {
-                File path = new File((System.getenv("localappdata")) + "\\CLImproved");
-                if (!path.exists()) {
-                    if (!path.mkdirs()) {
-                        new Alert("Could not create path!").fire();
-                        return;
-                    }
-                }
 
-                OutputStream output = new FileOutputStream(path + "\\" + fileName);
-                while ((n = input.read(buffer)) != -1) {
-                    output.write(buffer, 0, n);
+            File path = new File((System.getenv("localappdata")) + "\\CLImproved");
+            if (!path.exists()) {
+                if (!path.mkdirs()) {
+                    new Alert("Could not create path!").fire();
+                    return;
                 }
-                output.close();
-            } catch (Exception ignored) {
             }
-            createNewTab();
-            new com.climproved.Notifications.Alert("Dataset successfully updated!\nOnly new tabs have the new dataset applied.").fire();
+            OutputStream output = new FileOutputStream(path + "\\" + fileName);
+            while ((n = input.read(buffer)) != -1) {
+                output.write(buffer, 0, n);
+            }
+            output.close();
+            new Alert("Dataset successfully updated!\nOnly new tabs have the new dataset applied.").fire();
         } catch (Exception e) {
             new Alert("Dataset could not be updated!\nPlease make sure to have a stable internet connection.").fire();
         }
@@ -212,9 +212,8 @@ public class Controller {
                     case FINISH, EXITSUBMODE -> label.setBackground(new Background(new BackgroundFill(
                             Color.rgb(107, 65, 65), CornerRadii.EMPTY, Insets.EMPTY)));
 
-                    case COMMAND_ENTERSUBMODE, PARAM_ENTERSUBMODE ->
-                            label.setBackground(new Background(new BackgroundFill(
-                                    Color.rgb(67, 103, 58), CornerRadii.EMPTY, Insets.EMPTY)));
+                    case COMMAND_ENTERSUBMODE, PARAM_ENTERSUBMODE -> label.setBackground(new Background(new BackgroundFill(
+                            Color.rgb(67, 103, 58), CornerRadii.EMPTY, Insets.EMPTY)));
                 }
             }
             switch (words[i].type) {
@@ -239,10 +238,19 @@ public class Controller {
         jsonFileHandlerArrayList.add(new JSONFileHandler());
         try {
             jsonFileHandlerArrayList.get(jsonFileHandlerArrayList.size() - 1).init(
-                    System.getenv("localappdata")+"\\CLImproved\\ciscoFile.json");
+                    System.getenv("localappdata") + "\\CLImproved\\ciscoFile.json");
         } catch (FileNotFoundException e) {
-            if (new Question("There is no dataset available.\nDo you want to download it").fire()) {
+            if (new Question("There is no dataset available.\nDo you want to download it?").fire()) {
                 updateDataSet();
+                try {
+                    jsonFileHandlerArrayList.get(jsonFileHandlerArrayList.size() - 1).init(
+                            System.getenv("localappdata") + "\\CLImproved\\ciscoFile.json");
+                } catch (Exception f) {
+                    new Alert("Try reinstalling the software").fire();
+                }
+            } else {
+                new Alert("There is no dataset availbale").fire();
+                System.exit(0);
             }
         }
         int index = jsonFileHandlerArrayList.size() - 1;
@@ -483,5 +491,4 @@ public class Controller {
         }
         return "";
     }
-
 }

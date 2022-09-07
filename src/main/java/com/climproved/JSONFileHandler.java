@@ -40,7 +40,7 @@ public class JSONFileHandler {
     /**
      * @param file JSONfile that should be interpreted
      */
-    public void init(String file) throws FileNotFoundException, IllegalArgumentException {
+    public void init(String file) throws IllegalArgumentException, FileNotFoundException {
         InputStream inputStream;
         try {
             inputStream = Files.newInputStream(Path.of(file));
@@ -125,8 +125,8 @@ public class JSONFileHandler {
                     nextCommands = multiCommands.peek().getJSONArray(currentMultiCommand.peek());
                 }
                 case "param" ->
-                    //as parameters are handeld by the frontend no further operations have to be done and
-                    //the next commands can be loaded into nextCommands
+                        //as parameters are handeld by the frontend no further operations have to be done and
+                        //the next commands can be loaded into nextCommands
                         nextCommands = nextCommands.getJSONObject(indexOfPressedCommand).getJSONArray("words");
 
                 case "param_enterSubMode" -> {
@@ -188,7 +188,7 @@ public class JSONFileHandler {
                     }
                 }
                 case "finish" ->
-                    //force into catch block as no further operations have to be made
+                        //force into catch block as no further operations have to be made
                         throw new JSONException("");
             }
         } catch (JSONException e) {

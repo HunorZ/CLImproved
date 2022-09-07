@@ -117,7 +117,7 @@
 
 #wordsGrid {
     -fx-background-color: -fx-primary;
-
+    -fx-grid-lines-visible: false;
     -fx-hgap: 0em;
     -fx-vgap: 0.9em;
 }
@@ -125,7 +125,7 @@
 #wordLabel {
     -fx-font-size: 1.3em;
     -fx-text-fill: #ffffff;
--fx-padding: 0em 0em 0em 5em;
+    -fx-padding: 0em 0em 0em 5em;
     -fx-border-style: solid;
     -fx-border-color: -fx-primary;
 }
@@ -140,11 +140,13 @@
 
 #textArea {
     -fx-control-inner-background: -fx-primary;
+    -fx-background: -fx-primary;
     -fx-background-color: -fx-primary;
     -fx-effect: null;
     -fx-padding: 0px;
     -fx-font-size: 1.3em;
     -fx-highlight-fill: -fx-tertiary;
+
 }
 
 

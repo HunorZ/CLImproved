@@ -21,12 +21,12 @@ public class Main extends Application {
         Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
         Main.stage.setHeight(size.getHeight() * 0.7);
         Main.stage.setWidth(((size.getHeight() * 0.7) / 9) * 16);
-        Main.stage.getIcons().add(new Image(new FileInputStream("assets\\CLImproved_newLogo.png")));
+        Main.stage.getIcons().add(new Image(
+                Objects.requireNonNull(this.getClass().getResourceAsStream("CLImproved_newLogo.png"))));
 
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("main.fxml"));
 
         Scene scene = new Scene(fxmlLoader.load());
-        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("application.css")).toExternalForm());
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("application.css")).toExternalForm());
         Main.stage.setTitle("CLImproved");
         Main.stage.setScene(scene);

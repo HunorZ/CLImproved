@@ -26,7 +26,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import javax.net.ssl.HttpsURLConnection;
-import javax.swing.*;
 import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
@@ -117,6 +116,11 @@ public class Controller {
     }
 
     @FXML
+    public void updateDataSetFromMenu() {
+        updateDataSet();
+        createNewTab();
+    }
+
     public void updateDataSet() {
         try {
             String link =
@@ -242,11 +246,12 @@ public class Controller {
         } catch (FileNotFoundException e) {
             if (new Question("There is no dataset available.\nDo you want to download it?").fire()) {
                 updateDataSet();
+
                 try {
                     jsonFileHandlerArrayList.get(jsonFileHandlerArrayList.size() - 1).init(
                             System.getenv("localappdata") + "\\CLImproved\\ciscoFile.json");
                 } catch (Exception f) {
-                    new Alert("Try reinstalling the software").fire();
+                    System.exit(0);
                 }
             } else {
                 new Alert("There is no dataset availbale").fire();
@@ -446,8 +451,8 @@ public class Controller {
                     "Version 1.4.0\n" +
                     "GUI Version 2.0\n\n" +
                     "Made by\n" +
-                    "-Felix Payer\n" +
-                    "-Hunor Zakarias\n\n" +
+                    "-Hunor Zakarias\n" +
+                    "(-Felix Payer)\n\n" +
                     "OS: " + System.getProperty("os.name") + "\n" +
                     "Architecture: " + System.getProperty("os.arch") + "\n" +
                     "Java Version: " + System.getProperty("java.version"));

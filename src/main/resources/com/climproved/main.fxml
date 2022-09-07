@@ -19,7 +19,7 @@
             </Menu>
             <Menu mnemonicParsing="false" text="Options">
                <items>
-                  <MenuItem mnemonicParsing="false" onAction="#updateDataSet" text="Update dataset" />
+                  <MenuItem mnemonicParsing="false" onAction="#updateDataSetFromMenu" text="Update dataset" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Help">

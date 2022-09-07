@@ -137,11 +137,22 @@ public class Controller {
             InputStream input = https.getInputStream();
             byte[] buffer = new byte[4096];
             int n;
-            OutputStream output = new FileOutputStream(fileName);
-            while ((n = input.read(buffer)) != -1) {
-                output.write(buffer, 0, n);
+            try {
+                File path = new File((System.getenv("localappdata")) + "\\CLImproved");
+                if (!path.exists()) {
+                    if (!path.mkdirs()) {
+                        new Alert("Could not create path!").fire();
+                        return;
+                    }
+                }
+
+                OutputStream output = new FileOutputStream(path + "\\" + fileName);
+                while ((n = input.read(buffer)) != -1) {
+                    output.write(buffer, 0, n);
+                }
+                output.close();
+            } catch (Exception ignored) {
             }
-            output.close();
             createNewTab();
             new com.climproved.Notifications.Alert("Dataset successfully updated!\nOnly new tabs have the new dataset applied.").fire();
         } catch (Exception e) {
@@ -201,8 +212,9 @@ public class Controller {
                     case FINISH, EXITSUBMODE -> label.setBackground(new Background(new BackgroundFill(
                             Color.rgb(107, 65, 65), CornerRadii.EMPTY, Insets.EMPTY)));
 
-                    case COMMAND_ENTERSUBMODE, PARAM_ENTERSUBMODE -> label.setBackground(new Background(new BackgroundFill(
-                            Color.rgb(67, 103, 58), CornerRadii.EMPTY, Insets.EMPTY)));
+                    case COMMAND_ENTERSUBMODE, PARAM_ENTERSUBMODE ->
+                            label.setBackground(new Background(new BackgroundFill(
+                                    Color.rgb(67, 103, 58), CornerRadii.EMPTY, Insets.EMPTY)));
                 }
             }
             switch (words[i].type) {
@@ -225,8 +237,14 @@ public class Controller {
 
         //create new jsonFileHandler instance for new tab
         jsonFileHandlerArrayList.add(new JSONFileHandler());
-        jsonFileHandlerArrayList.get(jsonFileHandlerArrayList.size() - 1).init("ciscoFile.json");
-
+        try {
+            jsonFileHandlerArrayList.get(jsonFileHandlerArrayList.size() - 1).init(
+                    System.getenv("localappdata")+"\\CLImproved\\ciscoFile.json");
+        } catch (FileNotFoundException e) {
+            if (new Question("There is no dataset available.\nDo you want to download it").fire()) {
+                updateDataSet();
+            }
+        }
         int index = jsonFileHandlerArrayList.size() - 1;
 
 

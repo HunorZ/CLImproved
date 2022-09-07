@@ -4,6 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONTokener;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -39,12 +40,12 @@ public class JSONFileHandler {
     /**
      * @param file JSONfile that should be interpreted
      */
-    public void init(String file) throws UnsupportedOperationException {
+    public void init(String file) throws FileNotFoundException, IllegalArgumentException {
         InputStream inputStream;
         try {
             inputStream = Files.newInputStream(Path.of(file));
         } catch (IOException e) {
-            throw new UnsupportedOperationException("The path could not be found");
+            throw new FileNotFoundException("The path could not be found");
         }
         //the content of the json-file is stored inside fileContent
         JSONTokener tokener = new JSONTokener(inputStream);
@@ -124,8 +125,8 @@ public class JSONFileHandler {
                     nextCommands = multiCommands.peek().getJSONArray(currentMultiCommand.peek());
                 }
                 case "param" ->
-                        //as parameters are handeld by the frontend no further operations have to be done and
-                        //the next commands can be loaded into nextCommands
+                    //as parameters are handeld by the frontend no further operations have to be done and
+                    //the next commands can be loaded into nextCommands
                         nextCommands = nextCommands.getJSONObject(indexOfPressedCommand).getJSONArray("words");
 
                 case "param_enterSubMode" -> {
@@ -187,7 +188,7 @@ public class JSONFileHandler {
                     }
                 }
                 case "finish" ->
-                        //force into catch block as no further operations have to be made
+                    //force into catch block as no further operations have to be made
                         throw new JSONException("");
             }
         } catch (JSONException e) {

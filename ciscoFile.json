@@ -1,0 +1,1301 @@
+[
+  {
+    "category": "user EXEC mode",
+    "words": [
+      {
+        "type": "command",
+        "word": "connect",
+        "description": "Session number to resume"
+      },
+      {
+        "type": "command",
+        "word": "enable",
+        "description": "Turn on priviledged commands"
+      },
+      {
+        "type": "command",
+        "word": "ping",
+        "description": "Send echo messages",
+        "words": [
+          {
+            "type": "param",
+            "word": "ip(v6)",
+            "description": "IP(v6) echo"
+          }
+        ]
+      },
+      {
+        "type": "command",
+        "word": "reload",
+        "description": "restarts the system"
+      },
+      {
+        "type": "command",
+        "word": "traceroute",
+        "description": "Trace route to destination",
+        "words": [
+          {
+            "type": "param",
+            "word": "ip(v6)",
+            "description": "IP(v6) echo"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "priviledged EXECE mode",
+    "words": [
+      {
+        "type": "command",
+        "word": "clock",
+        "description": "Manage the system clock",
+        "words": [
+          {
+            "type": "command",
+            "word": "set",
+            "description": "Set the time and date",
+            "words": [
+              {
+                "type": "param",
+                "word": "hh:mm:ss",
+                "description": "Current Time",
+                "words": [
+                  {
+                    "type": "param",
+                    "word": "<1-31>",
+                    "description": "Day of the month",
+                    "words": [
+                      {
+                        "type": "param",
+                        "word": "MONTH",
+                        "description": "Month of the year",
+                        "words": [
+                          {
+                            "type": "param",
+                            "word": "<1993-2035>",
+                            "description": "Year"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "param",
+                    "word": "MONTH",
+                    "description": "Month of the year",
+                    "words": [
+                      {
+                        "type": "param",
+                        "word": "<1-31>",
+                        "description": "Day of the month",
+                        "words": [
+                          {
+                            "type": "param",
+                            "word": "<1993-2035>",
+                            "description": "Year"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "command_enterSubMode",
+        "word": "configure terminal",
+        "description": "enter global configuration mode",
+        "words": [
+          {
+            "type": "command",
+            "word": "banner",
+            "description": "Define a login banner",
+            "words": [
+              {
+                "type": "command",
+                "word": "motd",
+                "description": "Set Message of the Day banner",
+                "words": [
+                  {
+                    "type": "param",
+                    "word": "LINE",
+                    "description": "c banner-text c, where 'c' is a delimiting character"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "command",
+            "word": "crypto",
+            "description": "Encryption module",
+            "words": [
+              {
+                "type": "command",
+                "word": "key",
+                "description": "Long term key operations",
+                "words": [
+                  {
+                    "type": "command",
+                    "word": "generate",
+                    "description": "Generate new keys",
+                    "words": [
+                      {
+                        "type": "command",
+                        "word": "rsa",
+                        "description": "Generate RSA keys",
+                        "words": [
+                          {
+                            "type": "command",
+                            "word": "general-keys",
+                            "description": "Generate a general purpose RSA key pair for signing and encryption",
+                            "words": [
+                              {
+                                "type": "command",
+                                "word": "modulus",
+                                "description": "Provide number of modulus bits on the command line",
+                                "words": [
+                                  {
+                                    "type": "param",
+                                    "word": "<360-4096>",
+                                    "description": "size of the key modulus [360-4096]"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "command",
+            "word": "enable",
+            "description": "Modify enable password parameters",
+            "words": [
+              {
+                "type": "command",
+                "word": "password",
+                "description": "Enable by giving the local enable password"
+              },
+              {
+                "type": "command",
+                "word": "secret",
+                "description": "Enable by giving the local enable password"
+              }
+            ]
+          },
+          {
+            "type": "exitSubMode",
+            "word": "exit",
+            "description": "Exit from configure mode"
+          },
+          {
+            "type": "command",
+            "word": "hostname",
+            "description": "Set system's network name",
+            "words": [
+              {
+                "type": "param",
+                "word": "WORD",
+                "description": "This system's network name"
+              }
+            ]
+          },
+          {
+            "type": "command",
+            "word": "interface",
+            "description": "Select an interface to configure",
+            "words": [
+              {
+                "type": "command",
+                "word": "GigabitEthernet",
+                "description": "GigabitEthernet IEEE 802.3z",
+                "words": [
+                  {
+                    "type": "param_enterSubMode",
+                    "word": "x/x(/x)",
+                    "description": "GigabitEthernet interface number",
+                    "words": [
+                      {
+                        "type": "command",
+                        "word": "description",
+                        "description": "Interface specific description",
+                        "words": [
+                          {
+                            "type": "param",
+                            "word": "LINE",
+                            "description": "Up to 240 characters describing this interface"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "command",
+                        "word": "duplex",
+                        "description": "Configure duplex operation",
+                        "words": [
+                          {
+                            "type": "command",
+                            "word": "auto",
+                            "description": "Enable AUTO duplex configuration"
+                          },
+                          {
+                            "type": "command",
+                            "word": "full",
+                            "description": "Force full duplex operation"
+                          },
+                          {
+                            "type": "command",
+                            "word": "half",
+                            "description": "Force half-duplex operation"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "exitSubMode",
+                        "word": "exit",
+                        "description": "Exit from interface configuration mode"
+                      },
+                      {
+                        "type": "command",
+                        "word": "ip",
+                        "description": "Interface Internet Protocol config commands",
+                        "words": [
+                          {
+                            "type": "command",
+                            "word": "address",
+                            "description": "Set the IP address of an interface",
+                            "words": [
+                              {
+                                "type": "param",
+                                "word": "A.B.C.D",
+                                "description": "IP address",
+                                "words": [
+                                  {
+                                    "type": "param",
+                                    "word": "A.B.C.D",
+                                    "description": "IP subnet mask"
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "command",
+                                "word": "dhcp",
+                                "description": "IP Address negotiated via DHCP"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "command",
+                        "word": "ipv6",
+                        "description": "IPv6 interface subcommands",
+                        "words": [
+                          {
+                            "type": "command",
+                            "word": "address",
+                            "description": "Configure IPv6 address on interface",
+                            "words": [
+                              {
+                                "type": "param",
+                                "word": "X:X:X:X::X",
+                                "description": "IPv6 link-local address",
+                                "words": [
+                                  {
+                                    "type": "command",
+                                    "word": "link-local",
+                                    "description": "Use link-local address"
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "param",
+                                "word": "X:X:X:X::X/<0-128>",
+                                "description": "IPv6 prefix"
+                              },
+                              {
+                                "type": "command",
+                                "word": "dhcp",
+                                "description": "Obtain a ipv6 address using dhcp"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "command",
+                        "word": "no",
+                        "description": "Negate a command or set its defaults",
+                        "words": [
+                          {
+                            "type": "command",
+                            "word": "description",
+                            "description": "Interface specific description"
+                          },
+                          {
+                            "type": "command",
+                            "word": "ip",
+                            "description": "Interface Internet Protocol config commands",
+                            "words": [
+                              {
+                                "type": "command",
+                                "word": "address",
+                                "description": "Set the IP address of an interface",
+                                "words": [
+                                  {
+                                    "type": "param",
+                                    "word": "A.B.C.D",
+                                    "description": "IP address",
+                                    "words": [
+                                      {
+                                        "type": "param",
+                                        "word": "A.B.C.D",
+                                        "description": "IP subnet mask"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "command",
+                                    "word": "dhcp",
+                                    "description": "IP Address negotiated via DHCP"
+                                  },
+                                  {
+                                    "type": "finish"
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "command",
+                            "word": "ipv6",
+                            "description": "IPv6 interface subcommands",
+                            "words": [
+                              {
+                                "type": "command",
+                                "word": "address",
+                                "description": "Configure IPv6 address on interface",
+                                "words": [
+                                  {
+                                    "type": "param",
+                                    "word": "X:X:X:X::X",
+                                    "description": "IPv6 link-local address",
+                                    "words": [
+                                      {
+                                        "type": "command",
+                                        "word": "link-local",
+                                        "description": "Use link-local address"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "param",
+                                    "word": "X:X:X:X::X/<0-128>",
+                                    "description": "IPv6 prefix"
+                                  },
+                                  {
+                                    "type": "command",
+                                    "word": "dhcp",
+                                    "description": "Obtain a ipv6 address using dhcp"
+                                  },
+                                  {
+                                    "type": "finish"
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "command",
+                            "word": "shutdown",
+                            "description": "Shutdown the selected interface"
+                          },
+                          {
+                            "type": "command",
+                            "word": "speed",
+                            "description": "Configure speed operation"
+                          },
+                          {
+                            "type": "command",
+                            "word": "switchport",
+                            "description": "Set switching mode characteristics",
+                            "words": [
+                              {
+                                "type": "command",
+                                "word": "access",
+                                "description": "Set access mode characteristics of the interface",
+                                "words": [
+                                  {
+                                    "type": "command",
+                                    "word": "vlan",
+                                    "description": "Set VLAN when interface is in access mode"
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "command",
+                                "word": "mode",
+                                "description": "Set trunking mode of the interface"
+                              },
+                              {
+                                "type": "command",
+                                "word": "trunk",
+                                "description": "Set trunking characteristics of the interface",
+                                "words": [
+                                  {
+                                    "type": "command",
+                                    "word": "allowed",
+                                    "description": "Set allowed VLAN characteristics when interface is in trunking mode",
+                                    "words": [
+                                      {
+                                        "type": "command",
+                                        "word": "vlan",
+                                        "description": "Set allowed VLANs when interface is in trunking mode"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "command",
+                                    "word": "native",
+                                    "description": "Set trunking native characteristics when interface is in trunking mode",
+                                    "words": [
+                                      {
+                                        "type": "command",
+                                        "word": "vlan",
+                                        "description": "Set native VLAN when interface is in trunking mode"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "command",
+                        "word": "shutdown",
+                        "description": "Shutdown the selected interface"
+                      },
+                      {
+                        "type": "command",
+                        "word": "speed",
+                        "description": "Configure speed operation",
+                        "words": [
+                          {
+                            "type": "command",
+                            "word": "10",
+                            "description": "Force 10 Mbps operation"
+                          },
+                          {
+                            "type": "command",
+                            "word": "100",
+                            "description": "Force 100 Mbps operation"
+                          },
+                          {
+                            "type": "command",
+                            "word": "1000",
+                            "description": "Force 1000 Mbps operation"
+                          },
+                          {
+                            "type": "command",
+                            "word": "auto",
+                            "description": "Enable AUTO speed configuration"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "command",
+                        "word": "switchport",
+                        "description": "Set switching mode characteristics",
+                        "words": [
+                          {
+                            "type": "command",
+                            "word": "access",
+                            "description": "Set access mode characteristics of the interface",
+                            "words": [
+                              {
+                                "type": "command",
+                                "word": "vlan",
+                                "description": "Set VLAN when interface is in access mode",
+                                "words": [
+                                  {
+                                    "type": "param",
+                                    "word": "<1-4094>",
+                                    "description": "VLAN ID of the VLAN when this port is in access mode"
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "command",
+                            "word": "mode",
+                            "description": "Set trunking mode of the interface",
+                            "words": [
+                              {
+                                "type": "command",
+                                "word": "access",
+                                "description": "Set trunking mode to ACCESS unconditionally"
+                              },
+                              {
+                                "type": "command",
+                                "word": "trunk",
+                                "description": "Set trunking mode to TRUNK unconditionally"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "command",
+                            "word": "trunk",
+                            "description": "Set trunking characteristics of the interface",
+                            "words": [
+                              {
+                                "type": "command",
+                                "word": "allowed",
+                                "description": "Set allowed VLAN characteristics when interface is in trunking mode",
+                                "words": [
+                                  {
+                                    "type": "command",
+                                    "word": "vlan",
+                                    "description": "Set allowed VLANs when interface is in trunking mode",
+                                    "words": [
+                                      {
+                                        "type": "command",
+                                        "word": "WORD",
+                                        "description": "VLAN IDs of the allowed VLANs when this port is in trunking mode"
+                                      },
+                                      {
+                                        "type": "command",
+                                        "word": "add",
+                                        "description": "add VLANs to the current list",
+                                        "words": [
+                                          {
+                                            "type": "command",
+                                            "word": "<1-4094>",
+                                            "description": "VLAN ID of a allowed VLAN when this port is in trunking mode"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "type": "command",
+                                        "word": "all",
+                                        "description": "all VLANs"
+                                      },
+                                      {
+                                        "type": "command",
+                                        "word": "except",
+                                        "description": "all VLANs except the following",
+                                        "words": [
+                                          {
+                                            "type": "command",
+                                            "word": "<1-4094>",
+                                            "description": "VLAN ID of a allowed VLAN when this port is in trunking mode"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "type": "command",
+                                        "word": "none",
+                                        "description": "no VLANs"
+                                      },
+                                      {
+                                        "type": "command",
+                                        "word": "remove",
+                                        "description": "remove VLANs from the current list",
+                                        "words": [
+                                          {
+                                            "type": "command",
+                                            "word": "<1-4094>",
+                                            "description": "VLAN ID of a allowed VLAN when this port is in trunking mode"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "command",
+                                "word": "native",
+                                "description": "Set trunking native characteristics when interface is in trunking mode",
+                                "words": [
+                                  {
+                                    "type": "command",
+                                    "word": "vlan",
+                                    "description": "Set native VLAN when interface is in trunking mode",
+                                    "words": [
+                                      {
+                                        "type": "param",
+                                        "word": "<1-4094>",
+                                        "description": "VLAN ID of the native VLAN when this port is in trunking mode"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "command",
+                "word": "Loopback",
+                "description": "Loopback interface",
+                "words": [
+                  {
+                    "type": "param_enterSubMode",
+                    "word": "<0-2147483647>",
+                    "description": "Loopback interface number",
+                    "words": []
+                  }
+                ]
+              },
+              {
+                "type": "command",
+                "word": "vlan",
+                "description": "Vlan Commands",
+                "words": [
+                  {
+                    "type": "param_enterSubMode",
+                    "word": "<1-4094>>",
+                    "description": "ISL VLAN IDs 1-1005",
+                    "words": [
+                      {
+                        "type": "command",
+                        "word": "description",
+                        "description": "Interface specific description",
+                        "words": [
+                          {
+                            "type": "param",
+                            "word": "LINE",
+                            "description": "Up to 240 characters describing this interface"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "exitSubMode",
+                        "word": "exit",
+                        "description": "Exit from interface configuration mode"
+                      },
+                      {
+                        "type": "command",
+                        "word": "ip",
+                        "description": "Interface Internet Protocol config commands",
+                        "words": [
+                          {
+                            "type": "command",
+                            "word": "address",
+                            "description": "Set the IP address of an interface",
+                            "words": [
+                              {
+                                "type": "param",
+                                "word": "A.B.C.D",
+                                "description": "IP address",
+                                "words": [
+                                  {
+                                    "type": "param",
+                                    "word": "A.B.C.D",
+                                    "description": "IP subnet mask"
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "command",
+                                "word": "dhcp",
+                                "description": "IP Address negotiated via DHCP"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "command",
+                        "word": "ipv6",
+                        "description": "IPv6 interface subcommands",
+                        "words": [
+                          {
+                            "type": "command",
+                            "word": "address",
+                            "description": "Configure IPv6 address on interface",
+                            "words": [
+                              {
+                                "type": "param",
+                                "word": "X:X:X:X::X",
+                                "description": "IPv6 link-local address",
+                                "words": [
+                                  {
+                                    "type": "command",
+                                    "word": "link-local",
+                                    "description": "Use link-local address"
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "param",
+                                "word": "X:X:X:X::X/<0-128>",
+                                "description": "IPv6 prefix"
+                              },
+                              {
+                                "type": "command",
+                                "word": "dhcp",
+                                "description": "Obtain a ipv6 address using dhcp"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "command",
+                        "word": "no",
+                        "description": "Negate a command or set its defaults",
+                        "words": [
+                          {
+                            "type": "command",
+                            "word": "description",
+                            "description": "Interface specific description"
+                          },
+                          {
+                            "type": "command",
+                            "word": "ip",
+                            "description": "Interface Internet Protocol config commands",
+                            "words": [
+                              {
+                                "type": "command",
+                                "word": "address",
+                                "description": "Set the IP address of an interface",
+                                "words": [
+                                  {
+                                    "type": "param",
+                                    "word": "A.B.C.D",
+                                    "description": "IP address",
+                                    "words": [
+                                      {
+                                        "type": "param",
+                                        "word": "A.B.C.D",
+                                        "description": "IP subnet mask"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "command",
+                                    "word": "dhcp",
+                                    "description": "IP Address negotiated via DHCP"
+                                  },
+                                  {
+                                    "type": "finish"
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "command",
+                            "word": "ipv6",
+                            "description": "IPv6 interface subcommands",
+                            "words": [
+                              {
+                                "type": "command",
+                                "word": "address",
+                                "description": "Configure IPv6 address on interface",
+                                "words": [
+                                  {
+                                    "type": "param",
+                                    "word": "X:X:X:X::X",
+                                    "description": "IPv6 link-local address",
+                                    "words": [
+                                      {
+                                        "type": "command",
+                                        "word": "link-local",
+                                        "description": "Use link-local address"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "param",
+                                    "word": "X:X:X:X::X/<0-128>",
+                                    "description": "IPv6 prefix"
+                                  },
+                                  {
+                                    "type": "command",
+                                    "word": "dhcp",
+                                    "description": "Obtain a ipv6 address using dhcp"
+                                  },
+                                  {
+                                    "type": "finish"
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "command",
+                            "word": "shutdown",
+                            "description": "Shutdown the selected interface"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "command",
+                        "word": "shutdown",
+                        "description": "Shutdown the selected interface"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "command",
+            "word": "ip",
+            "description": "Global IP configuration subcommands",
+            "words": [
+              {
+                "type": "command",
+                "word": "default-gateway",
+                "description": "Specify default gateway (if not routing IP)",
+                "words": [
+                  {
+                    "type": "param",
+                    "word": "A.B.C.D",
+                    "description": "IP address of default gateway"
+                  }
+                ]
+              },
+              {
+                "type": "command",
+                "word": "dhcp",
+                "description": "Configure DHCP server and relay parameters",
+                "words": [
+                  {
+                    "type": "command",
+                    "word": "excluded-address",
+                    "description": "Prevent DHCP from assigning certain addresses",
+                    "words": [
+                      {
+                        "type": "command",
+                        "word": "A.B.C.D",
+                        "description": "Low IP address",
+                        "words": [
+                          {
+                            "type": "command",
+                            "word": "A.B.C.D",
+                            "description": "High IP address"
+                          },
+                          {
+                            "type": "finish"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "command",
+                    "word": "pool",
+                    "description": "Configure DHCP address pools",
+                    "words": [
+                      {
+                        "type": "param_enterSubMode",
+                        "word": "WORD",
+                        "description": "Pool name",
+                        "words": [
+                          {
+                            "type": "command",
+                            "word": "default-router",
+                            "description": "Default routers",
+                            "words": [
+                              {
+                                "type": "param",
+                                "word": "A.B.C.D",
+                                "description": "Router's IP address"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "command",
+                            "word": "dns-server",
+                            "description": "Set name server",
+                            "words": [
+                              {
+                                "type": "param",
+                                "word": "A.B.C.D",
+                                "description": "Set ip address of DNS server"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "exitSubMode",
+                            "word": "exit",
+                            "description": "Exit from DHCP pool configuration mode"
+                          },
+                          {
+                            "type": "command",
+                            "word": "no",
+                            "description": "Negate a command or set its defaults",
+                            "words": [
+                              {
+                                "type": "command",
+                                "word": "default-router",
+                                "description": "Default routers"
+                              },
+                              {
+                                "type": "command",
+                                "word": "dns-server",
+                                "description": "Set name server"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "command",
+                "word": "domain",
+                "description": "IP DNS Resolver",
+                "words": [
+                  {
+                    "type": "command",
+                    "word": "name",
+                    "description": "Define the default domain name",
+                    "words": [
+                      {
+                        "type": "param",
+                        "word": "WORD",
+                        "description": "Default domain name"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "command",
+                "word": "ssh",
+                "description": "Configure ssh options",
+                "words": [
+                  {
+                    "type": "command",
+                    "word": "version",
+                    "description": "Specify protocol version to be supported",
+                    "words": [
+                      {
+                        "type": "param",
+                        "word": "<1-2>",
+                        "description": "Protocol version"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "command",
+            "word": "ipv6",
+            "description": "Global IPv6 configuration commands",
+            "words": [
+              {
+                "type": "command",
+                "word": "unicast-routing",
+                "description": "Enable unicast routing"
+              }
+            ]
+          },
+          {
+            "type": "command",
+            "word": "line",
+            "description": "Configure a terminal line",
+            "words": [
+              {
+                "type": "command",
+                "word": "vty",
+                "description": "Virtual terminal",
+                "words": [
+                  {
+                    "type": "param_enterSubMode",
+                    "word": "<0-15> (<0-15>)",
+                    "description": "First Line number opt.(to last Line number)",
+                    "words": [
+                      {
+                        "type": "command",
+                        "word": "exec-timeout",
+                        "description": "Set the EXEC timeout",
+                        "words": [
+                          {
+                            "type": "param",
+                            "word": "<0-35791>",
+                            "description": "Timeout in minutes",
+                            "words": [
+                              {
+                                "type": "param",
+                                "word": "<0-2147483>",
+                                "description": "Timeout in seconds"
+                              },
+                              {
+                                "type": "finish"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "exitSubMode",
+                        "word": "exit",
+                        "description": "Exit from line configuration mode"
+                      },
+                      {
+                        "type": "command",
+                        "word": "login",
+                        "description": "Enable password checking",
+                        "words": [
+                          {
+                            "type": "command",
+                            "word": "local",
+                            "description": "Local password checking"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "command",
+                        "word": "password",
+                        "description": "Set a password",
+                        "words": [
+                          {
+                            "type": "param",
+                            "word": "LINE",
+                            "description": "The UNENCRYPTED (cleartext) line password"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "command",
+                        "word": "transport",
+                        "description": "Define transport protocols for line",
+                        "words": [
+                          {
+                            "type": "command",
+                            "word": "input",
+                            "description": "Define which protocols to use when connecting to the terminal server",
+                            "words": [
+                              {
+                                "type": "command",
+                                "word": "ssh",
+                                "description": "TCP/IP SSH protocol"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "command",
+            "word": "login",
+            "description": "Enable secure login checking",
+            "words": [
+              {
+                "type": "command",
+                "word": "block-for",
+                "description": "Set quiet-mode active time period",
+                "words": [
+                  {
+                    "type": "param",
+                    "word": "<1-65535>",
+                    "description": "Time period in seconds",
+                    "words": [
+                      {
+                        "type": "command",
+                        "word": "attempts",
+                        "description": "Set max number of fail attempts",
+                        "words": [
+                          {
+                            "type": "param",
+                            "word": "<1-65535>",
+                            "description": "Fail attempts max value",
+                            "words": [
+                              {
+                                "type": "command",
+                                "word": "within",
+                                "description": "Watch period for fail attempts",
+                                "words": [
+                                  {
+                                    "type": "param",
+                                    "word": "<1-65535>",
+                                    "description": "Time period in seconds"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "command",
+            "word": "security",
+            "description": "Infra Security CLIs",
+            "words": [
+              {
+                "type": "command",
+                "word": "passwords",
+                "description": "Passwords security CLIs",
+                "words": [
+                  {
+                    "type": "command",
+                    "word": "min-length",
+                    "description": "Minimum length of passwords",
+                    "words": [
+                      {
+                        "type": "param",
+                        "word": "<0-16>",
+                        "description": "Minimum length of all user/enable passwords"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "command",
+            "word": "service",
+            "description": "Modify use of network based services",
+            "words": [
+              {
+                "type": "command",
+                "word": "password-encryption",
+                "description": "Encrypt system passwords"
+              }
+            ]
+          },
+          {
+            "type": "command",
+            "word": "username",
+            "description": "Establish User Name Authentication",
+            "words": [
+              {
+                "type": "param",
+                "word": "WORD",
+                "description": "User name",
+                "words": [
+                  {
+                    "type": "command",
+                    "word": "password",
+                    "description": "Specify the password for the user",
+                    "words": [
+                      {
+                        "type": "command",
+                        "word": "LINE",
+                        "description": "The UNENCRYPTED (cleartext) user password"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "command",
+                    "word": "secret",
+                    "description": "Specify the secret for the user",
+                    "words": [
+                      {
+                        "type": "param",
+                        "word": "LINE",
+                        "description": "The UNENCRYPTED (cleartext) user secret"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "finish"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "command",
+            "word": "vlan",
+            "description": "Vlan Commands",
+            "words": [
+              {
+                "type": "param_enterSubMode",
+                "word": "<1-4094>>",
+                "description": "ISL VLAN IDs 1-1005",
+                "words": [
+                  {
+                    "type": "exitSubMode",
+                    "word": "exit",
+                    "description": "Apply changes, bump revision number, and exit mode"
+                  },
+                  {
+                    "type": "command",
+                    "word": "name",
+                    "description": "Ascii name of the VLAN",
+                    "words": [
+                      {
+                        "type": "param",
+                        "word": "WORD",
+                        "description": "The ascii name for the VLAN"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "command",
+        "word": "exit",
+        "description": "Exit from the EXEC"
+      },
+      {
+        "type": "command",
+        "word": "ping",
+        "description": "Send echo messages",
+        "words": [
+          {
+            "type": "param",
+            "word": "ip(v6)",
+            "description": "IP(v6) echo"
+          }
+        ]
+      },
+      {
+        "type": "command",
+        "word": "traceroute",
+        "description": "Trace route to destination",
+        "words": [
+          {
+            "type": "param",
+            "word": "ip(v6)",
+            "description": "IP(v6) echo"
+          }
+        ]
+      }
+    ]
+  }
+]

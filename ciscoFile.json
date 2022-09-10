@@ -217,6 +217,442 @@
             "words": [
               {
                 "type": "command",
+                "word": "FastEthernet",
+                "description": "FastEthernet IEEE 802.3",
+                "words": [
+                  {
+                    "type": "param_enterSubMode",
+                    "word": "x/x(/x)",
+                    "description": "FastEthernet interface number",
+                    "words": [
+                      {
+                        "type": "command",
+                        "word": "description",
+                        "description": "Interface specific description",
+                        "words": [
+                          {
+                            "type": "param",
+                            "word": "LINE",
+                            "description": "Up to 240 characters describing this interface"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "command",
+                        "word": "duplex",
+                        "description": "Configure duplex operation",
+                        "words": [
+                          {
+                            "type": "command",
+                            "word": "auto",
+                            "description": "Enable AUTO duplex configuration"
+                          },
+                          {
+                            "type": "command",
+                            "word": "full",
+                            "description": "Force full duplex operation"
+                          },
+                          {
+                            "type": "command",
+                            "word": "half",
+                            "description": "Force half-duplex operation"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "exitSubMode",
+                        "word": "exit",
+                        "description": "Exit from interface configuration mode"
+                      },
+                      {
+                        "type": "command",
+                        "word": "ip",
+                        "description": "Interface Internet Protocol config commands",
+                        "words": [
+                          {
+                            "type": "command",
+                            "word": "address",
+                            "description": "Set the IP address of an interface",
+                            "words": [
+                              {
+                                "type": "param",
+                                "word": "A.B.C.D",
+                                "description": "IP address",
+                                "words": [
+                                  {
+                                    "type": "param",
+                                    "word": "A.B.C.D",
+                                    "description": "IP subnet mask"
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "command",
+                                "word": "dhcp",
+                                "description": "IP Address negotiated via DHCP"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "command",
+                        "word": "ipv6",
+                        "description": "IPv6 interface subcommands",
+                        "words": [
+                          {
+                            "type": "command",
+                            "word": "address",
+                            "description": "Configure IPv6 address on interface",
+                            "words": [
+                              {
+                                "type": "param",
+                                "word": "X:X:X:X::X",
+                                "description": "IPv6 link-local address",
+                                "words": [
+                                  {
+                                    "type": "command",
+                                    "word": "link-local",
+                                    "description": "Use link-local address"
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "param",
+                                "word": "X:X:X:X::X/<0-128>",
+                                "description": "IPv6 prefix"
+                              },
+                              {
+                                "type": "command",
+                                "word": "dhcp",
+                                "description": "Obtain a ipv6 address using dhcp"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "command",
+                        "word": "no",
+                        "description": "Negate a command or set its defaults",
+                        "words": [
+                          {
+                            "type": "command",
+                            "word": "description",
+                            "description": "Interface specific description"
+                          },
+                          {
+                            "type": "command",
+                            "word": "ip",
+                            "description": "Interface Internet Protocol config commands",
+                            "words": [
+                              {
+                                "type": "command",
+                                "word": "address",
+                                "description": "Set the IP address of an interface",
+                                "words": [
+                                  {
+                                    "type": "param",
+                                    "word": "A.B.C.D",
+                                    "description": "IP address",
+                                    "words": [
+                                      {
+                                        "type": "param",
+                                        "word": "A.B.C.D",
+                                        "description": "IP subnet mask"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "command",
+                                    "word": "dhcp",
+                                    "description": "IP Address negotiated via DHCP"
+                                  },
+                                  {
+                                    "type": "finish"
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "command",
+                            "word": "ipv6",
+                            "description": "IPv6 interface subcommands",
+                            "words": [
+                              {
+                                "type": "command",
+                                "word": "address",
+                                "description": "Configure IPv6 address on interface",
+                                "words": [
+                                  {
+                                    "type": "param",
+                                    "word": "X:X:X:X::X",
+                                    "description": "IPv6 link-local address",
+                                    "words": [
+                                      {
+                                        "type": "command",
+                                        "word": "link-local",
+                                        "description": "Use link-local address"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "param",
+                                    "word": "X:X:X:X::X/<0-128>",
+                                    "description": "IPv6 prefix"
+                                  },
+                                  {
+                                    "type": "command",
+                                    "word": "dhcp",
+                                    "description": "Obtain a ipv6 address using dhcp"
+                                  },
+                                  {
+                                    "type": "finish"
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "command",
+                            "word": "shutdown",
+                            "description": "Shutdown the selected interface"
+                          },
+                          {
+                            "type": "command",
+                            "word": "speed",
+                            "description": "Configure speed operation"
+                          },
+                          {
+                            "type": "command",
+                            "word": "switchport",
+                            "description": "Set switching mode characteristics",
+                            "words": [
+                              {
+                                "type": "command",
+                                "word": "access",
+                                "description": "Set access mode characteristics of the interface",
+                                "words": [
+                                  {
+                                    "type": "command",
+                                    "word": "vlan",
+                                    "description": "Set VLAN when interface is in access mode"
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "command",
+                                "word": "mode",
+                                "description": "Set trunking mode of the interface"
+                              },
+                              {
+                                "type": "command",
+                                "word": "trunk",
+                                "description": "Set trunking characteristics of the interface",
+                                "words": [
+                                  {
+                                    "type": "command",
+                                    "word": "allowed",
+                                    "description": "Set allowed VLAN characteristics when interface is in trunking mode",
+                                    "words": [
+                                      {
+                                        "type": "command",
+                                        "word": "vlan",
+                                        "description": "Set allowed VLANs when interface is in trunking mode"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "command",
+                                    "word": "native",
+                                    "description": "Set trunking native characteristics when interface is in trunking mode",
+                                    "words": [
+                                      {
+                                        "type": "command",
+                                        "word": "vlan",
+                                        "description": "Set native VLAN when interface is in trunking mode"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "command",
+                        "word": "shutdown",
+                        "description": "Shutdown the selected interface"
+                      },
+                      {
+                        "type": "command",
+                        "word": "speed",
+                        "description": "Configure speed operation",
+                        "words": [
+                          {
+                            "type": "command",
+                            "word": "10",
+                            "description": "Force 10 Mbps operation"
+                          },
+                          {
+                            "type": "command",
+                            "word": "100",
+                            "description": "Force 100 Mbps operation"
+                          },
+                          {
+                            "type": "command",
+                            "word": "1000",
+                            "description": "Force 1000 Mbps operation"
+                          },
+                          {
+                            "type": "command",
+                            "word": "auto",
+                            "description": "Enable AUTO speed configuration"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "command",
+                        "word": "switchport",
+                        "description": "Set switching mode characteristics",
+                        "words": [
+                          {
+                            "type": "command",
+                            "word": "access",
+                            "description": "Set access mode characteristics of the interface",
+                            "words": [
+                              {
+                                "type": "command",
+                                "word": "vlan",
+                                "description": "Set VLAN when interface is in access mode",
+                                "words": [
+                                  {
+                                    "type": "param",
+                                    "word": "<1-4094>",
+                                    "description": "VLAN ID of the VLAN when this port is in access mode"
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "command",
+                            "word": "mode",
+                            "description": "Set trunking mode of the interface",
+                            "words": [
+                              {
+                                "type": "command",
+                                "word": "access",
+                                "description": "Set trunking mode to ACCESS unconditionally"
+                              },
+                              {
+                                "type": "command",
+                                "word": "trunk",
+                                "description": "Set trunking mode to TRUNK unconditionally"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "command",
+                            "word": "trunk",
+                            "description": "Set trunking characteristics of the interface",
+                            "words": [
+                              {
+                                "type": "command",
+                                "word": "allowed",
+                                "description": "Set allowed VLAN characteristics when interface is in trunking mode",
+                                "words": [
+                                  {
+                                    "type": "command",
+                                    "word": "vlan",
+                                    "description": "Set allowed VLANs when interface is in trunking mode",
+                                    "words": [
+                                      {
+                                        "type": "command",
+                                        "word": "WORD",
+                                        "description": "VLAN IDs of the allowed VLANs when this port is in trunking mode"
+                                      },
+                                      {
+                                        "type": "command",
+                                        "word": "add",
+                                        "description": "add VLANs to the current list",
+                                        "words": [
+                                          {
+                                            "type": "command",
+                                            "word": "<1-4094>",
+                                            "description": "VLAN ID of a allowed VLAN when this port is in trunking mode"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "type": "command",
+                                        "word": "all",
+                                        "description": "all VLANs"
+                                      },
+                                      {
+                                        "type": "command",
+                                        "word": "except",
+                                        "description": "all VLANs except the following",
+                                        "words": [
+                                          {
+                                            "type": "command",
+                                            "word": "<1-4094>",
+                                            "description": "VLAN ID of a allowed VLAN when this port is in trunking mode"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "type": "command",
+                                        "word": "none",
+                                        "description": "no VLANs"
+                                      },
+                                      {
+                                        "type": "command",
+                                        "word": "remove",
+                                        "description": "remove VLANs from the current list",
+                                        "words": [
+                                          {
+                                            "type": "command",
+                                            "word": "<1-4094>",
+                                            "description": "VLAN ID of a allowed VLAN when this port is in trunking mode"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "command",
+                                "word": "native",
+                                "description": "Set trunking native characteristics when interface is in trunking mode",
+                                "words": [
+                                  {
+                                    "type": "command",
+                                    "word": "vlan",
+                                    "description": "Set native VLAN when interface is in trunking mode",
+                                    "words": [
+                                      {
+                                        "type": "param",
+                                        "word": "<1-4094>",
+                                        "description": "VLAN ID of the native VLAN when this port is in trunking mode"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "command",
                 "word": "GigabitEthernet",
                 "description": "GigabitEthernet IEEE 802.3z",
                 "words": [

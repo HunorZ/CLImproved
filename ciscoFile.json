@@ -1096,7 +1096,13 @@
                     "type": "param_enterSubMode",
                     "word": "<0-2147483647>",
                     "description": "Loopback interface number",
-                    "words": []
+                    "words": [
+                      {
+                        "type": "exitSubMode",
+                        "word": "exit",
+                        "description": "Exit from interface configuration mode"
+                      }
+                    ]
                   }
                 ]
               },

@@ -397,7 +397,7 @@ public class Controller {
             filePathsAtLastSave.set(currentTabIndex, selectedFile.getAbsolutePath());
             BufferedWriter output = Files.newBufferedWriter(selectedFile.toPath(), StandardCharsets.UTF_8);
             contentAtLastSave = textAreas.get(currentTabIndex).getText();
-            output.write(shorten(textAreas.get(currentTabIndex).getText()));
+            output.write(textAreas.get(currentTabIndex).getText().trim());
             output.close();
 
             String fileName = selectedFile.getName().split("\\.")[0];
@@ -433,7 +433,7 @@ public class Controller {
         ImageView aboutPageLogoImage = new ImageView(header_logo_image);
         HBox pictureHBox = new HBox(aboutPageLogoImage);
         Label infoLabel = new Label("CLImproved for Windows\n" +
-                "Version 1.4.0\n" +
+                "Version 1.4.1\n" +
                 "GUI Version 2.0\n\n" +
                 "Made by\n" +
                 "-Hunor Zakarias\n" +
@@ -463,19 +463,5 @@ public class Controller {
         aboutStage.getIcons().add(header_logo_image);
         aboutStage.setScene(aboutStage_scene);
         aboutStage.show();
-    }
-
-    private String shorten(String s) {
-        if (!s.equals("")) {
-            while ("\n".equals(s.charAt(0) + "") || "\t".equals(s.charAt(0) + "") || " ".equals(s.charAt(0) + "")) {
-                s = s.substring(1);
-            }
-
-            while ("\n".equals(s.charAt(s.length() - 1) + "") || "\t".equals(s.charAt(s.length() - 1) + "") || " ".equals(s.charAt(s.length() - 1) + "")) {
-                s = s.substring(0, s.length() - 1);
-            }
-            return s;
-        }
-        return "";
     }
 }

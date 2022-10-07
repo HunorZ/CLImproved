@@ -45,11 +45,10 @@ public class JSONFileHandler {
         try {
             inputStream = Files.newInputStream(Path.of(file));
         } catch (IOException e) {
-            throw new FileNotFoundException("The path could not be found");
+            throw new FileNotFoundException("Path not found");
         }
         //the content of the json-file is stored inside fileContent
-        JSONTokener tokener = new JSONTokener(inputStream);
-        fileContent = new JSONArray(tokener);
+        fileContent = new JSONArray(new JSONTokener(inputStream));
 
         //tries to change the mode to the first available one
         try {
@@ -199,8 +198,8 @@ public class JSONFileHandler {
 
                 //loaded the next commands from the stack into nextCommands
                 nextCommands = multiCommands.peek().getJSONArray(currentMultiCommand.peek());
-            } else {
 
+            } else {
                 //as the condition was false, no more multicommands are available
                 //and the object can be removed from the stack
                 if (isInMultiCommand) {
@@ -216,9 +215,8 @@ public class JSONFileHandler {
                 }
 
                 //sets "isInMultiCommand" to false if the "multiCommands" stack is empty
-                if (multiCommands.empty()) {
-                    isInMultiCommand = false;
-                }
+                if (multiCommands.empty()) isInMultiCommand = false;
+
                 commandWriter.makeBreak();
             }
         }

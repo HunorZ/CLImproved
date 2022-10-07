@@ -54,9 +54,10 @@ public class Controller {
     ArrayList<String> filePathsAtLastSave = new ArrayList<>();
 
     int currentTabIndex = 0;
-    boolean aboutPageOpen = false;
 
     String contentAtLastSave;
+
+    Stage aboutStage = new Stage();
 
     Image center_addButton_image;
     Image header_logo_image;
@@ -183,10 +184,8 @@ public class Controller {
 
         for (int i = 0; i < words.length; i++) {
             Button button = new Button();
-            //variable used in lambda expression must be final or effectively final
+
             final int finalI = i;
-
-
             button.setOnAction(actionEvent -> {
                 if (words[finalI].type == Word.Type.PARAM || words[finalI].type == Word.Type.PARAM_ENTERSUBMODE) {
                     String parameter = new Input(words[finalI].word + "\n" +
@@ -198,8 +197,9 @@ public class Controller {
             });
             if (words.length == 1) {
                 button.fire();
-                break;
+                return;
             }
+
             button.setGraphic(new ImageView(center_addButton_image));
             button.setId("wordButton");
 
@@ -254,7 +254,7 @@ public class Controller {
                     System.exit(0);
                 }
             } else {
-                new Alert("There is no dataset availbale").fire();
+                new Alert("There is no dataset available").fire();
                 System.exit(0);
             }
         }
@@ -284,18 +284,6 @@ public class Controller {
 
         RowConstraints rowConstraints = new RowConstraints();
         rowConstraints.setVgrow(Priority.SOMETIMES);
-
-        /*
-        AnchorPane labelAnchor = new AnchorPane();
-
-        Label label = new Label();
-        label.setText("");
-        label.setId("inWords");
-        AnchorPane.setTopAnchor(label, 0.0);
-        AnchorPane.setBottomAnchor(label, 0.0);
-        AnchorPane.setRightAnchor(label, 0.0);
-        AnchorPane.setLeftAnchor(label, 0.0);
-        */
 
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setId("scrollPane");
@@ -335,7 +323,7 @@ public class Controller {
         tab.setId(currentTabIndex + "");
 
         //get modes and display them
-        String[] execModes = jsonFileHandlerArrayList.get(0).getModes();
+        String[] execModes = jsonFileHandlerArrayList.get(index).getModes();
         for (int i = 0; i < execModes.length; i++) {
             Button button = new Button(execModes[i]);
             int finalI = i;
@@ -370,9 +358,9 @@ public class Controller {
             }
         }
 
-        for (int i = tabID; i < tabPane.getTabs().size() - 1; i++) {
+        for (int i = tabID; i < tabPane.getTabs().size() - 1; i++)
             tabPane.getTabs().get(i).setId((Integer.parseInt(tabPane.getTabs().get(i).getId()) - 1) + "");
-        }
+
 
         //remove jsonFileHandler instance as tab is closed and object is no longer needed
         jsonFileHandlerArrayList.remove(tabID);
@@ -383,10 +371,9 @@ public class Controller {
         commandContainers.remove(tabID);
         filePathsAtLastSave.remove(tabID);
 
-        if (tabPane.getTabs().size() == 1) {
-            createNewTab();
-        }
+        if (tabPane.getTabs().size() == 1) createNewTab();
     }
+
 
     @FXML
     private void saveAs() {
@@ -394,7 +381,7 @@ public class Controller {
         fileChooser.setTitle("Save");
         fileChooser.setInitialFileName("Script_File");
 
-        //Set to user directory or go to default if cannot access
+        //Set to user directory or go to default if no accessible
         String userDirectoryString = System.getProperty("user.home") + "/Desktop";
         File userDirectory = new File(userDirectoryString);
         if (!userDirectory.canRead()) {
@@ -411,11 +398,11 @@ public class Controller {
             BufferedWriter output = Files.newBufferedWriter(selectedFile.toPath(), StandardCharsets.UTF_8);
             contentAtLastSave = textAreas.get(currentTabIndex).getText();
             output.write(shorten(textAreas.get(currentTabIndex).getText()));
-            output.flush();
+            output.close();
 
             String fileName = selectedFile.getName().split("\\.")[0];
             tabPane.getTabs().get(currentTabIndex).setText(fileName + " ".repeat(30 - fileName.length()));
-        } catch (Exception e) {
+        } catch (Exception ignored) {
             //Filesave aborted!
         }
     }
@@ -426,9 +413,9 @@ public class Controller {
             try {
                 BufferedWriter output = Files.newBufferedWriter(Paths.get(filePathsAtLastSave.get(currentTabIndex)), StandardCharsets.UTF_8);
                 contentAtLastSave = textAreas.get(currentTabIndex).getText();
-                output.write(shorten(textAreas.get(currentTabIndex).getText()));
-                output.flush();
-            } catch (Exception e) {
+                output.write(textAreas.get(currentTabIndex).getText().trim());
+                output.close();
+            } catch (Exception ignored) {
                 //Filesave aborted!
             }
         } else {
@@ -438,49 +425,44 @@ public class Controller {
 
     @FXML
     private void openAboutWindow() {
-        if (!aboutPageOpen) {
-            aboutPageOpen = true;
+        if (aboutStage.isShowing()) return;
 
-            Stage aboutStage = new Stage();
-            BorderPane aboutPane = new BorderPane();
-            Scene aboutStage_scene = new Scene(aboutPane);
+        BorderPane aboutPane = new BorderPane();
+        Scene aboutStage_scene = new Scene(aboutPane);
 
-            ImageView aboutPagelogoImage = new ImageView(header_logo_image);
-            HBox picuteHBox = new HBox(aboutPagelogoImage);
-            Label infoLabel = new Label("CLImproved for Windows\n" +
-                    "Version 1.4.0\n" +
-                    "GUI Version 2.0\n\n" +
-                    "Made by\n" +
-                    "-Hunor Zakarias\n" +
-                    "(-Felix Payer)\n\n" +
-                    "OS: " + System.getProperty("os.name") + "\n" +
-                    "Architecture: " + System.getProperty("os.arch") + "\n" +
-                    "Java Version: " + System.getProperty("java.version"));
+        ImageView aboutPageLogoImage = new ImageView(header_logo_image);
+        HBox pictureHBox = new HBox(aboutPageLogoImage);
+        Label infoLabel = new Label("CLImproved for Windows\n" +
+                "Version 1.4.0\n" +
+                "GUI Version 2.0\n\n" +
+                "Made by\n" +
+                "-Hunor Zakarias\n" +
+                "(-Felix Payer)\n\n" +
+                "OS: " + System.getProperty("os.name") + "\n" +
+                "Architecture: " + System.getProperty("os.arch") + "\n" +
+                "Java Version: " + System.getProperty("java.version"));
 
-            infoLabel.setFont(new Font("System Regular", 15));
+        infoLabel.setFont(new Font("System Regular", 15));
 
-            picuteHBox.setPadding(new Insets(50, 10, 10, 20));
+        pictureHBox.setPadding(new Insets(50, 10, 10, 20));
 
-            aboutPagelogoImage.setFitWidth(80);
-            aboutPagelogoImage.setFitHeight(80);
+        aboutPageLogoImage.setFitWidth(80);
+        aboutPageLogoImage.setFitHeight(80);
 
-            aboutPane.setPrefWidth(Double.MAX_VALUE);
-            aboutPane.setPrefHeight(Double.MAX_VALUE);
-            aboutPane.setRight(infoLabel);
-            aboutPane.setLeft(picuteHBox);
-            aboutPane.setPadding(new Insets(10, 70, 10, 10));
+        aboutPane.setPrefWidth(Double.MAX_VALUE);
+        aboutPane.setPrefHeight(Double.MAX_VALUE);
+        aboutPane.setRight(infoLabel);
+        aboutPane.setLeft(pictureHBox);
+        aboutPane.setPadding(new Insets(10, 70, 10, 10));
 
-            aboutStage.setResizable(false);
-            aboutStage.setWidth(330);
-            aboutStage.setHeight(300);
-            aboutStage.initOwner(Main.stage);
-            aboutStage.setTitle("About");
-            aboutStage.getIcons().add(header_logo_image);
-            aboutStage.setScene(aboutStage_scene);
-            aboutStage.show();
-
-            aboutStage.setOnCloseRequest(e -> aboutPageOpen = false);
-        }
+        aboutStage.setResizable(false);
+        aboutStage.setWidth(330);
+        aboutStage.setHeight(300);
+        aboutStage.initOwner(Main.stage);
+        aboutStage.setTitle("About");
+        aboutStage.getIcons().add(header_logo_image);
+        aboutStage.setScene(aboutStage_scene);
+        aboutStage.show();
     }
 
     private String shorten(String s) {

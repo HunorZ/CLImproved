@@ -16,8 +16,4 @@ public abstract class Notification {
     protected void setMessage(String message) {
         label.setText(message);
     }
-
-    protected String getMessage() {
-        return label.getText();
-    }
 }

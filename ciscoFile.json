@@ -416,6 +416,18 @@
                           },
                           {
                             "type": "command",
+                            "word": "service",
+                            "description": "Modify use of network based services",
+                            "words": [
+                              {
+                                "type": "command",
+                                "word": "dhcp",
+                                "description": "Disable DHCP server and relay agent"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "command",
                             "word": "shutdown",
                             "description": "Shutdown the selected interface"
                           },
@@ -1386,6 +1398,25 @@
                           },
                           {
                             "type": "command",
+                            "word": "network",
+                            "description": "Network number and mask",
+                            "words": [
+                              {
+                                "type": "param",
+                                "word": "A.B.C.D",
+                                "description": "Network number in dotted-decimal notation",
+                                "words": [
+                                  {
+                                    "type": "param",
+                                    "word": "A.B.C.D",
+                                    "description": "Network mask"
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "command",
                             "word": "no",
                             "description": "Negate a command or set its defaults",
                             "words": [
@@ -1599,6 +1630,181 @@
           },
           {
             "type": "command",
+            "word": "port-channel",
+            "description": "EtherChannel configuration",
+            "words": [
+              {
+                "type": "command",
+                "word": "load-balance",
+                "description": "Load Balancing method",
+                "words": [
+                  {
+                    "type": "command",
+                    "word": "dst-ip",
+                    "description": "Dst IP Addr"
+                  },
+                  {
+                    "type": "command",
+                    "word": "dst-mac",
+                    "description": "Dst Mac Addr"
+                  },
+                  {
+                    "type": "command",
+                    "word": "src-dst-ip",
+                    "description": "Src XOR Dst IP Addr"
+                  },
+                  {
+                    "type": "command",
+                    "word": "src-dst-mac",
+                    "description": "Src XOR Dst Mac Addr"
+                  },
+                  {
+                    "type": "command",
+                    "word": "src-ip",
+                    "description": "Src IP Addr"
+                  },
+                  {
+                    "type": "command",
+                    "word": "src-mac",
+                    "description": "Src Mac Addr"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "command",
+            "word": "no",
+            "description": "Negate a command or set its defaults",
+            "words": [
+              {
+                "type": "command",
+                "word": "interface",
+                "description": "Select an interface to configure",
+                "words": [
+                  {
+                    "type": "command",
+                    "word": "port-channel",
+                    "description": "Ethernet Channel of interfaces",
+                    "words": [
+                      {
+                        "type": "param",
+                        "word": "<1-48>",
+                        "description": "Port-channel interface number"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "command",
+                "word": "spanning-tree",
+                "description": "Spanning Tree Subsystem",
+                "words": [
+                  {
+                    "type": "word",
+                    "word": "vlan",
+                    "description": "VLAN Switch Spanning Tree",
+                    "words": [
+                      {
+                        "type": "param",
+                        "word": "WORD",
+                        "description": "vlan range, example: 1,3-5,7,9-11"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "command",
+            "word": "router",
+            "description": "Enable a routing process",
+            "words": [
+              {
+                "type": "command_enterSubMode",
+                "word": "rip",
+                "description": "Routing Information Protocol (RIP)",
+                "words": [
+                  {
+                    "type": "command",
+                    "word": "auto-summary",
+                    "description": "Enter Address Family command mode"
+                  },
+                  {
+                    "type": "command",
+                    "word": "default-information",
+                    "description": "Control distribution of default information",
+                    "words": [
+                      {
+                        "type": "command",
+                        "word": "originate",
+                        "description": "Distribute a default route"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "exitSubMode",
+                    "word": "exit",
+                    "description": "Exit from routing protocol configuration mode"
+                  },
+                  {
+                    "type": "command",
+                    "word": "network",
+                    "description": "Enable routing on an IP network",
+                    "words": [
+                      {
+                        "type": "param",
+                        "word": "A.B.C.D",
+                        "description": "Network number"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "command",
+                    "word": "no",
+                    "description": "Negate a command or set its defaults",
+                    "words": [
+                      {
+                        "type": "command",
+                        "word": "auto-summary",
+                        "description": "Enter Address Family command mode"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "multiCommand",
+                    "word": "passive-interface",
+                    "description": "Suppress routing updates on an interface",
+                    "words": [
+                      [
+                        {
+                          "type": "command",
+                          "word": "FastEthernet",
+                          "description": "FastEthernet IEEE 802.3"
+                        },
+                        {
+                          "type": "command",
+                          "word": "GigabitEthernet",
+                          "description": "GigabitEthernet IEEE 802.3z"
+                        }
+                      ],
+                      [
+                        {
+                          "type": "param",
+                          "word": "x/x(/x)",
+                          "description": "interface number"
+                        }
+                      ]
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "command",
             "word": "security",
             "description": "Infra Security CLIs",
             "words": [
@@ -1630,8 +1836,88 @@
             "words": [
               {
                 "type": "command",
+                "word": "dhcp",
+                "description": "Enable DHCP server and relay agent"
+              },
+              {
+                "type": "command",
                 "word": "password-encryption",
                 "description": "Encrypt system passwords"
+              }
+            ]
+          },
+          {
+            "type": "command",
+            "word": "spanning-tree",
+            "description": "Spanning Tree Subsystem",
+            "words": [
+              {
+                "type": "command",
+                "word": "mode",
+                "description": "Spanning tree operating mode",
+                "words": [
+                  {
+                    "type": "command",
+                    "word": "pvst",
+                    "description": "Per-Vlan spanning tree mode"
+                  },
+                  {
+                    "type": "command",
+                    "word": "rapid-pvst",
+                    "description": "Per-Vlan rapid spanning tree mode"
+                  },
+                  {
+                    "type": "command",
+                    "word": "mst",
+                    "description": ""
+                  }
+                ]
+              },
+              {
+                "type": "command",
+                "word": "vlan",
+                "description": "VLAN Switch Spanning Tree",
+                "words": [
+                  {
+                    "type": "param",
+                    "word": "WORD",
+                    "description": "vlan range, example: 1,3-5,7,9-11",
+                    "words": [
+                      {
+                        "type": "command",
+                        "word": "priority",
+                        "description": "Set the bridge priority for the spanning tree",
+                        "words": [
+                          {
+                            "type": "param",
+                            "word": "<0-61440>",
+                            "description": "bridge priority in increments of 4096"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "command",
+                        "word": "root",
+                        "description": "Configure switch as root",
+                        "words": [
+                          {
+                            "type": "command",
+                            "word": "primary",
+                            "description": "Configure this switch as primary root for this spanning tree"
+                          },
+                          {
+                            "type": "command",
+                            "word": "secondary",
+                            "description": "Configure switch as secondary root"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "finish"
+                      }
+                    ]
+                  }
+                ]
               }
             ]
           },

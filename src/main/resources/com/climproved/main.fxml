@@ -5,34 +5,34 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<VBox id="tst" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.climproved.Controller">
-   <children>
-      <MenuBar>
-         <menus>
-            <Menu mnemonicParsing="false" text="File">
-               <items>
-                  <MenuItem mnemonicParsing="false" onAction="#saveAs" text="Save As" />
-                  <MenuItem mnemonicParsing="false" onAction="#save" text="Save" />
-               </items>
-            </Menu>
-            <Menu mnemonicParsing="false" text="Options">
-               <items>
-                  <MenuItem mnemonicParsing="false" onAction="#updateDataSetFromMenu" text="Update dataset" />
-               </items>
-            </Menu>
-            <Menu mnemonicParsing="false" text="Help">
-               <items>
-                  <MenuItem mnemonicParsing="false" onAction="#openAboutWindow" text="About" />
-               </items>
-            </Menu>
-         </menus>
-      </MenuBar>
-      <TabPane fx:id="tabPane" tabClosingPolicy="ALL_TABS">
-         <tabs>
-            <Tab fx:id="addTab" closable="false" text="+" />
-         </tabs>
-      </TabPane>
-   </children>
+<VBox id="tst" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0"
+      prefWidth="1280.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/18"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.climproved.Controller">
+   <MenuBar>
+      <Menu mnemonicParsing="false" text="File">
+         <MenuItem mnemonicParsing="false" onAction="#saveAs" text="Save As"/>
+         <MenuItem mnemonicParsing="false" onAction="#save" text="Save"/>
+      </Menu>
+      <Menu mnemonicParsing="false" text="Options">
+         <MenuItem mnemonicParsing="false" onAction="#updateDataSetFromMenu" text="Update dataset"/>
+      </Menu>
+      <Menu mnemonicParsing="false" text="Help">
+         <MenuItem mnemonicParsing="false" onAction="#openAboutWindow" text="About"/>
+      </Menu>
+   </MenuBar>
+   <TabPane fx:id="tabPane" tabClosingPolicy="ALL_TABS">
+      <Tab fx:id="addTab" closable="false" text="+">
+         <tooltip>
+            <Tooltip text="Create new Tab">
+               <font>
+                  <Font size="27.0"/>
+               </font>
+            </Tooltip>
+         </tooltip>
+      </Tab>
+   </TabPane>
 </VBox>

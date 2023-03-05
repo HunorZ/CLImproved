@@ -13,6 +13,12 @@ import java.util.Objects;
 
 public class Main extends Application {
     static Stage stage;
+    static Image center_addButton_image = new Image(
+            Objects.requireNonNull(Main.class.getResourceAsStream("add_button.png")));
+
+    static Image header_logo_image = new Image(
+            Objects.requireNonNull(Main.class.getResourceAsStream("CLImproved_newLogo.png")));
+
 
     @Override
     public void start(Stage stage) throws IOException {
